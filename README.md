@@ -1,4310 +1,1415 @@
-1 - Binary Classification
+# Session 1
+# Introduction to NLP with spacy
+
+import spacy
+
+nlp=spacy.blank('en')
+
+type(nlp)
+
+ doc1=nlp('Today is Tuesday, 3rd January. We are starting NLP course using spacy')
+
+type(doc1)
+
+## Tokenization
+
+![image-2.png](attachment:image-2.png)
+
+for token in doc1:
+    print(token)
+
+doc1[0]
+
+doc1[1]
+
+doc1[2:7]
+
+doc1[:8]
+
+doc1[0]='Yesterday'
+
+## Stop words
+
+from spacy.lang.en.stop_words import STOP_WORDS
+
+print(STOP_WORDS)
+
+for token in doc1:
+    print(token,'-',token.is_stop)
+
+# session 2
+# Preprocessing of text using spacy
+
+import spacy
+
+nlp=spacy.load('en_core_web_sm')
+
+doc1=nlp('THE WRITING was on the wall — as early as almost half a century ago, when an 18-member committee warned that the town of Joshimath is “geologically unstable”, and suggested several restrictions and remedial measures. The committee, under the chairmanship of then Commissioner, Garhwal Mandal, Mahesh Chandra Mishra, was set up to probe the cause of landslides and sinking of Joshimath town. In its report dated May 7, 1976, it suggested restrictions on heavy construction work, agriculture on slopes, felling of trees; construction of pucca drainage to stop seepage of rainwater, proper sewage system, and cement blocks on river banks to prevent erosion.Amid the current crisis, the Congress and BJP are now blaming each other for failing to implement the recommendations of the report.')
+
+type(doc1)
+
+## Tokenization
+
+for token in doc1:
+    print(token)
+
+# No of tokens
+
+t_count=0
+for token in doc1:
+    t_count=t_count+1
+    print(token)
+print('\n\n The no of tokens:',t_count)
+
+len(doc1)
+
+## Is it stop word
+
+from spacy.lang.en.stop_words import STOP_WORDS
+
+print(STOP_WORDS)
+
+len(STOP_WORDS)
+
+# No of stop words in the documnt
+
+s_count=0
+for token in doc1:
+    print(token,'==>',token.is_stop)
+print('\n \n The non- stop words in the doc \n')
+for token in doc1:
+    if token.is_stop == False:
+        s_count=s_count+1
+        print(token)
+print('\n The no of non-stop words:',s_count)
+
+## Is it a punctuation
+
+# No of non - punctations in the documnt
+
+p_count=0
+for token in doc1:
+    print(token,'==>',token.is_punct)
+print('\n \n The non- punctuations in the doc \n')
+for token in doc1:
+    if token.is_punct == False:
+        p_count=p_count+1
+        print(token)
+print('\n The no of non-punctuations:',p_count)
+
+## Is it a left puncutation
+
+# No of left - punctations in the documnt
+
+lp_count=0
+for token in doc1:
+    print(token,'==>',token.is_left_punct)
+print('\n \n The left punctuations in the doc \n')
+for token in doc1:
+    if token.is_left_punct == True:
+        lp_count=lp_count+1
+        print(token)
+print('\n The no of left punctuations:',lp_count)
+
+## Is it a right punctuation
+
+# No of right - punctations in the documnt
+
+rp_count=0
+for token in doc1:
+    print(token,'==>',token.is_right_punct)
+print('\n \n The right punctuations in the doc \n')
+for token in doc1:
+    if token.is_right_punct == True:
+        rp_count=rp_count+1
+        print(token)
+print('\n The no of right punctuations:',rp_count)
+
+## Is it an alphabet
+
+# No of alphabets in the documnt
+
+a_count=0
+for token in doc1:
+    print(token,'==>',token.is_alpha)
+print('\n \n The alphabets in the doc \n')
+for token in doc1:
+    if token.is_alpha == True:
+        a_count=a_count+1
+        print(token)
+print('\n The no of alphabets:',a_count)
+
+## Is it a digit?
+
+# No of digits in the documnt
+
+d_count=0
+for token in doc1:
+    print(token,'==>',token.is_digit)
+print('\n \n The digits in the doc \n')
+for token in doc1:
+    if token.is_digit == True:
+        d_count=d_count+1
+        print(token)
+print('\n The no of digits:',d_count)
+
+## Is it of lower case?
+
+# No of lower cases in the documnt
+
+l_count=0
+for token in doc1:
+    print(token,'==>',token.is_lower)
+print('\n \n The lower cases in the doc \n')
+for token in doc1:
+    if token.is_lower == True:
+        l_count=l_count+1
+        print(token)
+print('\n The no of lower case tokens:',l_count)
+
+## Is it in upper case?
+
+# No of upper cases tokens in the documnt
+
+u_count=0
+for token in doc1:
+    print(token,'==>',token.is_upper)
+print('\n \n The upper case tokens in the doc \n')
+for token in doc1:
+    if token.is_upper == True:
+        u_count=u_count+1
+        print(token)
+print('\n The no of upper case tokens:',u_count)
+
+## Is it a title case?
+
+# No of title cases in the documnt
+
+t_count=0
+for token in doc1:
+    print(token,'==>',token.is_title)
+print('\n \n The title cases in the doc \n')
+for token in doc1:
+    if token.is_title == True:
+        t_count=t_count+1
+        print(token)
+print('\n The no of title cases:',t_count)
+
+## Is it a quote?
 
 
-Binary Classification using Multi Layer Perceptron
+# No of quotes in the documnt
 
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import tensorflow as tf
-     
-Accessing the dataset
+q_count=0
+for token in doc1:
+    print(token,'==>',token.is_quote)
+print('\n \n The quotes in the doc \n')
+for token in doc1:
+    if token.is_quote == True:
+        q_count=q_count+1
+        print(token)
+print('\n The no of quotes:',q_count)
 
-from sklearn.datasets import make_blobs
-X,y=make_blobs(n_samples=400,n_features=2,
-               centers=2,random_state=100)
-X
+## Is it like a number
 
-array([[ 1.55822031e+00, -3.74572223e+00],
-       [ 7.88487590e-01, -5.32234378e+00],
-       [-6.98588694e-01, -3.52763818e+00],
-       [ 4.04148936e+00, -1.09840878e+00],
-       [-1.18262203e+00,  7.46285607e+00],
-       [-1.18820391e+00,  7.12904202e+00],
-       [-2.23716944e+00,  8.96100878e+00],
-       [-1.15321729e+00,  7.92680484e+00],
-       [-4.02959150e-01, -3.50351218e+00],
-       [ 2.90270640e+00, -4.98332671e+00],
-       [ 4.24690850e-01, -3.69365840e+00],
-       [ 2.35863193e+00, -4.83200368e+00],
-       [-6.29621545e-01, -5.62649827e+00],
-       [ 4.29963213e-01, -5.55093054e+00],
-       [ 5.56751775e-01, -5.85726789e+00],
-       [-2.95136986e-01, -4.45378807e+00],
-       [ 9.56328770e-01, -5.03537167e+00],
-       [ 2.95834937e-01, -1.68749433e+00],
-       [ 1.63680636e-01, -5.02398742e+00],
-       [ 1.23770999e+00, -4.91324446e+00],
-       [-1.59850585e+00,  6.20057352e+00],
-       [-2.78727727e+00,  5.95120262e+00],
-       [ 6.91201971e-01, -3.92556480e+00],
-       [ 1.39546797e+00, -4.80691518e+00],
-       [-4.76730139e-01,  4.90570041e+00],
-       [-8.56472333e-01,  7.45386955e+00],
-       [ 2.39040660e+00, -4.61257562e+00],
-       [ 1.62116102e+00, -6.04205119e+00],
-       [ 1.75577062e+00, -4.34396251e+00],
-       [ 1.27580536e+00, -5.26089269e+00],
-       [ 1.16914830e+00, -6.11751226e+00],
-       [-3.19918761e-01, -4.98235849e+00],
-       [-1.36995537e-02, -4.41397335e+00],
-       [ 1.27169725e+00, -6.31744669e+00],
-       [-6.48331660e-01, -4.10332979e+00],
-       [-6.84089004e-01,  6.63683306e+00],
-       [-2.24198600e+00,  6.24753053e+00],
-       [-1.82845561e+00,  4.81125176e+00],
-       [ 2.45426977e+00, -3.73922164e+00],
-       [ 5.48267789e-01, -5.58035390e+00],
-       [-8.20726823e-01,  6.93679722e+00],
-       [-1.53825371e+00,  5.64324513e+00],
-       [-1.26321582e+00, -4.16953561e+00],
-       [-3.78155368e+00,  7.65312763e+00],
-       [-9.73089464e-01, -4.06651907e+00],
-       [ 2.64409242e+00, -3.91953792e+00],
-       [-1.52320610e+00,  7.27141947e+00],
-       [-4.87809020e-01, -6.14419535e+00],
-       [ 4.10071850e-01, -3.99744881e+00],
-       [-5.90104539e-01,  6.33434530e+00],
-       [ 6.29385967e-01, -5.86167920e+00],
-       [-1.26481154e+00, -3.67340797e+00],
-       [ 6.01320672e-01, -5.28867432e+00],
-       [-6.99550318e-01,  4.82906892e+00],
-       [-2.52068331e+00,  7.83802953e+00],
-       [ 6.47968272e-01, -4.68488234e+00],
-       [ 1.91043158e+00, -3.33373631e+00],
-       [ 9.69874609e-01, -3.12426547e+00],
-       [-1.58901450e+00,  6.57723733e+00],
-       [-1.29605808e+00,  5.63046495e+00],
-       [ 8.48976085e-01, -3.43967065e+00],
-       [-2.44386402e+00,  5.83308151e+00],
-       [-1.44039722e+00,  5.73392070e+00],
-       [-1.45277602e+00,  6.07202377e+00],
-       [-2.63647647e+00,  8.01025654e+00],
-       [ 1.28949078e-02,  5.87904153e+00],
-       [ 4.91951468e-01, -3.97226309e+00],
-       [ 1.89502028e+00, -5.86480291e+00],
-       [-1.27075220e+00,  6.38706976e+00],
-       [-5.96919926e-01,  6.01012745e+00],
-       [-1.20301233e+00,  5.06164891e+00],
-       [ 1.44867217e+00, -5.53713539e+00],
-       [-1.49678130e+00,  5.54701076e+00],
-       [-2.45662424e+00,  4.62690268e+00],
-       [-1.97867599e+00,  7.68250411e+00],
-       [ 1.48113772e+00, -3.69640708e+00],
-       [ 8.75413399e-01, -5.04555103e+00],
-       [-2.21288514e+00,  7.13972972e+00],
-       [-4.15899987e-01,  5.51190049e+00],
-       [ 9.98347291e-01, -3.48325143e+00],
-       [-7.45479667e-01, -2.96189843e+00],
-       [ 2.03862582e+00, -2.35490007e+00],
-       [-1.08998240e+00, -4.56741361e+00],
-       [ 2.10918092e+00, -2.76907599e+00],
-       [-4.99514302e-01,  7.76818577e+00],
-       [ 1.56256518e-01,  5.51540835e+00],
-       [ 3.46013766e-02,  4.71036884e+00],
-       [ 3.31458409e-01, -3.60948790e+00],
-       [-3.81490634e+00,  7.05767825e+00],
-       [-1.61872215e+00,  6.83735653e+00],
-       [ 1.19330513e+00, -5.08689315e+00],
-       [-1.61855445e+00,  8.03072431e+00],
-       [ 1.82105826e+00, -5.41597494e+00],
-       [-1.06331402e+00, -4.40839696e+00],
-       [-1.67900120e+00,  6.00982475e+00],
-       [ 1.61855217e+00, -5.73960464e+00],
-       [ 1.18546681e+00, -5.18502648e+00],
-       [ 1.62614133e+00, -5.63205227e+00],
-       [-8.46754970e-01,  5.34744524e+00],
-       [-1.37668590e+00,  6.81262412e+00],
-       [-4.38461706e+00,  6.36701701e+00],
-       [ 3.16675278e+00, -4.59782185e+00],
-       [-8.37853170e-01, -4.06344834e+00],
-       [-2.98329678e-01,  5.05328847e+00],
-       [ 2.53989002e+00, -4.74562003e+00],
-       [ 4.52282500e-01, -5.79111523e+00],
-       [ 1.18559451e-01,  6.81962288e+00],
-       [-6.72517189e-01, -2.38589833e+00],
-       [-1.28582407e+00,  6.52332366e+00],
-       [ 3.42453641e-01, -5.01750163e+00],
-       [ 2.06476030e+00, -4.89745487e+00],
-       [ 3.19606556e-01, -4.48524727e+00],
-       [-1.80143463e+00,  6.23538338e+00],
-       [ 1.46012211e+00, -4.86967671e+00],
-       [ 7.60209659e-01, -3.42921474e+00],
-       [-1.55790989e+00,  6.86049560e+00],
-       [-1.01301581e+00, -4.25026957e+00],
-       [ 2.51469464e-01, -3.66942865e+00],
-       [ 6.35114274e-01, -5.61702373e+00],
-       [ 1.83184337e+00, -3.17888616e+00],
-       [-2.37730768e+00,  7.31393789e+00],
-       [-1.85410163e-01,  6.62793072e+00],
-       [ 1.39109664e+00, -4.44895770e+00],
-       [-2.41490183e+00,  7.10858857e+00],
-       [ 2.84503785e-01, -3.61576523e+00],
-       [-9.19622059e-01,  8.02670384e+00],
-       [-3.49155295e-01, -4.58987747e+00],
-       [ 9.76970826e-01, -4.40432866e+00],
-       [ 1.08927851e+00, -5.50265563e+00],
-       [-2.70241957e+00,  8.27038206e+00],
-       [ 1.47252237e+00, -5.33964272e+00],
-       [-2.77714418e+00,  6.98709389e+00],
-       [-8.11017415e-01,  7.36843611e+00],
-       [-2.23630718e-01,  6.62829734e+00],
-       [-4.77302274e-01,  8.51246255e+00],
-       [ 1.34519113e+00, -5.86237496e+00],
-       [-2.71385772e-01,  5.60994879e+00],
-       [ 2.34829149e+00,  9.97109654e+00],
-       [-1.40305056e+00,  7.43777998e+00],
-       [-3.73115901e+00,  4.30975506e+00],
-       [ 5.87148931e-03, -3.18314256e+00],
-       [-1.56447842e+00,  6.64751130e+00],
-       [ 3.26659975e-01,  7.03519022e+00],
-       [-1.18094573e+00,  8.34352407e+00],
-       [-1.99221350e+00,  7.42007049e+00],
-       [ 1.02669743e+00, -2.30012557e+00],
-       [-1.64552494e+00,  7.52990174e+00],
-       [-4.68930690e-01,  6.13999756e+00],
-       [ 5.41860777e-01, -4.37693628e+00],
-       [ 1.84941962e+00, -3.91839346e+00],
-       [-2.39336640e-01,  6.92640040e+00],
-       [ 1.57028334e+00, -5.71651711e+00],
-       [-4.70009290e-01,  5.96455299e+00],
-       [-1.69166902e+00,  5.89214193e+00],
-       [-2.44223164e+00,  6.22195809e+00],
-       [-1.40105816e+00, -4.78078294e+00],
-       [-1.78209999e+00,  7.08031540e+00],
-       [-1.47234053e+00,  5.44288197e+00],
-       [-4.40188859e+00,  6.73693133e+00],
-       [-2.42912741e+00,  7.18315377e+00],
-       [-5.18429334e-01,  7.18273563e+00],
-       [-1.70171727e+00,  6.66145376e+00],
-       [-2.58189046e+00,  7.44097668e+00],
-       [-8.36552370e-01, -5.56887330e+00],
-       [-1.11552211e+00, -4.26547551e+00],
-       [-2.02051138e+00,  4.14348498e+00],
-       [ 1.44503290e+00, -4.34608745e+00],
-       [-2.17537529e-02,  6.53770579e+00],
-       [-1.23425471e+00,  9.29644096e+00],
-       [ 4.65601860e-02,  6.69283982e+00],
-       [ 1.05261753e+00, -3.49553010e+00],
-       [-1.37325065e+00,  6.55818424e+00],
-       [ 8.93290739e-01, -2.91507617e+00],
-       [-2.33724992e+00,  9.18771629e+00],
-       [-1.44057986e-01,  6.33682731e+00],
-       [-5.28900509e-01, -5.52978428e+00],
-       [ 1.99365429e+00, -3.50555900e+00],
-       [-1.08522994e+00,  6.96196695e+00],
-       [ 2.71262204e+00, -4.76875593e+00],
-       [ 2.68115791e-01, -2.85644557e+00],
-       [ 1.96178549e+00, -4.66213005e+00],
-       [-3.11106213e+00,  7.68654880e+00],
-       [ 2.91054745e-02,  9.29259571e+00],
-       [-1.84863172e+00,  6.75321034e+00],
-       [-2.00737487e+00,  6.88567536e+00],
-       [ 9.93052815e-01, -5.49785845e+00],
-       [ 1.72857424e+00, -4.67920960e+00],
-       [ 1.00052664e+00, -4.41039837e+00],
-       [-3.81233433e-01,  5.96827405e+00],
-       [-4.28292971e-01, -4.33747285e+00],
-       [-2.35216418e+00,  6.14257704e+00],
-       [-2.42263751e+00,  6.44515432e+00],
-       [-2.84681324e+00,  6.48403169e+00],
-       [-2.24190889e+00,  6.18378106e+00],
-       [ 2.42741369e+00, -5.52530116e+00],
-       [ 9.76962304e-01, -3.92480271e+00],
-       [-1.61742438e+00,  7.41844001e+00],
-       [ 1.29047906e+00, -5.52665523e+00],
-       [-1.49332532e+00,  6.68593469e+00],
-       [-1.74623054e+00,  7.87466398e+00],
-       [-1.95580204e+00,  5.65560232e+00],
-       [ 9.60875261e-01, -4.24289351e+00],
-       [-1.83805626e+00,  7.18097164e+00],
-       [ 6.89204836e-01, -3.25437314e+00],
-       [-1.14708988e+00, -4.51215289e+00],
-       [-1.15211263e-01, -4.07510454e+00],
-       [ 3.58943245e+00, -6.40547635e+00],
-       [ 1.60509400e+00, -3.99674505e+00],
-       [-1.18057309e+00, -3.64882622e+00],
-       [ 7.41897652e-01, -2.44233865e+00],
-       [-8.21888489e-01,  7.28868084e+00],
-       [ 7.13250381e-01, -4.51866794e+00],
-       [-7.19473257e-02, -5.26054466e+00],
-       [ 6.70301546e-01, -5.28728509e+00],
-       [-1.42239020e+00,  5.56607703e+00],
-       [ 5.69663165e-01, -4.83490222e+00],
-       [-2.52412023e+00,  7.76673866e+00],
-       [-3.04125001e+00,  6.31757638e+00],
-       [-2.51366399e+00,  5.58342411e+00],
-       [-2.52185941e+00,  7.80057551e+00],
-       [-2.65142688e+00,  7.64192480e+00],
-       [ 6.78603005e-01, -4.17761085e+00],
-       [-2.26458354e-01, -4.67396105e+00],
-       [ 3.16746830e+00, -5.37221474e+00],
-       [-9.70475740e-01,  8.09434658e+00],
-       [-1.15684160e+00,  6.94456011e+00],
-       [ 1.21879165e+00, -4.56468901e+00],
-       [ 2.41244931e-01, -4.70755211e+00],
-       [ 2.88718495e+00, -3.68520888e+00],
-       [ 2.45525981e-01,  6.49995701e+00],
-       [-6.39486324e-01, -4.32472817e+00],
-       [ 9.91651465e-01, -2.88488320e+00],
-       [-2.23981447e+00,  7.02990546e+00],
-       [ 2.06161121e-01, -9.67385150e-01],
-       [-2.38893281e-01,  5.89204811e+00],
-       [ 5.82917966e-01, -3.95220089e+00],
-       [ 1.33439820e+00, -4.16262506e+00],
-       [ 2.32352030e+00, -4.19110541e+00],
-       [-9.69215430e-01,  7.03621770e+00],
-       [ 1.15647626e+00, -4.77169773e+00],
-       [-1.28534533e+00,  3.68556726e+00],
-       [-7.36207187e-01,  7.88373149e+00],
-       [-1.59764359e+00,  8.84995274e+00],
-       [ 8.59200173e-01, -4.97581031e+00],
-       [ 1.33609952e+00, -1.72361035e+00],
-       [-1.77423187e+00,  7.24852783e+00],
-       [ 1.76269654e+00, -3.67291918e+00],
-       [ 7.92075370e-01, -4.42865470e+00],
-       [-3.41555372e+00,  4.88658003e+00],
-       [-6.33597000e-01,  9.05174264e+00],
-       [-9.41704803e-01,  6.79388467e+00],
-       [-2.48587971e+00,  6.82037008e+00],
-       [-6.08055927e-01,  8.77266552e+00],
-       [-1.07903491e+00,  5.70473839e+00],
-       [-1.78768190e+00,  7.66121807e+00],
-       [-2.47536385e+00,  7.90501242e+00],
-       [-5.53498206e-01,  8.09884324e+00],
-       [ 2.89273011e-01, -5.63206350e+00],
-       [ 1.13777080e+00,  7.02881289e+00],
-       [ 8.30432165e-01, -3.60107927e+00],
-       [ 2.10500672e+00, -4.66289698e+00],
-       [-4.72035850e-01,  7.19807035e+00],
-       [ 1.81710361e+00, -4.45200988e+00],
-       [-2.10521664e+00, -4.39929502e+00],
-       [ 2.74467226e+00, -4.80951565e+00],
-       [ 2.16436142e+00, -3.48033667e+00],
-       [ 1.64692124e+00, -4.00437943e+00],
-       [ 1.36684932e+00, -5.51043838e+00],
-       [-2.01320867e+00,  4.84461688e+00],
-       [-2.13909405e+00,  6.59323822e+00],
-       [-2.08848931e+00,  6.49623801e+00],
-       [ 6.16219697e-01, -5.27504804e+00],
-       [-1.91976019e+00,  6.96364835e+00],
-       [ 4.44383736e-01, -5.61859586e+00],
-       [-5.38094622e-01,  5.83714320e+00],
-       [ 2.48708050e+00, -2.89100712e+00],
-       [ 1.54081964e+00, -4.53702344e+00],
-       [-2.23695509e+00,  8.41388472e+00],
-       [-1.77016081e+00,  5.56803166e+00],
-       [-1.89586809e+00,  8.24047292e+00],
-       [-1.83073718e+00,  9.07779856e+00],
-       [-5.45951320e-01,  7.41386616e+00],
-       [ 2.43226650e-01, -4.54260769e+00],
-       [-7.67430564e-01, -5.47682218e+00],
-       [ 1.10594346e+00, -4.41906375e+00],
-       [ 1.11746530e-01, -3.61615829e+00],
-       [ 4.63015572e-01, -3.89616836e+00],
-       [ 2.16784691e+00, -6.16570792e+00],
-       [-4.40862504e-01,  6.40034869e+00],
-       [-1.37358689e+00,  7.09733651e+00],
-       [-1.60856731e+00,  7.13478251e+00],
-       [-4.02219203e-01, -3.79711113e+00],
-       [-1.15002444e+00,  7.60827065e+00],
-       [-7.53271297e-01,  7.71981185e+00],
-       [ 2.94289200e+00, -4.77590998e+00],
-       [ 2.25570065e+00, -6.16800345e+00],
-       [-4.99854643e-01,  5.98210195e+00],
-       [ 2.81136110e+00, -5.88004841e+00],
-       [-2.57931445e+00,  7.12136139e+00],
-       [ 1.25188768e+00, -3.09788154e+00],
-       [ 8.78135975e-01, -3.95232392e+00],
-       [-2.22055061e+00,  6.28933854e+00],
-       [ 1.65852693e+00, -3.34079639e+00],
-       [-2.33927592e+00,  8.05598902e+00],
-       [-7.65498617e-01,  5.17232932e+00],
-       [-7.95116137e-01,  5.10551873e+00],
-       [-6.43589012e-01,  7.68681763e+00],
-       [ 6.83084725e-01, -6.91976383e+00],
-       [-2.59090676e+00,  6.83244385e+00],
-       [ 2.47147083e+00, -3.41971607e+00],
-       [ 2.78390249e-01, -5.24603712e+00],
-       [ 1.61854360e+00, -4.88855923e+00],
-       [-1.90637313e+00,  6.86197562e+00],
-       [ 1.09049844e+00, -5.87582929e+00],
-       [-1.87789375e+00,  5.34753008e+00],
-       [-1.82117329e+00,  6.35613162e+00],
-       [ 2.72984997e-01, -5.41542419e+00],
-       [ 5.36321701e-01, -5.12183028e+00],
-       [ 1.40791175e+00, -3.88943912e+00],
-       [-7.04156079e-01,  8.25029179e+00],
-       [-1.06282194e+00,  7.04405463e+00],
-       [-8.81760507e-01,  7.84822789e+00],
-       [-9.71402088e-01,  6.05266209e+00],
-       [-4.88300213e-01, -5.66504681e+00],
-       [-3.45592704e-01, -4.24447534e+00],
-       [ 1.29155612e+00, -4.59212966e+00],
-       [-2.20945629e-01,  6.75298745e+00],
-       [-1.97905441e+00,  5.46976636e+00],
-       [-1.41270784e+00,  6.43729225e+00],
-       [-2.29008236e+00,  6.42935052e+00],
-       [-5.46944085e-01, -5.07337222e+00],
-       [ 6.93317281e-01, -3.41534795e+00],
-       [-3.15525615e+00,  7.06532017e+00],
-       [ 1.06101603e+00, -4.78107123e+00],
-       [ 5.32341997e-01, -4.56924168e+00],
-       [-1.49297581e+00,  6.26409039e+00],
-       [ 7.38502277e-01, -4.60344271e+00],
-       [ 1.04446931e+00, -5.30834314e+00],
-       [-2.80776567e+00,  7.74338636e+00],
-       [ 2.01555627e+00, -3.27264332e+00],
-       [ 4.12176817e-01, -3.78343937e+00],
-       [ 7.76730575e-02,  7.58320026e+00],
-       [-1.52786053e+00,  6.30594058e+00],
-       [-4.56479260e-01, -4.19422765e+00],
-       [-2.04244056e+00,  7.06116443e+00],
-       [-2.06552261e+00,  6.68612387e+00],
-       [-2.14561800e+00,  6.51701984e+00],
-       [-3.73890712e+00,  6.43279233e+00],
-       [-1.29542914e+00,  7.58821870e+00],
-       [ 5.02636843e-01, -5.70363534e+00],
-       [-3.45418847e+00,  7.15945387e+00],
-       [ 8.91696332e-01, -4.60306877e+00],
-       [-3.32695671e-01,  5.73009091e+00],
-       [ 2.57172282e+00, -5.15476307e+00],
-       [ 7.04073433e-01, -3.21603171e+00],
-       [ 1.59909918e+00, -3.07105617e+00],
-       [-2.90418090e+00,  6.11552434e+00],
-       [ 1.25953746e+00, -4.10536695e+00],
-       [ 2.70003492e+00, -4.42959486e+00],
-       [-3.27484204e+00,  8.34312670e+00],
-       [-3.41783297e+00,  7.01205596e+00],
-       [ 1.09048965e+00, -5.11753403e+00],
-       [ 3.53668944e-01, -4.64867242e+00],
-       [-1.77852458e+00,  7.19750564e+00],
-       [-2.73621562e+00,  8.25079521e+00],
-       [ 1.39366466e-02,  6.82590699e+00],
-       [-6.78828621e-01,  6.01725448e+00],
-       [-1.94693543e+00,  7.80699713e+00],
-       [-1.12997496e+00,  7.41974630e+00],
-       [ 1.19917052e+00, -4.79910855e+00],
-       [ 2.14555087e+00, -4.87820056e+00],
-       [-2.29516962e+00,  8.63025383e+00],
-       [-1.23311713e+00,  5.94030676e+00],
-       [ 3.23659674e-01, -5.10078403e+00],
-       [ 9.79921414e-01, -1.89318027e+00],
-       [ 6.19210169e-01, -4.88278873e+00],
-       [-2.68573875e-01, -4.18411767e+00],
-       [-1.08886872e+00, -4.99709696e+00],
-       [-1.96132046e+00,  5.75798025e+00],
-       [-7.52148661e-01,  6.19106694e+00],
-       [-1.36978598e+00,  7.60806159e+00],
-       [ 1.61515449e+00, -4.00293586e+00],
-       [ 3.30222750e-01,  6.88348688e+00],
-       [-6.11483621e-02, -4.03419588e+00],
-       [ 1.47115253e+00, -5.49407994e+00],
-       [ 2.05772110e+00, -6.12322912e+00],
-       [-1.58648852e+00,  6.20213480e+00],
-       [-2.02730851e+00,  7.19769947e+00],
-       [-2.95869411e+00,  5.57280615e+00],
-       [-2.60144585e+00,  7.46037956e+00],
-       [-1.28343605e+00,  6.32620608e+00],
-       [ 9.85707292e-01, -5.39078063e+00],
-       [-4.94695896e-01,  5.53017940e+00],
-       [-1.14862277e+00,  9.47250033e+00],
-       [ 1.64772514e+00, -4.87073321e+00],
-       [-4.79255759e-01,  6.95523742e+00],
-       [-1.49204798e+00,  7.71532880e+00],
-       [ 3.36818459e-01, -3.40287961e+00],
-       [-2.44657030e+00,  5.95125205e+00],
-       [-1.64750688e+00,  6.82402853e+00]])
+# No of Numbers in the documnt
+
+n_count=0
+for token in doc1:
+    print(token,'==>',token.like_num)
+print('\n \n The numbers in the doc \n')
+for token in doc1:
+    if token.like_num == True:
+        n_count=n_count+1
+        print(token)
+print('\n The count of numbers:',n_count)
+
+doc2=nlp(' 2 is the second lowest positive integer')
+
+for token in doc2:
+    print(token,'=>',token.like_num)
+
+for token in doc2:
+    print(token,'=>',token.is_digit)
+
+## Is it like a url?
+
+doc3=nlp('The url of Times of India is www.timesofindia.com, which we tried to access')
+
+for token in doc3:
+    print(token.text,'==>',token.like_url)
+
+## Is it like an Email ID?
 
 
-y
+doc4=nlp(' My Email ID is abc123@nmims.edu')
 
-array([0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
-       0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1,
-       0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1,
-       0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0,
-       1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0,
-       0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1,
-       1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1,
-       1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0,
-       0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0,
-       1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1,
-       1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1,
-       1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0,
-       0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-       0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0,
-       1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1,
-       0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0,
-       1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0,
-       0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1,
-       1, 0, 1, 1])
+for token in doc4:
+    print(token.text, '=>', token.like_email)
 
-Visualisation of the data
+doc5=nlp(' My Email id is abc123@nmims.edu')
 
-plt.scatter(X[:,0],X[:,1],c=y);
-     
-Splitting into train and test
+for token in doc5:
+    print(token.text, '=>', token.like_email)
 
-from sklearn.model_selection import train_test_split
-X_train,X_test,y_train,y_test=train_test_split(X,y,
-                                  test_size=0.2,random_state=100)
-X_train.shape,X_test.shape,y_train.shape,y_test.shape
+# Parts of Speech - POS
 
-((320, 2), (80, 2), (320,), (80,))
+for token in doc1:
+    print(token.text,'==>',token.pos_)
 
-Building the model
+spacy.explain('ADP')
 
-model_1=tf.keras.Sequential()
-model_1.add(tf.keras.layers.Dense(8,activation='relu'))
-model_1.add(tf.keras.layers.Dense(1,activation='sigmoid'))
-     
-Compiling the model
+## POS in a DF
 
-model_1.compile(optimizer=tf.keras.optimizers.Adam(),
-                loss=tf.keras.losses.BinaryCrossentropy(),
-                metrics=['accuracy'])
-     
-Training the model
+cols=['Token','POS','Explain_POS','Tag','Explain_Tag']
+cols
 
-tf.random.set_seed(100)
-history=model_1.fit(X_train,y_train,epochs=50)
-hist=pd.DataFrame(history.history)
-hist.plot();
-
-Epoch 1/50
-10/10 [==============================] - 1s 3ms/step - loss: 1.6604 - accuracy: 0.0000e+00
-Epoch 2/50
-10/10 [==============================] - 0s 3ms/step - loss: 1.5358 - accuracy: 0.0000e+00
-Epoch 3/50
-10/10 [==============================] - 0s 3ms/step - loss: 1.4192 - accuracy: 0.0000e+00
-Epoch 4/50
-10/10 [==============================] - 0s 4ms/step - loss: 1.3132 - accuracy: 0.0000e+00
-Epoch 5/50
-10/10 [==============================] - 0s 3ms/step - loss: 1.2171 - accuracy: 0.0000e+00
-Epoch 6/50
-10/10 [==============================] - 0s 3ms/step - loss: 1.1293 - accuracy: 0.0031
-Epoch 7/50
-10/10 [==============================] - 0s 4ms/step - loss: 1.0539 - accuracy: 0.1875
-Epoch 8/50
-10/10 [==============================] - 0s 4ms/step - loss: 0.9850 - accuracy: 0.4688
-Epoch 9/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.9243 - accuracy: 0.4875
-Epoch 10/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.8693 - accuracy: 0.4875
-Epoch 11/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.8209 - accuracy: 0.4875
-Epoch 12/50
-10/10 [==============================] - 0s 4ms/step - loss: 0.7773 - accuracy: 0.4875
-Epoch 13/50
-10/10 [==============================] - 0s 4ms/step - loss: 0.7379 - accuracy: 0.4938
-Epoch 14/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.7024 - accuracy: 0.4938
-Epoch 15/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.6698 - accuracy: 0.4938
-Epoch 16/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.6403 - accuracy: 0.4969
-Epoch 17/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.6131 - accuracy: 0.4969
-Epoch 18/50
-10/10 [==============================] - 0s 2ms/step - loss: 0.5879 - accuracy: 0.4969
-Epoch 19/50
-10/10 [==============================] - 0s 2ms/step - loss: 0.5647 - accuracy: 0.4969
-Epoch 20/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.5434 - accuracy: 0.5094
-Epoch 21/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.5232 - accuracy: 0.5094
-Epoch 22/50
-10/10 [==============================] - 0s 4ms/step - loss: 0.5044 - accuracy: 0.5219
-Epoch 23/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.4865 - accuracy: 0.5344
-Epoch 24/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.4690 - accuracy: 0.5437
-Epoch 25/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.4521 - accuracy: 0.5688
-Epoch 26/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.4354 - accuracy: 0.6094
-Epoch 27/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.4194 - accuracy: 0.6562
-Epoch 28/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.4035 - accuracy: 0.7063
-Epoch 29/50
-10/10 [==============================] - 0s 4ms/step - loss: 0.3860 - accuracy: 0.7531
-Epoch 30/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.3683 - accuracy: 0.8313
-Epoch 31/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.3500 - accuracy: 0.8938
-Epoch 32/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.3308 - accuracy: 0.9438
-Epoch 33/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.3111 - accuracy: 0.9937
-Epoch 34/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.2910 - accuracy: 1.0000
-Epoch 35/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.2715 - accuracy: 1.0000
-Epoch 36/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.2518 - accuracy: 1.0000
-Epoch 37/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.2331 - accuracy: 1.0000
-Epoch 38/50
-10/10 [==============================] - 0s 5ms/step - loss: 0.2139 - accuracy: 1.0000
-Epoch 39/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.1961 - accuracy: 1.0000
-Epoch 40/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.1788 - accuracy: 1.0000
-Epoch 41/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.1631 - accuracy: 1.0000
-Epoch 42/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.1487 - accuracy: 1.0000
-Epoch 43/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.1357 - accuracy: 1.0000
-Epoch 44/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.1237 - accuracy: 1.0000
-Epoch 45/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.1133 - accuracy: 1.0000
-Epoch 46/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.1039 - accuracy: 1.0000
-Epoch 47/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.0953 - accuracy: 1.0000
-Epoch 48/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.0883 - accuracy: 1.0000
-Epoch 49/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.0814 - accuracy: 1.0000
-Epoch 50/50
-10/10 [==============================] - 0s 3ms/step - loss: 0.0755 - accuracy: 1.0000
-
-Model summary
-
-model_1.summary()
-
-Model: "sequential"
-_________________________________________________________________
- Layer (type)                Output Shape              Param #   
-=================================================================
- dense (Dense)               (32, 8)                   24        
-                                                                 
- dense_1 (Dense)             (32, 1)                   9         
-                                                                 
-=================================================================
-Total params: 33
-Trainable params: 33
-Non-trainable params: 0
-_________________________________________________________________
-
-PLotting the model
-
-from tensorflow.keras.utils import plot_model
-
-plot_model(model_1,show_shapes=True)
-     
-Prediction
-
-model_1.predict(X_test)
-
-3/3 [==============================] - 0s 7ms/step
-
-array([[0.95728004],
-       [0.03607585],
-       [0.96082115],
-       [0.0581784 ],
-       [0.9362384 ],
-       [0.04149133],
-       [0.05603508],
-       [0.02949298],
-       [0.0093605 ],
-       [0.8054612 ],
-       [0.8989639 ],
-       [0.83938724],
-       [0.9103793 ],
-       [0.8030427 ],
-       [0.01505162],
-       [0.91403395],
-       [0.0302219 ],
-       [0.924292  ],
-       [0.0150222 ],
-       [0.97799146],
-       [0.9156281 ],
-       [0.00982525],
-       [0.8233052 ],
-       [0.07999323],
-       [0.9336693 ],
-       [0.91378313],
-       [0.02758133],
-       [0.05738372],
-       [0.04765961],
-       [0.01880269],
-       [0.8552671 ],
-       [0.9374511 ],
-       [0.0212914 ],
-       [0.03104979],
-       [0.9061731 ],
-       [0.01603323],
-       [0.9099588 ],
-       [0.118682  ],
-       [0.96425647],
-       [0.01246984],
-       [0.8123036 ],
-       [0.95796704],
-       [0.04066228],
-       [0.01977251],
-       [0.73776007],
-       [0.02414643],
-       [0.10443232],
-       [0.8792161 ],
-       [0.8985677 ],
-       [0.0035568 ],
-       [0.0064778 ],
-       [0.07924177],
-       [0.95960116],
-       [0.01489726],
-       [0.03177902],
-       [0.01695511],
-       [0.9721974 ],
-       [0.9511623 ],
-       [0.8422534 ],
-       [0.92560667],
-       [0.0177418 ],
-       [0.04445037],
-       [0.9394195 ],
-       [0.815672  ],
-       [0.9812305 ],
-       [0.02066951],
-       [0.00478439],
-       [0.15686676],
-       [0.01430797],
-       [0.05013769],
-       [0.02731665],
-       [0.04303475],
-       [0.96156985],
-       [0.0320129 ],
-       [0.90251523],
-       [0.01832331],
-       [0.02586624],
-       [0.9128734 ],
-       [0.01138924],
-       [0.8476232 ]], dtype=float32)
-3 - FFNN
-
-
-Regression using Feed Forward Neural Network
+rows=[]
+for token in doc1:
+    row=token,token.pos_,spacy.explain(token.pos_),token.tag_,spacy.explain(token.tag_)
+    rows.append(row)
+rows
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-import tensorflow as tf
-from sklearn.datasets import fetch_california_housing
-     
-Accessing the dataset
 
-house=fetch_california_housing()
-house
+token_df=pd.DataFrame(rows,columns=cols)
+token_df
 
-{'data': array([[   8.3252    ,   41.        ,    6.98412698, ...,    2.55555556,
-           37.88      , -122.23      ],
-        [   8.3014    ,   21.        ,    6.23813708, ...,    2.10984183,
-           37.86      , -122.22      ],
-        [   7.2574    ,   52.        ,    8.28813559, ...,    2.80225989,
-           37.85      , -122.24      ],
-        ...,
-        [   1.7       ,   17.        ,    5.20554273, ...,    2.3256351 ,
-           39.43      , -121.22      ],
-        [   1.8672    ,   18.        ,    5.32951289, ...,    2.12320917,
-           39.43      , -121.32      ],
-        [   2.3886    ,   16.        ,    5.25471698, ...,    2.61698113,
-           39.37      , -121.24      ]]),
- 'target': array([4.526, 3.585, 3.521, ..., 0.923, 0.847, 0.894]),
- 'frame': None,
- 'target_names': ['MedHouseVal'],
- 'feature_names': ['MedInc',
-  'HouseAge',
-  'AveRooms',
-  'AveBedrms',
-  'Population',
-  'AveOccup',
-  'Latitude',
-  'Longitude'],
- 'DESCR': '.. _california_housing_dataset:\n\nCalifornia Housing dataset\n--------------------------\n\n**Data Set Characteristics:**\n\n    :Number of Instances: 20640\n\n    :Number of Attributes: 8 numeric, predictive attributes and the target\n\n    :Attribute Information:\n        - MedInc        median income in block group\n        - HouseAge      median house age in block group\n        - AveRooms      average number of rooms per household\n        - AveBedrms     average number of bedrooms per household\n        - Population    block group population\n        - AveOccup      average number of household members\n        - Latitude      block group latitude\n        - Longitude     block group longitude\n\n    :Missing Attribute Values: None\n\nThis dataset was obtained from the StatLib repository.\nhttps://www.dcc.fc.up.pt/~ltorgo/Regression/cal_housing.html\n\nThe target variable is the median house value for California districts,\nexpressed in hundreds of thousands of dollars ($100,000).\n\nThis dataset was derived from the 1990 U.S. census, using one row per census\nblock group. A block group is the smallest geographical unit for which the U.S.\nCensus Bureau publishes sample data (a block group typically has a population\nof 600 to 3,000 people).\n\nAn household is a group of people residing within a home. Since the average\nnumber of rooms and bedrooms in this dataset are provided per household, these\ncolumns may take surpinsingly large values for block groups with few households\nand many empty houses, such as vacation resorts.\n\nIt can be downloaded/loaded using the\n:func:`sklearn.datasets.fetch_california_housing` function.\n\n.. topic:: References\n\n    - Pace, R. Kelley and Ronald Barry, Sparse Spatial Autoregressions,\n      Statistics and Probability Letters, 33 (1997) 291-297\n'}
+token_df['POS'].value_counts()
+
+# session 3
+# Spacy Pipeline
+
+![image.png](attachment:image.png)
+
+import spacy
+
+nlp=spacy.load('en_core_web_sm')
+
+doc_1=nlp('NMIMS is the all-encompassing educational platform for diverse fields of career such as Engineering, Science and Technology, Management, Commerce, Architecture, Law, Economics, Pharmacy, Aviation, Design, Performing Arts, Liberal Arts, Hospitality Management, Mathematical Science, Branding and Advertising, Agricultural Sciences and much more..Ideal for forward-thinking and new-age young professionals.Strong industry interface & corporate relationships with 1348+ companies.Research-backed updated curriculum, along with 2400+ published papers to its credit.Continuing the legacy of quality education.Focus on employability of students through evolved pedagogy.Pursuing excellence in technological and management research')
+
+type(doc_1)
+
+## Tokenizer
+
+for token in doc_1:
+    print(token)
+
+## Stream of strings as input 
+
+When there is a stream of strings as input, we need to 
+
+use nlp.pipe() instead of nlp().
 
 
-house['data']
 
-array([[   8.3252    ,   41.        ,    6.98412698, ...,    2.55555556,
-          37.88      , -122.23      ],
-       [   8.3014    ,   21.        ,    6.23813708, ...,    2.10984183,
-          37.86      , -122.22      ],
-       [   7.2574    ,   52.        ,    8.28813559, ...,    2.80225989,
-          37.85      , -122.24      ],
-       ...,
-       [   1.7       ,   17.        ,    5.20554273, ...,    2.3256351 ,
-          39.43      , -121.22      ],
-       [   1.8672    ,   18.        ,    5.32951289, ...,    2.12320917,
-          39.43      , -121.32      ],
-       [   2.3886    ,   16.        ,    5.25471698, ...,    2.61698113,
-          39.37      , -121.24      ]])
+### List of strings
 
+text_2=['Today is Monday','Tomorrow is Tuesday',
+       'Yesterday was a holiday']
 
-house['data'].shape
+type(text_2)
 
-(20640, 8)
+text_2[0]
 
+text_2[1]
 
-house['feature_names']
+for sentence in nlp.pipe(text_2):
+    print(sentence)
 
-['MedInc',
- 'HouseAge',
- 'AveRooms',
- 'AveBedrms',
- 'Population',
- 'AveOccup',
- 'Latitude',
- 'Longitude']
+# Tokens
 
+for sentence in nlp.pipe(text_2):
+    print(sentence)
+    for token in sentence:
+        print(token)
 
-# Feature set
+### Tuple of strings
 
-X=pd.DataFrame(house['data'],columns=house['feature_names'])
-X
-     
- MedInc  HouseAge  AveRooms  AveBedrms  Population  AveOccup  Latitude  Longitude
-0  8.3252  41.0  6.984127  1.023810  322.0  2.555556  37.88  -122.23
-1  8.3014  21.0  6.238137  0.971880  2401.0  2.109842  37.86  -122.22
-2  7.2574  52.0  8.288136  1.073446  496.0  2.802260  37.85  -122.24
-3  5.6431  52.0  5.817352  1.073059  558.0  2.547945  37.85  -122.25
-4  3.8462  52.0  6.281853  1.081081  565.0  2.181467  37.85  -122.25
-...  ...  ...  ...  ...  ...  ...  ...  ...
-20635  1.5603  25.0  5.045455  1.133333  845.0  2.560606  39.48  -121.09
-20636  2.5568  18.0  6.114035  1.315789  356.0  3.122807  39.49  -121.21
-20637  1.7000  17.0  5.205543  1.120092  1007.0  2.325635  39.43  -121.22
-20638  1.8672  18.0  5.329513  1.171920  741.0  2.123209  39.43  -121.32
-20639  2.3886  16.0  5.254717  1.162264  1387.0  2.616981  39.37  -121.24
+text_3=('Today is Monday','Tomorrow is Tuesday',
+       'Yesterday was Sundaya,a holiday')
 
-20640 rows × 8 columns
+type(text_3)
 
-# Target
+text_3[0]
 
-house['target']
+for sent in nlp.pipe(text_3):
+    print(sent)
+    for token in sent:
+        print(token)
 
-array([4.526, 3.585, 3.521, ..., 0.923, 0.847, 0.894])
+### List of tuples
 
+text_4=[('Today is Monday'),('Tomorrow is Tuesday'),
+       ('Yesterday was Sundaya,a holiday')]
 
-house['target_names']
+type(text_4)
 
-['MedHouseVal']
+text_4[0]
 
+sent_count=0
+for sent in nlp.pipe(text_4):
+    sent_count=sent_count+1
+    print(sent_count,'=>',sent)
+    for token in sent:
+        print(token)
 
-y=pd.DataFrame(house['target'],columns=house['target_names'])
-y
-     
- MedHouseVal
-0  4.526
-1  3.585
-2  3.521
-3  3.413
-4  3.422
-...  ...
-20635  0.781
-20636  0.771
-20637  0.923
-20638  0.847
-20639  0.894
+### A DataFrame
 
-20640 rows × 1 columns
-Standardisation
+text_2
 
-from sklearn.preprocessing import StandardScaler
+import pandas as pd
 
-sc=StandardScaler()
+text_df=pd.DataFrame(text_2,columns=['Sentence'])
+text_df
 
-X_scaled=sc.fit_transform(X)
-X_scaled
+text_df['Sentence']
 
-array([[ 2.34476576,  0.98214266,  0.62855945, ..., -0.04959654,
-         1.05254828, -1.32783522],
-       [ 2.33223796, -0.60701891,  0.32704136, ..., -0.09251223,
-         1.04318455, -1.32284391],
-       [ 1.7826994 ,  1.85618152,  1.15562047, ..., -0.02584253,
-         1.03850269, -1.33282653],
-       ...,
-       [-1.14259331, -0.92485123, -0.09031802, ..., -0.0717345 ,
-         1.77823747, -0.8237132 ],
-       [-1.05458292, -0.84539315, -0.04021111, ..., -0.09122515,
-         1.77823747, -0.87362627],
-       [-0.78012947, -1.00430931, -0.07044252, ..., -0.04368215,
-         1.75014627, -0.83369581]])
+for sent in nlp.pipe(text_df['Sentence']):
+    print(sent)
+    for token in sent:
+        print(token)
 
-Splitting data to train and test
+doc_1
 
-from sklearn.model_selection import train_test_split
-X_train,X_test,y_train,y_test=train_test_split(X_scaled,
-                      y, test_size=0.2, random_state=100)
+for token in doc_1:
+    print(token)
 
+## Separating doc into sentences
 
-X_train.shape,X_test.shape,y_train.shape,y_test.shape
+for sent in doc_1.sents:
+    print(sent)
 
-((16512, 8), (4128, 8), (16512, 1), (4128, 1))
+sent_count=0
+for sent in doc_1.sents:
+    sent_count=sent_count+1
+    print(sent_count,'==>',sent)
 
-Building the model
+## Tagger
 
-model_1=tf.keras.Sequential()
-model_1.add(tf.keras.layers.Dense(20,activation='relu'))
-model_1.add(tf.keras.layers.Dense(1))
-     
-Compiling the model
+for token in doc_1:
+    print(token.text,'==>',token.tag_)
 
-model_1.compile(optimizer=tf.keras.optimizers.Adam(),
-                loss=tf.keras.losses.MeanSquaredError(),
-                metrics=['mae'])
-     
-Training the model
+spacy.explain('NNS')
 
-tf.random.set_seed(100)
-history=model_1.fit(X_train,y_train,epochs=100)
-hist=pd.DataFrame(history.history)
-hist.plot();
+spacy.explain('VBG')
 
-Epoch 1/100
-516/516 [==============================] - 2s 1ms/step - loss: 1.8401 - mae: 0.9575
-Epoch 2/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.6212 - mae: 0.5630
-Epoch 3/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.4905 - mae: 0.5037
-Epoch 4/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.4388 - mae: 0.4758
-Epoch 5/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.4185 - mae: 0.4627
-Epoch 6/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.4092 - mae: 0.4572
-Epoch 7/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3995 - mae: 0.4505
-Epoch 8/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3933 - mae: 0.4469
-Epoch 9/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3877 - mae: 0.4432
-Epoch 10/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3829 - mae: 0.4404
-Epoch 11/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3814 - mae: 0.4380
-Epoch 12/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3763 - mae: 0.4345
-Epoch 13/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3707 - mae: 0.4316
-Epoch 14/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3669 - mae: 0.4287
-Epoch 15/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3671 - mae: 0.4274
-Epoch 16/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3608 - mae: 0.4246
-Epoch 17/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3569 - mae: 0.4218
-Epoch 18/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3541 - mae: 0.4200
-Epoch 19/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3526 - mae: 0.4190
-Epoch 20/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3617 - mae: 0.4181
-Epoch 21/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3477 - mae: 0.4141
-Epoch 22/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3441 - mae: 0.4130
-Epoch 23/100
-516/516 [==============================] - 1s 971us/step - loss: 0.3426 - mae: 0.4119
-Epoch 24/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3412 - mae: 0.4108
-Epoch 25/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3412 - mae: 0.4098
-Epoch 26/100
-516/516 [==============================] - 1s 996us/step - loss: 0.3371 - mae: 0.4076
-Epoch 27/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3399 - mae: 0.4075
-Epoch 28/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3348 - mae: 0.4055
-Epoch 29/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3339 - mae: 0.4048
-Epoch 30/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3332 - mae: 0.4046
-Epoch 31/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3365 - mae: 0.4039
-Epoch 32/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3288 - mae: 0.4014
-Epoch 33/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3276 - mae: 0.4008
-Epoch 34/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3285 - mae: 0.3997
-Epoch 35/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3268 - mae: 0.3988
-Epoch 36/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3273 - mae: 0.3986
-Epoch 37/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3252 - mae: 0.3973
-Epoch 38/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3255 - mae: 0.3965
-Epoch 39/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3235 - mae: 0.3961
-Epoch 40/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3226 - mae: 0.3952
-Epoch 41/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3218 - mae: 0.3943
-Epoch 42/100
-516/516 [==============================] - 1s 970us/step - loss: 0.3181 - mae: 0.3929
-Epoch 43/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3202 - mae: 0.3940
-Epoch 44/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3217 - mae: 0.3922
-Epoch 45/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3154 - mae: 0.3907
-Epoch 46/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3185 - mae: 0.3923
-Epoch 47/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3159 - mae: 0.3906
-Epoch 48/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3172 - mae: 0.3908
-Epoch 49/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3385 - mae: 0.3919
-Epoch 50/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3138 - mae: 0.3891
-Epoch 51/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3133 - mae: 0.3885
-Epoch 52/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3161 - mae: 0.3896
-Epoch 53/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3123 - mae: 0.3884
-Epoch 54/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3150 - mae: 0.3884
-Epoch 55/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3145 - mae: 0.3882
-Epoch 56/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3138 - mae: 0.3896
-Epoch 57/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3158 - mae: 0.3880
-Epoch 58/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3132 - mae: 0.3884
-Epoch 59/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3149 - mae: 0.3887
-Epoch 60/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3171 - mae: 0.3886
-Epoch 61/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3159 - mae: 0.3883
-Epoch 62/100
-516/516 [==============================] - 1s 994us/step - loss: 0.3121 - mae: 0.3879
-Epoch 63/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3167 - mae: 0.3872
-Epoch 64/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3108 - mae: 0.3865
-Epoch 65/100
-516/516 [==============================] - 1s 2ms/step - loss: 0.3099 - mae: 0.3861
-Epoch 66/100
-516/516 [==============================] - 1s 2ms/step - loss: 0.3192 - mae: 0.3878
-Epoch 67/100
-516/516 [==============================] - 1s 2ms/step - loss: 0.3117 - mae: 0.3872
-Epoch 68/100
-516/516 [==============================] - 1s 2ms/step - loss: 0.3107 - mae: 0.3859
-Epoch 69/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3141 - mae: 0.3878
-Epoch 70/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3151 - mae: 0.3879
-Epoch 71/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3120 - mae: 0.3866
-Epoch 72/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3130 - mae: 0.3858
-Epoch 73/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3179 - mae: 0.3871
-Epoch 74/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3083 - mae: 0.3846
-Epoch 75/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3195 - mae: 0.3867
-Epoch 76/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3073 - mae: 0.3840
-Epoch 77/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3068 - mae: 0.3844
-Epoch 78/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3086 - mae: 0.3846
-Epoch 79/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3087 - mae: 0.3845
-Epoch 80/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3138 - mae: 0.3856
-Epoch 81/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3176 - mae: 0.3864
-Epoch 82/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3076 - mae: 0.3844
-Epoch 83/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3142 - mae: 0.3845
-Epoch 84/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3067 - mae: 0.3838
-Epoch 85/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3067 - mae: 0.3835
-Epoch 86/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3157 - mae: 0.3857
-Epoch 87/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3080 - mae: 0.3842
-Epoch 88/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3071 - mae: 0.3833
-Epoch 89/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3282 - mae: 0.3854
-Epoch 90/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3110 - mae: 0.3836
-Epoch 91/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3138 - mae: 0.3835
-Epoch 92/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3063 - mae: 0.3829
-Epoch 93/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3097 - mae: 0.3832
-Epoch 94/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3073 - mae: 0.3827
-Epoch 95/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3078 - mae: 0.3828
-Epoch 96/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3189 - mae: 0.3845
-Epoch 97/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3081 - mae: 0.3827
-Epoch 98/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3059 - mae: 0.3820
-Epoch 99/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3057 - mae: 0.3817
-Epoch 100/100
-516/516 [==============================] - 1s 1ms/step - loss: 0.3076 - mae: 0.3835
+for token in doc_1:
+    print(token.text,'==>',token.tag)
 
-Model summary
+## POS
 
-model_1.summary()
+for token in doc_1:
+    print(token.text,'==>',token.pos_)
 
-Model: "sequential"
-_________________________________________________________________
- Layer (type)                Output Shape              Param #   
-=================================================================
- dense (Dense)               (32, 20)                  180       
-                                                                 
- dense_1 (Dense)             (32, 1)                   21        
-                                                                 
-=================================================================
-Total params: 201
-Trainable params: 201
-Non-trainable params: 0
-_________________________________________________________________
+for token in doc_1:
+    print(token.text,'==>',token.pos)
 
-Plotting
+## POS count
 
-from tensorflow.keras.utils import plot_model
+pos_count=doc_1.count_by(spacy.attrs.POS)
+pos_count
 
-plot_model(model_1, show_shapes=True)
-     
-Evaluation of the model
+for x,y in sorted(pos_count.items()):
+    print(x,doc_1.vocab[x].text,y)
 
-test_mse,test_mae=model_1.evaluate(X_test,y_test)
+## Visualisation of POS
 
-129/129 [==============================] - 0s 1ms/step - loss: 0.2937 - mae: 0.3780
+from spacy import displacy
+displacy.render(doc_1,style='dep') # Dependence
+
+options={'compact':'True','color':'blue'}
+
+displacy.render(doc_1,style='dep',options=options)
+
+## COnverting a text into a DF with tokens, pos 
+
+text_df
+
+token=[]
+for sent in nlp.pipe(text_df['Sentence']):
+    if sent.has_annotation('DEP'):
+        token.append([word.text for word in sent] )
+token
+
+token=[]
+pos=[]
+for sent in nlp.pipe(text_df['Sentence']):
+    if sent.has_annotation('DEP'):
+        token.append([word.text for word in sent] )
+        pos.append([word.pos_ for word in sent])
+print(token)
+print(pos)
+
+# Updating text_df
+
+text_df['Token']=token
+text_df['POS']=pos
+
+text_df
+
+# session 4
+# Parser and NER
+
+![image.png](attachment:image.png)
+
+import spacy
+
+nlp=spacy.load('en_core_web_sm')
+
+type(nlp)
+
+doc1=nlp('Let’s start by differentiating between data analytics and traditional analytics. The terms are often used interchangeably, but a distinction does exist. Traditional data analytics refers to the process of analyzing massive amounts of collected data to get insights and predictions. Business data analytics (sometimes called business analytics) takes that idea, but puts it in the context of business insight, often with prebuilt business content and tools that expedite the analysis process..Specifically, business analytics refers to:.Taking in and processing historical business data.Analyzing that data to identify trends, patterns, and root causes.Making data-driven business decisions based on those insights.In other words, data analytics is more of a general description of the modern analytics process. Business analytics implies a narrower focus and has functionally become more prevalent and more important for organizations around the globe as the overall volume of data has increase')
+
+doc1
+
+## Tokenizer
+
+for token in doc1:
+    print(token)
+
+## Tagger
+
+for token in doc1:
+    print(token.text,token.tag_)
+
+## Parser
+
+Tries to find the dependence between the tokens.
+
+for token in doc1:
+    print(token.text,'==>',token.dep_)
+
+from spacy import displacy
+
+displacy.render(doc1,style='dep')
+
+spacy.explain('nsubj')
+
+for token in doc1:
+    print(token.text,'==>',token.head)
+
+## Noun chunks
+
+for chunk in doc1.noun_chunks:
+    print(chunk.text, '==>',chunk.label_)
+
+## NER
+
+Named Entity Recognizer
 
 
-print('Test MSE:',test_mse)
-print('Train MSE:0.3076' )
+doc1
 
-Test MSE: 0.29374971985816956
-Train MSE:0.3076
+doc2=nlp('Sport is a significant part of life in India. The country has a very long sports history, with sports being a part of tradition, culture, finance and entertainment. People in India closely follow various sports and enthusiastically participate in them. Cricket is the most popular spectator sport in the country, and citizens often play it as a recreational activity; it generates the highest television viewership, and features full-capacity audiences in stadiums during international and Indian Premier League (IPL) matches. It is part of popular culture. However, in more recent decades, football has also become another popular sport in terms of broadcast viewership and stadium audience attendance.[2][b] Kabaddi has grown into the mainstream, as well as badminton, tennis, and athletics. India are the one of the power houses in field hockey. India won World Cup & multiple medals in field hockey in Olympics. During that time, Dhyan Chand was a notable player. Sports such as swimming and badminton are played as recreational activities and for exercise.[')
+
+doc2
+
+for token in doc2:
+    print(token.text)
+
+for ent in doc2.ents:
+    print(ent.text,'==>',ent.label_)
+
+spacy.explain('NORP')
+
+# List of entities
+
+ent_list=[]
+for ent in doc2.ents:
+    ent_list.append(ent.label_)
+
+print(ent_list)
+
+# List of tuples of text and the respective entities
+
+for ent in doc2.ents:
+    print(ent.text, ent.label_)
+
+ent_list=[(ent.text,ent.label_) for ent in doc2.ents]
+
+print(ent_list)
+
+## NER for web data
+
+import requests
+
+from bs4 import BeautifulSoup
+
+url='https://en.wikipedia.org/wiki/India'
+
+print(url)
+
+request=requests.get(url)
+
+print(request)
+
+request=request.text
+print(request)
+
+soup_request=BeautifulSoup(request)
+print(soup_request)
+
+text= soup_request.body.text
+print(text)
+
+type(text)
+
+### Converting str to doc using nlp
+
+doc3=nlp(text)
+
+type(doc3)
+
+doc3
+
+### Tokenizer
+
+for token in doc3:
+    print(token.text)
+
+len(doc3)
+
+## # List of entities
+
+for ent in doc3.ents:
+    print(ent.text,'==>',ent.label_)
+
+displacy.render(doc3, style='ent')
+
+ent_list=[]
+for ent in doc3.ents:
+    ent_list.append(ent.label_)
+print(ent_list)
+
+from collections import Counter
+Counter(ent_list)
+
+### Entities most appeared
+
+most_ent=[]
+for ent in doc3.ents:
+    most_ent.append(ent.text)
+print(most_ent)
+
+# Most common
+
+Counter(most_ent).most_common()
+
+Counter(most_ent).most_common(10)
+
+Counter(most_ent).most_common(20)
+
+print(len(doc3.ents))
+
+EXercise:
+
+Scrap https://en.wikipedia.org/wiki/History_of_India
+
+Find 10 most occurred named entities in the text.
 
 
-print('Test MAE:', test_mae)
-print('Train MAE:0.3835 ')
+# session 5
+# Rule based matching
 
-Test MAE: 0.3780365288257599
-Train MAE:0.3835 
+import spacy
 
-Prediction using the model
+nlp=spacy.load('en_core_web_sm')
 
-y_pred=model_1.predict(X_test)
-print('The predicted house prices:\n',y_pred)
+type(nlp)
 
-129/129 [==============================] - 0s 1ms/step
-The predicted house prices:
- [[2.440057 ]
- [1.400035 ]
- [1.3969451]
- ...
- [1.6530576]
- [0.8416471]
- [1.1105689]]
+## Accessing a text
+
+doc=nlp('''ChatGPT (Chat Generative Pre-trained Transformer)[1] is a chatbot launched by OpenAI in November 2022. It is built on top of OpenAI's GPT-3 family of large language models, and is fine-tuned (an approach to transfer learning)[2] with both supervised and reinforcement learning techniques.
+
+ChatGPT was launched as a prototype on November 30, 2022, and quickly garnered attention for its detailed responses and articulate answers across many domains of knowledge. Its uneven factual accuracy was identified as a significant drawback.[3] Following the release of ChatGPT, OpenAI was valued at $29 billion.[4]
+
+Training
+
+Pioneer Building, San Francisco, headquarters of OpenAI
+
+Sam Altman, CEO of OpenAI
+ChatGPT was fine-tuned on top of GPT-3.5 using supervised learning as well as reinforcement learning.[5] Both approaches used human trainers to improve the model's performance. In the case of supervised learning, the model was provided with conversations in which the trainers played both sides: the user and the AI assistant. In the reinforcement step, human trainers first ranked responses that the model had created in a previous conversation. These rankings were used to create 'reward models' that the model was further fine-tuned on using several iterations of Proximal Policy Optimization (PPO).[6][7] Proximal Policy Optimization algorithms present a cost-effective benefit to trust region policy optimization algorithms; they negate many of the computationally expensive operations with faster performance.[8][9] The models were trained in collaboration with Microsoft on their Azure supercomputing infrastructure.
+
+In addition, OpenAI continues to gather data from ChatGPT users that could be used to further train and fine-tune ChatGPT. Users are allowed to upvote or downvote the responses they receive from ChatGPT; upon upvoting or downvoting, they can also fill out a text field with additional feedback.[10][11][12]
+
+Features and limitations
+
+Cropped screenshot of a conversation with ChatGPT, December 30, 2022
+Although the core function of a chatbot is to mimic a human conversationalist, ChatGPT is versatile. For example, it has the ability to write and debug computer programs; to compose music, teleplays, fairy tales, and student essays; to answer test questions (sometimes, depending on the test, at a level above the average human test-taker);[13] to write poetry and song lyrics;[14] to emulate a Linux system; to simulate an entire chat room; to play games like tic-tac-toe; and to simulate an ATM.[15] ChatGPT's training data includes man pages and information about Internet phenomena and programming languages, such as bulletin board systems and the Python programming language.[15]
+
+In comparison to its predecessor, InstructGPT, ChatGPT attempts to reduce harmful and deceitful responses.[16] In one example, whereas InstructGPT accepts the premise of the prompt "Tell me about when Christopher Columbus came to the US in 2015" as being truthful, ChatGPT acknowledges the counterfactual nature of the question and frames its answer as a hypothetical consideration of what might happen if Columbus came to the U.S. in 2015, using information about Columbus' voyages and facts about the modern world – including modern perceptions of Columbus' actions.[6]
+
+Unlike most chatbots, ChatGPT remembers previous prompts given to it in the same conversation; journalists have suggested that this will allow ChatGPT to be used as a personalized therapist.[17] To prevent offensive outputs from being presented to and produced from ChatGPT, queries are filtered through OpenAI's company-wide moderation API,[18][19] and potentially racist or sexist prompts are dismissed.[6][17]
+
+ChatGPT suffers from multiple limitations. OpenAI acknowledged that ChatGPT "sometimes writes plausible-sounding but incorrect or nonsensical answers".[6] This behavior is common to large language models and is called hallucination.[20] The reward model of ChatGPT, designed around human oversight, can be over-optimized and thus hinder performance, otherwise known as Goodhart's law.[21] ChatGPT has limited knowledge of events that occurred after 2021. According to the BBC, as of December 2022 ChatGPT is not allowed to "express political opinions or engage in political activism".[22] Yet, research suggests that ChatGPT exhibits a pro-environmental, left-libertarian orientation when prompted to take a stance on political statements from two established voting advice applications.[23] In training ChatGPT, human reviewers preferred longer answers, irrespective of actual comprehension or factual content.[6] Training data also suffers from algorithmic bias, which may be revealed when ChatGPT responds to prompts including descriptors of people. In one instance, ChatGPT generated a rap indicating that women and scientists of color were inferior to white and male scientists.[24][25]
+
+Service
+ChatGPT was launched on November 30, 2022, by San Francisco-based OpenAI, the creator of DALL·E 2 and Whisper. The service was launched as initially free to the public, with plans to monetize the service later.[26] By December 4, OpenAI estimated ChatGPT already had over one million users.[10] CNBC wrote on December 15, 2022, that the service "still goes down from time to time".[27] The service works best in English, but is also able to function in some other languages, to varying degrees of success.[14] Unlike some other recent high-profile advances in AI, as of December 2022, there is no sign of an official peer-reviewed technical paper about ChatGPT.[28]
+
+According to OpenAI guest researcher Scott Aaronson, OpenAI is working on a tool to attempt to watermark its text generation systems so as to combat bad actors using their services for academic plagiarism or for spam.[29][30] The New York Times relayed in December 2022 that the next version of GPT, GPT-4, has been "rumored" to be launched sometime in 2023.[17]
+
+Reception and implications
+Positive reactions
+ChatGPT was met in December 2022 with generally positive reviews; The New York Times labeled it "the best artificial intelligence chatbot ever released to the general public".[31] Samantha Lock of The Guardian noted that it was able to generate "impressively detailed" and "human-like" text.[32] Technology writer Dan Gillmor used ChatGPT on a student assignment, and found its generated text was on par with what a good student would deliver and opined that "academia has some very serious issues to confront".[33] Alex Kantrowitz of Slate magazine lauded ChatGPT's pushback to questions related to Nazi Germany, including the claim that Adolf Hitler built highways in Germany, which was met with information regarding Nazi Germany's use of forced labor.[34]
+
+In The Atlantic's "Breakthroughs of the Year" for 2022, Derek Thompson included ChatGPT as part of "the generative-AI eruption" that "may change our mind about how we work, how we think, and what human creativity really is".[35]
+
+Kelsey Piper of the Vox website wrote that "ChatGPT is the general public's first hands-on introduction to how powerful modern AI has gotten, and as a result, many of us are [stunned]" and that ChatGPT is "smart enough to be useful despite its flaws".[36] Paul Graham of Y Combinator tweeted that "The striking thing about the reaction to ChatGPT is not just the number of people who are blown away by it, but who they are. These are not people who get excited by every shiny new thing. Clearly, something big is happening."[37] Elon Musk wrote that "ChatGPT is scary good. We are not far from dangerously strong AI".[36] Musk paused OpenAI's access to a Twitter database pending a better understanding of OpenAI's plans, stating that "OpenAI was started as open-source and non-profit. Neither is still true."[38][39] Musk had co-founded OpenAI in 2015, in part to address existential risk from artificial intelligence, but had resigned in 2018.[39]
 
 
-y_test
-     
- MedHouseVal
-8151  2.45300
-53  1.04200
-3039  1.46200
-9484  1.54200
-9307  3.24200
-...  ...
-16733  1.17200
-5264  5.00001
-12374  2.39300
-19662  0.85700
-11942  1.13900
+Google CEO Sundar Pichai upended the work of numerous internal groups in response to the threat of disruption by ChatGPT.[40]
+In December 2022, Google internally expressed alarm at the unexpected strength of ChatGPT and the newly discovered potential of large language models to disrupt the search engine business, and CEO Sundar Pichai "upended" and reassigned teams within multiple departments to aid in its artificial intelligence products, according to The New York Times.[40] The Information reported on January 3, 2023 that Microsoft Bing was planning to add optional ChatGPT functionality into its public search engine, possibly around March 2023.[41][42]
 
-4128 rows × 1 columns
+Stuart Cobbe, a chartered accountant in England & Wales, decided to the test the ChatGPT chatbot by entering questions from a sample exam paper on the ICAEW website and then entering its answers back into the online test. ChatGPT scored 42% which, while below the 55% pass mark, was considered a reasonable attempt.''')
+
+doc
+
+## How many sentences?
+
+
+sent_count=0
+for sent in doc.sents:
+    sent_count=sent_count+1
+    print(sent_count,'=>',sent)
+print('Total no of sentences:',sent_count)
+
+## Tokenization
+
+for token in doc:
+    print(token.text)
+
+print(len(doc))
+
+## Tagger
+
+for token in doc:
+    print(token.text,'=>',token.pos_)
+
+## NER
+
+for ent in doc.ents:
+    print(ent.text,'=>',ent.label_)
+
+## Rule based matching
+
+doc
+
+### Matching
+
+  1) Token Matching 
+  
+  2) Phrase Matching
+  
+  3) Entity Matching
+
+How ?
+
+   1) Create an object/instance of the Matcher class.
+   
+   2) Define a pattern/rule.
+   
+   3) Add the pattern to the object
+   
+   4) Pass the document to the object
+
+### Token matching
+
+#### Occurance of the text ' ChatGPT'
+
+from spacy.matcher import Matcher
+
+# Create an instance of Matcher
+
+matcher_1=Matcher(nlp.vocab)
+
+# Define a pattern or a rule.
+
+# A pattern is a list of dictionaries.
+
+pattern_1=[{'text':'ChatGPT'}]
+
+# Add pattern to the object
+
+matcher_1.add('Pattern1',[pattern_1])
+
+# Pass the doc to the object
+
+match_1= matcher_1(doc)
+
+print(len(match_1))
+
+for match_id,start,end in match_1:
+    span=doc[start:end]
+    print(span.text)
+
+## Phrase matching
+
+#### Occurance of 'ChaptGPT is'
+
+matcher_2=Matcher(nlp.vocab)
+pattern_2=[{'text':'ChatGPT'},
+          {'text':'is'}]
+matcher_2.add('Pattern2',[pattern_2])
+match_2=matcher_2(doc)
+
+print(len(match_2))
+
+for match_id,start,end in match_2:
+    span=doc[start:end]
+    print(span)
+
+### Occurances of language/s, model's
+
+matcher_3=Matcher(nlp.vocab)
+pattern_3=[{'LEMMA':'language'},
+          {'LEMMA':'model'}]
+
+
+matcher_3.add('Pattern3',[pattern_3])
+match_3=matcher_3(doc)
+
+print(len(match_3))
+
+for match_id,start,end in match_3:
+    span=doc[start:end]
+    print(span)
+
+## Occurances of alphabets, digits 
+
+matcher_4=Matcher(nlp.vocab)
+pattern_4=[{'IS_ALPHA': True},
+           {'IS_DIGIT':True}]
+
+
+matcher_4.add('Pattern4',[pattern_4])
+match_4=matcher_4(doc)
+
+print(len(match_4))
+
+for match_id,start,end in match_4:
+    span=doc[start:end]
+    print(span)
+
+## Occurance of launch, discovery, find,,....
+
+matcher_5=Matcher(nlp.vocab)
+pattern_5=[{'LEMMA':
+            {'IN':['launch','discover','find',
+        'invent','create','develop','innovate',
+                  'form','initiate']}}]
+
+matcher_5.add('Pattern5',[pattern_5])
+match_5=matcher_5(doc)
+
+print(len(match_5))
+
+for match_id,start,end in match_5:
+    span=doc[start:end]
+    print(span)
+
+## Occurance of words of having length>15
+
+matcher_6=Matcher(nlp.vocab)
+pattern_6=[{'LENGTH':{'>=':15}}]
+matcher_6.add('Pattern6',[pattern_6])
+match_6=matcher_6(doc)
+
+print(len(match_6))
+
+for match_id,start,end in match_6:
+    span=doc[start:end]
+    print(span)
+
+## Words of length 2
+
+matcher_7=Matcher(nlp.vocab)
+pattern_7=[{'LENGTH':{'==':2}}]
+matcher_7.add('Pattern7',[pattern_7])
+match_7=matcher_7(doc)
+
+for match_id,start,end in match_7:
+    span=doc[start:end]
+    print(span)
+
+# Occurance of Elon Musk
+
+### Entity Matching
+
+### Occurance of ent-type 'PERSON'
+
+matcher_10=Matcher(nlp.vocab)
+pattern_10=[{"ENT_TYPE":'PERSON'}]
+matcher_10.add('Pattern10',[pattern_10])
+match_10=matcher_10(doc)
+
+print(len(match_10))
+
+for match_id,start,end in match_10:
+    span=doc[start:end]
+    print(span.text)
 
 Refer:
+    https://spacy.io/usage/rule-based-matching
 
-https://towardsdatascience.com/a-visual-explanation-of-gradient-descent-methods-momentum-adagrad-rmsprop-adam-f898b102325c
-DL_4_Mulit_Class_Classification
 
+# session 6
+# Vectorisation of tokens and similarity of documents
 
-Multi-Class Classification
+# !pip install gensim
 
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import tensorflow as tf
-     
-Accessing the dataset
+import gensim
+import spacy
+nlp=spacy.load('en_core_web_sm')
 
-from tensorflow.keras.datasets import fashion_mnist
+## Create a list of texts
 
-(X_train,y_train),(X_test,y_test)=fashion_mnist.load_data()
+doc_1='''Chat GPT is a highly popular AI-based program that people use for generating dialogues. The chatbot has a language-based model that the developer fine-tunes for human interaction in a conversational manner. 
+It’s a simulated chatbot primarily designed for customer service; people use it for various other purposes. But what is it? If you are new to this Chat GPT, this guide is for you, so continue reading. 
+What’s Chat GPT?
+Chat GPT is an AI chatbot auto-generative system created by Open AI for online customer care. It is a pre-trained generative chat, which makes use of (NLP) Natural Language Processing. The source of its data is textbooks, websites, and various articles, which it uses to model its own language for responding to human interaction.'''
 
-Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-labels-idx1-ubyte.gz
-29515/29515 [==============================] - 0s 0us/step
-Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-images-idx3-ubyte.gz
-26421880/26421880 [==============================] - 0s 0us/step
-Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-labels-idx1-ubyte.gz
-5148/5148 [==============================] - 0s 0us/step
-Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-images-idx3-ubyte.gz
-4422102/4422102 [==============================] - 0s 0us/step
-
-
-X_train.shape,y_train.shape,X_test.shape,y_test.shape
-
-((60000, 28, 28), (60000,), (10000, 28, 28), (10000,))
-
-Visualisation of the data
-
-plt.imshow(X_train[0],'Greys')
-plt.title(y_train[0]);
-
-# Creating a dictionary of nos and respective fashion items
-
-fashion_dict={0:'T-shirt/top',
-1:'Trouser',
-2:'Pullover',
-3:'Dress',
-4:'Coat',
-5:'Sandal',
-6:'Shirt',
-7:'Sneaker',
-8:'Bag',
-9:'Ankle boot'}
-
-fashion_dict
-
-{0: 'T-shirt/top',
- 1: 'Trouser',
- 2: 'Pullover',
- 3: 'Dress',
- 4: 'Coat',
- 5: 'Sandal',
- 6: 'Shirt',
- 7: 'Sneaker',
- 8: 'Bag',
- 9: 'Ankle boot'}
-
-
-plt.imshow(X_train[0],'Greys')
-plt.title(fashion_dict[y_train[0]]);
-
-plt.imshow(X_train[10],'Greys')
-plt.title(fashion_dict[y_train[10]]);
-
-plt.imshow(X_train[100],'Greys')
-plt.title(fashion_dict[y_train[100]]);
-
-plt.imshow(X_train[500],'Greys')
-plt.title(fashion_dict[y_train[500]]);
-
-plt.imshow(X_train[1000],'Greys')
-plt.title(fashion_dict[y_train[1000]]);
-
-plt.imshow(X_train[3000],'Greys')
-plt.title(fashion_dict[y_train[3000]]);
-
-plt.imshow(X_train[5000],'Greys')
-plt.title(fashion_dict[y_train[5000]]);
-
-plt.imshow(X_train[15000],'Greys')
-plt.title(fashion_dict[y_train[15000]]);
-
-plt.imshow(X_train[45000],'Greys')
-plt.title(fashion_dict[y_train[45000]]);
-     
-Building the model
-
-fashion_1=tf.keras.Sequential()
-fashion_1.add(tf.keras.layers.Flatten())
-fashion_1.add(tf.keras.layers.Dense(300,activation='relu'))
-fashion_1.add(tf.keras.layers.Dense(10,activation='softmax'))
-     
-Compiling the model
-
-fashion_1.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                  optimizer=tf.keras.optimizers.Adam(),
-                  metrics=['accuracy'])
-     
-Training the model
-
-tf.random.set_seed(100)
-history_1=fashion_1.fit(X_train,y_train,epochs=25)
-pd.DataFrame(history_1.history).plot();
-
-Epoch 1/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 3.3806 - accuracy: 0.7374
-Epoch 2/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.5569 - accuracy: 0.8053
-Epoch 3/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.5163 - accuracy: 0.8201
-Epoch 4/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4908 - accuracy: 0.8261
-Epoch 5/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.4946 - accuracy: 0.8292
-Epoch 6/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4694 - accuracy: 0.8349
-Epoch 7/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4609 - accuracy: 0.8392
-Epoch 8/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4647 - accuracy: 0.8369
-Epoch 9/25
-1875/1875 [==============================] - 4s 2ms/step - loss: 0.4507 - accuracy: 0.8417
-Epoch 10/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.4410 - accuracy: 0.8450
-Epoch 11/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4399 - accuracy: 0.8438
-Epoch 12/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.4492 - accuracy: 0.8436
-Epoch 13/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.4431 - accuracy: 0.8427
-Epoch 14/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.4356 - accuracy: 0.8466
-Epoch 15/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.4331 - accuracy: 0.8485
-Epoch 16/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.4394 - accuracy: 0.8479
-Epoch 17/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.4240 - accuracy: 0.8512
-Epoch 18/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4286 - accuracy: 0.8503
-Epoch 19/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 0.4318 - accuracy: 0.8503
-Epoch 20/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4176 - accuracy: 0.8519
-Epoch 21/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.4207 - accuracy: 0.8535
-Epoch 22/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4205 - accuracy: 0.8534
-Epoch 23/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4086 - accuracy: 0.8561
-Epoch 24/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4292 - accuracy: 0.8532
-Epoch 25/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4271 - accuracy: 0.8525
-
-Evaluation of the model
-
-test_loss,test_accuracy=fashion_1.evaluate(X_test,y_test)
-
-313/313 [==============================] - 1s 2ms/step - loss: 0.5468 - accuracy: 0.8229
-
-
-print('The Test Loss:',test_loss)
-print('The Test Accuracy:',test_accuracy)
-
-The Test Loss: 0.5468084216117859
-The Test Accuracy: 0.8228999972343445
-
-Improving the model by adding one more hidden layer
-
-fashion_2=tf.keras.Sequential()
-fashion_2.add(tf.keras.layers.Flatten())
-fashion_2.add(tf.keras.layers.Dense(300,activation='relu'))
-
-fashion_2.add(tf.keras.layers.Dense(100,activation='relu'))## Adding a layer of 100 units
-
-fashion_2.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-fashion_2.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                  optimizer=tf.keras.optimizers.Adam(),
-                  metrics=['accuracy'])
-
-tf.random.set_seed(100)
-history_2=fashion_2.fit(X_train,y_train,epochs=25)
-pd.DataFrame(history_2.history).plot();
-
-Epoch 1/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.2530 - accuracy: 0.7698
-Epoch 2/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4925 - accuracy: 0.8300
-Epoch 3/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4449 - accuracy: 0.8418
-Epoch 4/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4187 - accuracy: 0.8517
-Epoch 5/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3995 - accuracy: 0.8584
-Epoch 6/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3867 - accuracy: 0.8638
-Epoch 7/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3741 - accuracy: 0.8682
-Epoch 8/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3659 - accuracy: 0.8710
-Epoch 9/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3561 - accuracy: 0.8743
-Epoch 10/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3425 - accuracy: 0.8786
-Epoch 11/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3445 - accuracy: 0.8779
-Epoch 12/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3370 - accuracy: 0.8812
-Epoch 13/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 0.3331 - accuracy: 0.8808
-Epoch 14/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3305 - accuracy: 0.8824
-Epoch 15/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 0.3232 - accuracy: 0.8845
-Epoch 16/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3179 - accuracy: 0.8864
-Epoch 17/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3204 - accuracy: 0.8873
-Epoch 18/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3109 - accuracy: 0.8888
-Epoch 19/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3158 - accuracy: 0.8885
-Epoch 20/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3027 - accuracy: 0.8923
-Epoch 21/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3017 - accuracy: 0.8925
-Epoch 22/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3028 - accuracy: 0.8933
-Epoch 23/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.2983 - accuracy: 0.8944
-Epoch 24/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.2963 - accuracy: 0.8937
-Epoch 25/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.2932 - accuracy: 0.8971
-
-
-test_loss,test_accuracy=fashion_2.evaluate(X_test,y_test)
-
-print('Test Loss:',test_loss)
-
-print('Test accuracy:',test_accuracy)
-
-313/313 [==============================] - 1s 2ms/step - loss: 0.4506 - accuracy: 0.8618
-Test Loss: 0.4505595266819
-Test accuracy: 0.8618000149726868
-
-Improving the model by adding another hidden layer
-
-fashion_3=tf.keras.Sequential()
-fashion_3.add(tf.keras.layers.Flatten())
-fashion_3.add(tf.keras.layers.Dense(300,activation='relu'))
-fashion_3.add(tf.keras.layers.Dense(100,activation='relu'))## Adding a layer of 100 units
-
-# Adding a layer of 25 units
-fashion_3.add(tf.keras.layers.Dense(25,activation='relu'))## Adding a layer of 100 units
-
-fashion_3.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-fashion_3.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                  optimizer=tf.keras.optimizers.Adam(),
-                  metrics=['accuracy'])
-
-tf.random.set_seed(100)
-history_3=fashion_3.fit(X_train,y_train,epochs=25)
-pd.DataFrame(history_3.history).plot();
-
-Epoch 1/25
-1875/1875 [==============================] - 7s 3ms/step - loss: 2.4589 - accuracy: 0.1195
-Epoch 2/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3029 - accuracy: 0.0992
-Epoch 3/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.0985
-Epoch 4/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.1007
-Epoch 5/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.0976
-Epoch 6/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.0990
-Epoch 7/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.0996
-Epoch 8/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3027 - accuracy: 0.0996
-Epoch 9/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3028 - accuracy: 0.0964
-Epoch 10/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.0979
-Epoch 11/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3028 - accuracy: 0.0986
-Epoch 12/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3027 - accuracy: 0.1004
-Epoch 13/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.0982
-Epoch 14/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3027 - accuracy: 0.1009
-Epoch 15/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3028 - accuracy: 0.0966
-Epoch 16/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3028 - accuracy: 0.0983
-Epoch 17/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.0985
-Epoch 18/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.0989
-Epoch 19/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3028 - accuracy: 0.0965
-Epoch 20/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3027 - accuracy: 0.0993
-Epoch 21/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3028 - accuracy: 0.0995
-Epoch 22/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3028 - accuracy: 0.0992
-Epoch 23/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3028 - accuracy: 0.0972
-Epoch 24/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 2.3028 - accuracy: 0.0962
-Epoch 25/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.3028 - accuracy: 0.0981
-
-Note:
-
-The model fashion_3 is not good.
-
-Go ahead with fashion_2.
-Improving the model by changing the no of units
-
-fashion_4=tf.keras.Sequential()
-fashion_4.add(tf.keras.layers.Flatten())
-
-# Changing the no of units 
-fashion_4.add(tf.keras.layers.Dense(200,activation='relu'))
-
-fashion_4.add(tf.keras.layers.Dense(100,activation='relu'))## Adding a layer of 100 units
-
-fashion_4.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-fashion_4.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                  optimizer=tf.keras.optimizers.Adam(),
-                  metrics=['accuracy'])
-
-tf.random.set_seed(100)
-history_4=fashion_4.fit(X_train,y_train,epochs=25)
-pd.DataFrame(history_4.history).plot();
-
-Epoch 1/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 2.2224 - accuracy: 0.7443
-Epoch 2/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.6171 - accuracy: 0.7987
-Epoch 3/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.5472 - accuracy: 0.8134
-Epoch 4/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4973 - accuracy: 0.8286
-Epoch 5/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4562 - accuracy: 0.8406
-Epoch 6/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4293 - accuracy: 0.8474
-Epoch 7/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 0.4119 - accuracy: 0.8539
-Epoch 8/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.4019 - accuracy: 0.8556
-Epoch 9/25
-1875/1875 [==============================] - 6s 3ms/step - loss: 0.3856 - accuracy: 0.8611
-Epoch 10/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3853 - accuracy: 0.8620
-Epoch 11/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.3773 - accuracy: 0.8632
-Epoch 12/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3687 - accuracy: 0.8649
-Epoch 13/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3652 - accuracy: 0.8687
-Epoch 14/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3568 - accuracy: 0.8712
-Epoch 15/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.3583 - accuracy: 0.8718
-Epoch 16/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3499 - accuracy: 0.8722
-Epoch 17/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3486 - accuracy: 0.8745
-Epoch 18/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3465 - accuracy: 0.8743
-Epoch 19/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3464 - accuracy: 0.8745
-Epoch 20/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3377 - accuracy: 0.8778
-Epoch 21/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.3483 - accuracy: 0.8751
-Epoch 22/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.3367 - accuracy: 0.8778
-Epoch 23/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3301 - accuracy: 0.8804
-Epoch 24/25
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.3334 - accuracy: 0.8789
-Epoch 25/25
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.3344 - accuracy: 0.8790
-
-
-test_loss,test_accuracy=fashion_4.evaluate(X_test,y_test)
-
-print('Test Loss:',test_loss)
-print('Test Accuracy:',test_accuracy)
-
-313/313 [==============================] - 1s 2ms/step - loss: 0.4424 - accuracy: 0.8579
-Test Loss: 0.4424266219139099
-Test Accuracy: 0.8579000234603882
-
-Note:
-
-Fashion_2 is the best model.
-Model summary
-
-fashion_2.summary()
-
-Model: "sequential_1"
-_________________________________________________________________
- Layer (type)                Output Shape              Param #   
-=================================================================
- flatten_1 (Flatten)         (None, 784)               0         
-                                                                 
- dense_2 (Dense)             (None, 300)               235500    
-                                                                 
- dense_3 (Dense)             (None, 100)               30100     
-                                                                 
- dense_4 (Dense)             (None, 10)                1010      
-                                                                 
-=================================================================
-Total params: 266,610
-Trainable params: 266,610
-Non-trainable params: 0
-_________________________________________________________________
-
-Plotting the model
-
-from tensorflow.keras.utils import plot_model
-plot_model(fashion_2,show_shapes=True)
-     
-Precition
-
-y_pred=fashion_2.predict(X_test)
-
-     
-
-313/313 [==============================] - 1s 2ms/step
-
-
-y_pred
-
-array([[0.0000000e+00, 0.0000000e+00, 2.6400036e-33, ..., 2.0986332e-03,
-        1.6008830e-18, 9.9789518e-01],
-       [3.1949926e-07, 5.1899717e-11, 9.9960297e-01, ..., 0.0000000e+00,
-        2.5369146e-10, 0.0000000e+00],
-       [0.0000000e+00, 9.9999994e-01, 0.0000000e+00, ..., 0.0000000e+00,
-        0.0000000e+00, 0.0000000e+00],
-       ...,
-       [4.2010441e-15, 2.0805253e-22, 5.4748295e-22, ..., 1.2092106e-38,
-        9.9999994e-01, 0.0000000e+00],
-       [0.0000000e+00, 9.9999994e-01, 0.0000000e+00, ..., 0.0000000e+00,
-        0.0000000e+00, 0.0000000e+00],
-       [6.3020478e-10, 0.0000000e+00, 3.7743940e-11, ..., 4.3371236e-03,
-        1.1680145e-07, 7.4792589e-04]], dtype=float32)
-
-
-y_pred[0]
-
-array([0.0000000e+00, 0.0000000e+00, 2.6400036e-33, 0.0000000e+00,
-       0.0000000e+00, 6.2328245e-06, 7.2520545e-28, 2.0986332e-03,
-       1.6008830e-18, 9.9789518e-01], dtype=float32)
-
-
-np.argmax(y_pred[0])
-
-9
-
-
-plt.imshow(X_test[0],'Greys')
-plt.title(fashion_dict[np.argmax(y_pred[0])]);
-
-plt.imshow(X_test[20],'Greys')
-plt.title(fashion_dict[np.argmax(y_pred[20])]);
-
-DL_5_Hyper_parameter_tuning_and_Regularisation
-
-
-Hyper parameter tuning and Regularisation
-Hyper parameters
-
-    No of layers
-
-    No of units
-
-    Activation function
-
-    Loss function
-
-    Optimizer
-
-    Dropout rate
-
-    Learning rate
-
-    Epoch
-
-    Etc..
-
-No of layers:
-
-    Output layer: One
-
-    Input Layer: One
-
-    Hidden Layers: At least one, depends upon the problem and complexity.
-
-No of units:
-
-    Output layer:
-
-        Regression: One
-
-        Binary classiifcation: One/ Two depends upon activation function
-
-        Multi-class classification: No of classes.
-
-    Input layer: Depends upon the no of features/values in the data point
-
-    Hidden layer: Depends, generally between 10 and 100.
-
-Activation function
-
-    Output layer
-
-        Regression: Linear
-
-        Binary classification: sigmoid (if the class labels are 0 and 1)
-
-                           tanh (if the class labels are -1 and 1)
-
-        Multi-class classiifcation: softmax.
-
-    Hidden layer: 'relu', in general.
-
-Loss function
-
-    Regression: MAE, MSE(more preferred)
-
-    Binary classification: BinaryCrossentropy
-
-    Multi-class Classification: Categorical Crossentropy / Sparse Categorical Crossentropy
-
-Optimizer
-
-    Adam, in general
-
-Regularisation
-
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import tensorflow as tf
-     
-Accessing the dataset
-
-from tensorflow.keras.datasets import mnist
-
-(X_train,y_train),(X_test,y_test)=mnist.load_data()
-
-X_train.shape,y_train.shape,X_test.shape,y_test.shape
-
-((60000, 28, 28), (60000,), (10000, 28, 28), (10000,))
-
-
-X_train[0]
-
-array([[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   3,
-         18,  18,  18, 126, 136, 175,  26, 166, 255, 247, 127,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,  30,  36,  94, 154, 170,
-        253, 253, 253, 253, 253, 225, 172, 253, 242, 195,  64,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,  49, 238, 253, 253, 253, 253,
-        253, 253, 253, 253, 251,  93,  82,  82,  56,  39,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,  18, 219, 253, 253, 253, 253,
-        253, 198, 182, 247, 241,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,  80, 156, 107, 253, 253,
-        205,  11,   0,  43, 154,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,  14,   1, 154, 253,
-         90,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 139, 253,
-        190,   2,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  11, 190,
-        253,  70,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  35,
-        241, 225, 160, 108,   1,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-         81, 240, 253, 253, 119,  25,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,  45, 186, 253, 253, 150,  27,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,  16,  93, 252, 253, 187,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,   0,   0, 249, 253, 249,  64,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,  46, 130, 183, 253, 253, 207,   2,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  39,
-        148, 229, 253, 253, 253, 250, 182,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  24, 114, 221,
-        253, 253, 253, 253, 201,  78,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,  23,  66, 213, 253, 253,
-        253, 253, 198,  81,   2,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,  18, 171, 219, 253, 253, 253, 253,
-        195,  80,   9,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,  55, 172, 226, 253, 253, 253, 253, 244, 133,
-         11,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0, 136, 253, 253, 253, 212, 135, 132,  16,   0,
-          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0],
-       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
-          0,   0]], dtype=uint8)
-
-Visualisation
-
-plt.imshow(X_train[0],'gray')
-plt.title(y_train[0]);
-
-plt.imshow(X_train[10],'gray')
-plt.title(y_train[10]);
-
-plt.imshow(X_train[100],'gray')
-plt.title(y_train[100]);
-
-plt.imshow(X_train[1000],'gray')
-plt.title(y_train[1000]);
-
-plt.imshow(X_train[10000],'gray')
-plt.title(y_train[10000]);
-
-plt.imshow(X_train[40000],'gray')
-plt.title(y_train[40000]);
-
-pd.DataFrame(y_train).value_counts()
-
-1    6742
-7    6265
-3    6131
-2    5958
-9    5949
-0    5923
-6    5918
-8    5851
-4    5842
-5    5421
-dtype: int64
-
-Building a Basic Model
-
-model_1=tf.keras.Sequential()
-model_1.add(tf.keras.layers.Flatten())
-model_1.add(tf.keras.layers.Dense(300, activation='relu'))
-model_1.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-# compiling the model
-model_1.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-
-# Training the model
-
-tf.random.set_seed(100)
-hist_1=model_1.fit(X_train,y_train,epochs=10)
-pd.DataFrame(hist_1.history).plot();
-
-Epoch 1/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 2.3320 - accuracy: 0.8881
-Epoch 2/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.3456 - accuracy: 0.9251
-Epoch 3/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.2736 - accuracy: 0.9369
-Epoch 4/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.2498 - accuracy: 0.9413
-Epoch 5/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.2345 - accuracy: 0.9471
-Epoch 6/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.2162 - accuracy: 0.9504
-Epoch 7/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.2054 - accuracy: 0.9548
-Epoch 8/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.2001 - accuracy: 0.9559
-Epoch 9/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.1936 - accuracy: 0.9590
-Epoch 10/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.1852 - accuracy: 0.9605
-
-
-# Evaluation of the model
-
-model_1.evaluate(X_test,y_test)
-
-313/313 [==============================] - 1s 3ms/step - loss: 0.3103 - accuracy: 0.9537
-
-[0.31031742691993713, 0.9537000060081482]
-
-Comment 1:
-
-Basic Model: Training loss=0.1852; Test loss=0.3103( Model is decent, but overfitting).
-Model with normalization
-
-# Normalization
-
-normalizer=tf.keras.layers.Normalization()
-normalizer.adapt(X_train)
-normalizer.adapt(X_test)
-
-X_train=normalizer(X_train)
-X_test=normalizer(X_test)
-
-X_train[0]
-
-<tf.Tensor: shape=(28, 28), dtype=float32, numpy=
-array([[-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.58221424e-01, -5.55382252e-01, -5.91231704e-01,
-        -6.07143462e-01,  4.16704774e-01,  5.67344427e-01,
-         1.08593071e+00, -2.72850573e-01,  1.60844707e+00,
-         3.47916603e+00,  4.47211742e+00,  3.19816446e+00,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -1.21771954e-01,
-        -1.78291753e-01,  3.27180088e-01,  8.63192856e-01,
-         9.67465341e-01,  1.67692387e+00,  1.59085870e+00,
-         1.57223129e+00,  1.60448718e+00,  1.67668068e+00,
-         1.58230078e+00,  1.30819166e+00,  2.68807101e+00,
-         3.28374887e+00,  3.47408342e+00,  1.51655328e+00,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01,  3.13044101e-01,  2.34519172e+00,
-         2.13658571e+00,  1.93453193e+00,  1.84190750e+00,
-         1.77544141e+00,  1.67692387e+00,  1.59085870e+00,
-         1.57223129e+00,  1.60448718e+00,  1.65771770e+00,
-         2.71883965e-01,  3.33576560e-01,  5.66051722e-01,
-         4.87780064e-01,  4.79982167e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -1.25040740e-01,  2.11984396e+00,
-         2.13658571e+00,  1.93453193e+00,  1.84190750e+00,
-         1.77544141e+00,  1.67692387e+00,  1.08015668e+00,
-         9.13781881e-01,  1.54837143e+00,  1.56290257e+00,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01,  4.71248180e-01,
-         1.10182476e+00,  4.58598763e-01,  1.84190750e+00,
-         1.77544141e+00,  1.22096348e+00, -6.56230152e-01,
-        -7.74074256e-01, -3.59562427e-01,  7.38011539e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -4.12979782e-01, -6.12969100e-01,  8.63192856e-01,
-         1.77544141e+00,  1.28558323e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01,  7.14902818e-01,
-         1.77544141e+00,  1.07847583e+00, -7.39799619e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -5.50505877e-01,
-         1.16215837e+00,  1.67692387e+00, -1.08386181e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -3.46712589e-01,  1.56293368e+00,  1.33086503e+00,
-         7.09755301e-01,  2.48357683e-01, -7.12659001e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01,  4.30657491e-02,  1.47014737e+00,
-         1.57223129e+00,  1.60448718e+00,  4.06158775e-01,
-        -4.03179199e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -3.40523452e-01,
-         9.50877607e-01,  1.60448718e+00,  1.67668068e+00,
-         8.37745726e-01, -2.62021512e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -6.25691295e-01,  1.08068421e-01,  1.66719925e+00,
-         1.86026800e+00,  1.47062743e+00, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01,  1.63875473e+00,
-         1.86026800e+00,  2.14202881e+00,  3.42681259e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -3.31237972e-01,
-         4.31537271e-01,  9.49803948e-01,  1.67668068e+00,
-         1.86026800e+00,  1.68720853e+00, -4.26705807e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -3.07773978e-01,  6.79510474e-01,  1.36800694e+00,
-         1.57223129e+00,  1.60448718e+00,  1.67668068e+00,
-         1.83048570e+00,  1.41648221e+00, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -3.80459100e-01,  4.67752665e-01,
-         1.46393263e+00,  1.67692387e+00,  1.59085870e+00,
-         1.57223129e+00,  1.60448718e+00,  1.18364239e+00,
-         1.22972980e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -2.04794765e-01,
-         1.41737401e-01,  1.53016663e+00,  1.84190750e+00,
-         1.77544141e+00,  1.67692387e+00,  1.59085870e+00,
-         1.06216478e+00, -4.16298211e-03, -7.03177512e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-         4.43913825e-02,  2.03711987e+00,  2.11984396e+00,
-         2.13658571e+00,  1.93453193e+00,  1.84190750e+00,
-         1.77544141e+00,  1.12597167e+00, -1.55312652e-02,
-        -6.90608859e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02,  2.36970687e+00,  4.28961515e+00,
-         3.83689117e+00,  3.19592476e+00,  2.52309775e+00,
-         2.13658571e+00,  1.93453193e+00,  1.75293338e+00,
-         6.07283235e-01, -6.21876478e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02,  6.03126621e+00,  6.40268135e+00,
-         4.32918692e+00,  3.19592476e+00,  2.03682137e+00,
-         8.77804399e-01,  7.11327076e-01, -5.01075864e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03]], dtype=float32)>
-
-
-model_2=tf.keras.Sequential()
-model_2.add(tf.keras.layers.Flatten())
-model_2.add(tf.keras.layers.Dense(300, activation='relu'))
-model_2.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-model_2.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-
-# Training the model
-tf.random.set_seed(100)
-
-# X_train is the normalosed training set
-hist_2=model_2.fit(X_train,y_train,epochs=10)
-pd.DataFrame(hist_2.history).plot();
-
-Epoch 1/10
-1875/1875 [==============================] - 10s 5ms/step - loss: 0.2092 - accuracy: 0.9402
-Epoch 2/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.0872 - accuracy: 0.9744
-Epoch 3/10
-1875/1875 [==============================] - 8s 5ms/step - loss: 0.0574 - accuracy: 0.9826
-Epoch 4/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.0445 - accuracy: 0.9863
-Epoch 5/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.0317 - accuracy: 0.9904
-Epoch 6/10
-1875/1875 [==============================] - 10s 5ms/step - loss: 0.0268 - accuracy: 0.9908
-Epoch 7/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.0208 - accuracy: 0.9937
-Epoch 8/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.0184 - accuracy: 0.9944
-Epoch 9/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.0181 - accuracy: 0.9940
-Epoch 10/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.0170 - accuracy: 0.9948
-
-
-model_2.evaluate(X_test,y_test)
-
-313/313 [==============================] - 1s 3ms/step - loss: 0.1470 - accuracy: 0.9788
-
-[0.14703814685344696, 0.9787999987602234]
-
-Comment 2:
-
-Basic Model: Training loss=0.1852; Test loss=0.3103( Model is decent, but overfitting).
-
-Model with Normlization: Training loss=0.0170; Test loss=0.1470 ( Model improved, but overfitting still).
-Model with Cross-validation
-
-model_3=tf.keras.Sequential()
-model_3.add(tf.keras.layers.Flatten())
-model_3.add(tf.keras.layers.Dense(300, activation='relu'))
-model_3.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-model_3.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-
-# Training the model
-tf.random.set_seed(100)
-
-# validation_split
-hist_3=model_3.fit(X_train,y_train,epochs=10,validation_split=0.2)
-pd.DataFrame(hist_3.history).plot();
-
-Epoch 1/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.2303 - accuracy: 0.9348 - val_loss: 0.1338 - val_accuracy: 0.9614
-Epoch 2/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0917 - accuracy: 0.9732 - val_loss: 0.0987 - val_accuracy: 0.9742
-Epoch 3/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0593 - accuracy: 0.9829 - val_loss: 0.1035 - val_accuracy: 0.9706
-Epoch 4/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0412 - accuracy: 0.9871 - val_loss: 0.0972 - val_accuracy: 0.9753
-Epoch 5/10
-1500/1500 [==============================] - 11s 7ms/step - loss: 0.0308 - accuracy: 0.9899 - val_loss: 0.1186 - val_accuracy: 0.9741
-Epoch 6/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0237 - accuracy: 0.9928 - val_loss: 0.1221 - val_accuracy: 0.9731
-Epoch 7/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0195 - accuracy: 0.9936 - val_loss: 0.1124 - val_accuracy: 0.9766
-Epoch 8/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0202 - accuracy: 0.9937 - val_loss: 0.1238 - val_accuracy: 0.9751
-Epoch 9/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0169 - accuracy: 0.9945 - val_loss: 0.1285 - val_accuracy: 0.9747
-Epoch 10/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0187 - accuracy: 0.9943 - val_loss: 0.1481 - val_accuracy: 0.9758
-
-
-model_3.evaluate(X_test,y_test)
-
-313/313 [==============================] - 2s 5ms/step - loss: 0.1403 - accuracy: 0.9762
-
-[0.14034612476825714, 0.9761999845504761]
-
-Comment 3:
-
-Basic Model: Training loss=0.1852; Test loss=0.3103( Model is decent, but overfitting).
-
-Model with Normlization: Training loss=0.0170; Test loss=0. 1470 ( Model improved, but overfitting still).
-
-Model with Cross-validation: Trainig loss: 0.0187; Test loss=0.1403 ( Model has improved, but epoch needs to curtailed to reduce overfitting).
-Early stopping
-
-DL_6_Regularisation
-
-
-Regularisation
-
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import tensorflow as tf
-     
-Accessing the dataset
-
-from tensorflow.keras.datasets.mnist import load_data
-(X_train,y_train),(X_test,y_test)=load_data()
-
-Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
-11490434/11490434 [==============================] - 0s 0us/step
-
-
-X_train.shape,y_train.shape,X_test.shape,y_test.shape
-
-((60000, 28, 28), (60000,), (10000, 28, 28), (10000,))
-
-Visualisation
-
-plt.imshow(X_train[0],'gray')
-plt.title(y_train[0]);
-
-plt.imshow(X_train[50],'gray')
-plt.title(y_train[50]);
-     
-Building a Basic Model
-
-model_1=tf.keras.Sequential()
-model_1.add(tf.keras.layers.Flatten())
-model_1.add(tf.keras.layers.Dense(300,activation='relu'))
-model_1.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-# Compiling the model
-model_1.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-# Training
-tf.random.set_seed(100)
-hist_1=model_1.fit(X_train,y_train,epochs=10)
-pd.DataFrame(hist_1.history).plot();
-
-     
-
-Epoch 1/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 2.3320 - accuracy: 0.8881
-Epoch 2/10
-1875/1875 [==============================] - 7s 4ms/step - loss: 0.3456 - accuracy: 0.9251
-Epoch 3/10
-1875/1875 [==============================] - 7s 4ms/step - loss: 0.2736 - accuracy: 0.9369
-Epoch 4/10
-1875/1875 [==============================] - 7s 4ms/step - loss: 0.2498 - accuracy: 0.9413
-Epoch 5/10
-1875/1875 [==============================] - 7s 4ms/step - loss: 0.2345 - accuracy: 0.9471
-Epoch 6/10
-1875/1875 [==============================] - 10s 5ms/step - loss: 0.2162 - accuracy: 0.9504
-Epoch 7/10
-1875/1875 [==============================] - 10s 5ms/step - loss: 0.2054 - accuracy: 0.9548
-Epoch 8/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.2001 - accuracy: 0.9559
-Epoch 9/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.1936 - accuracy: 0.9590
-Epoch 10/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.1852 - accuracy: 0.9605
-
-
-print(' Evaluation Result:\n')
-
-model_1.evaluate(X_test,y_test)
-
- Evaluation Result:
-
-313/313 [==============================] - 1s 2ms/step - loss: 0.3103 - accuracy: 0.9537
-
-[0.31031742691993713, 0.9537000060081482]
-
-Remark 1:
-
-    Basic Model: Training loss=0.1852 ; Test loss=0.3103 (Overfitting)
-
-2. Model with Normalised data
-
-normaliser=tf.keras.layers.Normalization()
-normaliser.adapt(X_train)
-normaliser.adapt(X_test)
-X_train=normaliser(X_train)
-X_test=normaliser(X_test)
-
-X_train[0]
-
-<tf.Tensor: shape=(28, 28), dtype=float32, numpy=
-array([[-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.58221424e-01, -5.55382252e-01, -5.91231704e-01,
-        -6.07143462e-01,  4.16704774e-01,  5.67344427e-01,
-         1.08593071e+00, -2.72850573e-01,  1.60844707e+00,
-         3.47916603e+00,  4.47211742e+00,  3.19816446e+00,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -1.21771954e-01,
-        -1.78291753e-01,  3.27180088e-01,  8.63192856e-01,
-         9.67465341e-01,  1.67692387e+00,  1.59085870e+00,
-         1.57223129e+00,  1.60448718e+00,  1.67668068e+00,
-         1.58230078e+00,  1.30819166e+00,  2.68807101e+00,
-         3.28374887e+00,  3.47408342e+00,  1.51655328e+00,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01,  3.13044101e-01,  2.34519172e+00,
-         2.13658571e+00,  1.93453193e+00,  1.84190750e+00,
-         1.77544141e+00,  1.67692387e+00,  1.59085870e+00,
-         1.57223129e+00,  1.60448718e+00,  1.65771770e+00,
-         2.71883965e-01,  3.33576560e-01,  5.66051722e-01,
-         4.87780064e-01,  4.79982167e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -1.25040740e-01,  2.11984396e+00,
-         2.13658571e+00,  1.93453193e+00,  1.84190750e+00,
-         1.77544141e+00,  1.67692387e+00,  1.08015668e+00,
-         9.13781881e-01,  1.54837143e+00,  1.56290257e+00,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01,  4.71248180e-01,
-         1.10182476e+00,  4.58598763e-01,  1.84190750e+00,
-         1.77544141e+00,  1.22096348e+00, -6.56230152e-01,
-        -7.74074256e-01, -3.59562427e-01,  7.38011539e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -4.12979782e-01, -6.12969100e-01,  8.63192856e-01,
-         1.77544141e+00,  1.28558323e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01,  7.14902818e-01,
-         1.77544141e+00,  1.07847583e+00, -7.39799619e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -5.50505877e-01,
-         1.16215837e+00,  1.67692387e+00, -1.08386181e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -3.46712589e-01,  1.56293368e+00,  1.33086503e+00,
-         7.09755301e-01,  2.48357683e-01, -7.12659001e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01,  4.30657491e-02,  1.47014737e+00,
-         1.57223129e+00,  1.60448718e+00,  4.06158775e-01,
-        -4.03179199e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -3.40523452e-01,
-         9.50877607e-01,  1.60448718e+00,  1.67668068e+00,
-         8.37745726e-01, -2.62021512e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -6.25691295e-01,  1.08068421e-01,  1.66719925e+00,
-         1.86026800e+00,  1.47062743e+00, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01,  1.63875473e+00,
-         1.86026800e+00,  2.14202881e+00,  3.42681259e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -3.31237972e-01,
-         4.31537271e-01,  9.49803948e-01,  1.67668068e+00,
-         1.86026800e+00,  1.68720853e+00, -4.26705807e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -3.07773978e-01,  6.79510474e-01,  1.36800694e+00,
-         1.57223129e+00,  1.60448718e+00,  1.67668068e+00,
-         1.83048570e+00,  1.41648221e+00, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -3.80459100e-01,  4.67752665e-01,
-         1.46393263e+00,  1.67692387e+00,  1.59085870e+00,
-         1.57223129e+00,  1.60448718e+00,  1.18364239e+00,
-         1.22972980e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -2.04794765e-01,
-         1.41737401e-01,  1.53016663e+00,  1.84190750e+00,
-         1.77544141e+00,  1.67692387e+00,  1.59085870e+00,
-         1.06216478e+00, -4.16298211e-03, -7.03177512e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-         4.43913825e-02,  2.03711987e+00,  2.11984396e+00,
-         2.13658571e+00,  1.93453193e+00,  1.84190750e+00,
-         1.77544141e+00,  1.12597167e+00, -1.55312652e-02,
-        -6.90608859e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02,  2.36970687e+00,  4.28961515e+00,
-         3.83689117e+00,  3.19592476e+00,  2.52309775e+00,
-         2.13658571e+00,  1.93453193e+00,  1.75293338e+00,
-         6.07283235e-01, -6.21876478e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02,  6.03126621e+00,  6.40268135e+00,
-         4.32918692e+00,  3.19592476e+00,  2.03682137e+00,
-         8.77804399e-01,  7.11327076e-01, -5.01075864e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03],
-       [-3.29633080e-03, -1.03209605e-02, -2.63224952e-02,
-        -5.94727769e-02, -1.16537198e-01, -1.97390229e-01,
-        -2.83805698e-01, -3.79412591e-01, -4.77584034e-01,
-        -5.62326729e-01, -6.23078227e-01, -6.59251928e-01,
-        -6.87425375e-01, -7.26367414e-01, -7.58370578e-01,
-        -7.74074256e-01, -7.61724949e-01, -7.22140551e-01,
-        -6.51364148e-01, -5.54406047e-01, -4.51524764e-01,
-        -3.54017019e-01, -2.68543184e-01, -1.91750199e-01,
-        -1.24660455e-01, -6.43352345e-02, -2.87100654e-02,
-        -8.99783615e-03]], dtype=float32)>
-
-
-model_2=tf.keras.Sequential()
-model_2.add(tf.keras.layers.Flatten())
-model_2.add(tf.keras.layers.Dense(300,activation='relu'))
-model_2.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-# Compiling the model
-model_2.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-# Training
-tf.random.set_seed(100)
-hist_2=model_2.fit(X_train,y_train,epochs=10)
-pd.DataFrame(hist_2.history).plot();
-
-print(' Evaluation Result:\n')
-model_2.evaluate(X_test,y_test)
-
-     
-
-Epoch 1/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.2092 - accuracy: 0.9402
-Epoch 2/10
-1875/1875 [==============================] - 7s 4ms/step - loss: 0.0872 - accuracy: 0.9744
-Epoch 3/10
-1875/1875 [==============================] - 7s 4ms/step - loss: 0.0574 - accuracy: 0.9826
-Epoch 4/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.0445 - accuracy: 0.9863
-Epoch 5/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.0317 - accuracy: 0.9904
-Epoch 6/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.0268 - accuracy: 0.9908
-Epoch 7/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.0208 - accuracy: 0.9937
-Epoch 8/10
-1875/1875 [==============================] - 8s 4ms/step - loss: 0.0184 - accuracy: 0.9944
-Epoch 9/10
-1875/1875 [==============================] - 7s 4ms/step - loss: 0.0181 - accuracy: 0.9940
-Epoch 10/10
-1875/1875 [==============================] - 7s 4ms/step - loss: 0.0170 - accuracy: 0.9948
- Evaluation Result:
-
-313/313 [==============================] - 1s 2ms/step - loss: 0.1470 - accuracy: 0.9788
-
-[0.14703814685344696, 0.9787999987602234]
-
-Remark 2:
-
-    Basic Model: Training loss=0.1852 ; Test loss=0.3103 (Overfitting)
-
-    Model with Normalised data: Training loss=0.0170 ; Test loss=0.1470 (Model improved, Overfitting)
-
-3. Model with validation
-
-model_3=tf.keras.Sequential()
-model_3.add(tf.keras.layers.Flatten())
-model_3.add(tf.keras.layers.Dense(300,activation='relu'))
-model_3.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-# Compiling the model
-model_3.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-# Training
-tf.random.set_seed(100)
-## Validation split
-hist_3=model_3.fit(X_train,y_train,epochs=10, validation_split=0.2)
-pd.DataFrame(hist_3.history).plot();
-
-print(' Evaluation Result:\n')
-model_3.evaluate(X_test,y_test)
-
-Epoch 1/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.2303 - accuracy: 0.9348 - val_loss: 0.1338 - val_accuracy: 0.9614
-Epoch 2/10
-1500/1500 [==============================] - 6s 4ms/step - loss: 0.0917 - accuracy: 0.9732 - val_loss: 0.0987 - val_accuracy: 0.9742
-Epoch 3/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0593 - accuracy: 0.9829 - val_loss: 0.1035 - val_accuracy: 0.9706
-Epoch 4/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0412 - accuracy: 0.9871 - val_loss: 0.0972 - val_accuracy: 0.9753
-Epoch 5/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0308 - accuracy: 0.9899 - val_loss: 0.1186 - val_accuracy: 0.9741
-Epoch 6/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0237 - accuracy: 0.9928 - val_loss: 0.1221 - val_accuracy: 0.9731
-Epoch 7/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0195 - accuracy: 0.9936 - val_loss: 0.1124 - val_accuracy: 0.9766
-Epoch 8/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0202 - accuracy: 0.9937 - val_loss: 0.1238 - val_accuracy: 0.9751
-Epoch 9/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0169 - accuracy: 0.9945 - val_loss: 0.1285 - val_accuracy: 0.9747
-Epoch 10/10
-1500/1500 [==============================] - 8s 6ms/step - loss: 0.0187 - accuracy: 0.9943 - val_loss: 0.1481 - val_accuracy: 0.9758
- Evaluation Result:
-
-313/313 [==============================] - 1s 3ms/step - loss: 0.1403 - accuracy: 0.9762
-
-[0.14034612476825714, 0.9761999845504761]
-
-Remark 3:
-
-    Basic Model: Training loss=0.1852 ; Test loss=0.3103 (Overfitting)
-
-    Model with Normalised data: Training loss=0.0170 ; Test loss=0.1470 (Model improved, Overfitting)
-
-    Model with Validation data: Training loss=0.0187 ; Test loss=0.1403 (Model improved, Overfitting)
-
-4. Model with Dropout
-
-model_4=tf.keras.Sequential()
-model_4.add(tf.keras.layers.Flatten())
-model_4.add(tf.keras.layers.Dense(300,activation='relu'))
-
-# Dropout layer
-model_4.add(tf.keras.layers.Dropout(0.1)) # 10% of units will be dropped
-
-model_4.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-# Compiling the model
-model_4.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-# Training
-tf.random.set_seed(100)
-## Validation split
-hist_4=model_4.fit(X_train,y_train,epochs=10, validation_split=0.2)
-pd.DataFrame(hist_4.history).plot();
-
-print(' Evaluation Result:\n')
-model_4.evaluate(X_test,y_test)
-
-Epoch 1/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.2436 - accuracy: 0.9305 - val_loss: 0.1401 - val_accuracy: 0.9601
-Epoch 2/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.1066 - accuracy: 0.9690 - val_loss: 0.0954 - val_accuracy: 0.9719
-Epoch 3/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0730 - accuracy: 0.9788 - val_loss: 0.0934 - val_accuracy: 0.9734
-Epoch 4/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0532 - accuracy: 0.9831 - val_loss: 0.1050 - val_accuracy: 0.9737
-Epoch 5/10
-1500/1500 [==============================] - 9s 6ms/step - loss: 0.0430 - accuracy: 0.9865 - val_loss: 0.1014 - val_accuracy: 0.9757
-Epoch 6/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0371 - accuracy: 0.9887 - val_loss: 0.1140 - val_accuracy: 0.9746
-Epoch 7/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0315 - accuracy: 0.9902 - val_loss: 0.1100 - val_accuracy: 0.9759
-Epoch 8/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0260 - accuracy: 0.9913 - val_loss: 0.1178 - val_accuracy: 0.9753
-Epoch 9/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0282 - accuracy: 0.9912 - val_loss: 0.1248 - val_accuracy: 0.9753
-Epoch 10/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0246 - accuracy: 0.9922 - val_loss: 0.1367 - val_accuracy: 0.9774
- Evaluation Result:
-
-313/313 [==============================] - 1s 3ms/step - loss: 0.1475 - accuracy: 0.9754
-
-[0.14748935401439667, 0.9753999710083008]
-
-Remark 4:
-
-    Basic Model: Training loss=0.1852 ; Test loss=0.3103 (Overfitting)
-
-    Model with Normalised data: Training loss=0.0170 ; Test loss=0.1470 (Model improved, Overfitting)
-
-    Model with Validation data: Training loss=0.0187 ; Test loss=0.1403 (Model improved, Overfitting)
-
-    Model with Dropout: Training loss=0.0246 ; Test loss= 0.1474(Model NOT improved. Retain the model_3)
-
-5. Model with Early Stop
-
-model_5=tf.keras.Sequential()
-model_5.add(tf.keras.layers.Flatten())
-model_5.add(tf.keras.layers.Dense(300,activation='relu'))
-model_5.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-# Compiling the model
-model_5.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-# Introducing early stop
-
-early_stop=tf.keras.callbacks.EarlyStopping(monitor='val_loss',patience=2)
-
-# Training
-tf.random.set_seed(100)
-## Validation split,callbacks
-hist_5=model_5.fit(X_train,y_train,epochs=10, validation_split=0.2,callbacks=[early_stop])
-pd.DataFrame(hist_5.history).plot();
-
-print(' Evaluation Result:\n')
-model_5.evaluate(X_test,y_test)
-
-Epoch 1/10
-1500/1500 [==============================] - 7s 4ms/step - loss: 0.2303 - accuracy: 0.9348 - val_loss: 0.1338 - val_accuracy: 0.9614
-Epoch 2/10
-1500/1500 [==============================] - 6s 4ms/step - loss: 0.0917 - accuracy: 0.9732 - val_loss: 0.0987 - val_accuracy: 0.9742
-Epoch 3/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0593 - accuracy: 0.9829 - val_loss: 0.1035 - val_accuracy: 0.9706
-Epoch 4/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0412 - accuracy: 0.9871 - val_loss: 0.0972 - val_accuracy: 0.9753
-Epoch 5/10
-1500/1500 [==============================] - 9s 6ms/step - loss: 0.0308 - accuracy: 0.9899 - val_loss: 0.1186 - val_accuracy: 0.9741
-Epoch 6/10
-1500/1500 [==============================] - 11s 7ms/step - loss: 0.0237 - accuracy: 0.9928 - val_loss: 0.1221 - val_accuracy: 0.9731
- Evaluation Result:
-
-313/313 [==============================] - 1s 3ms/step - loss: 0.1281 - accuracy: 0.9729
-
-[0.12814894318580627, 0.9728999733924866]
-
-Remark 5:
-
-    Basic Model: Training loss=0.1852 ; Test loss=0.3103 (Overfitting)
-
-    Model with Normalised data: Training loss=0.0170 ; Test loss=0.1470 (Model improved, Overfitting)
-
-    Model with Validation data: Training loss=0.0187 ; Test loss=0.1403 (Model improved, Overfitting)
-
-    Model with Dropout: Training loss=0.0246 ; Test loss= 0.1474(Model NOT improved. Retain the model_3)
-
-    Model with EarlyStop: Training loss=0.0237 ; Test loss= 0.1281(Model improved. Retain the model_5)
-
-6. Model with Batch Normalisation
-
-model_6=tf.keras.Sequential()
-model_6.add(tf.keras.layers.Flatten())
-model_6.add(tf.keras.layers.Dense(300,activation='relu'))
-
-# Batch Normalisation
-model_6.add(tf.keras.layers.BatchNormalization())
-model_6.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-# Compiling the model
-model_6.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-# Introducing early stop
-
-early_stop=tf.keras.callbacks.EarlyStopping(monitor='val_loss',patience=2)
-
-# Training
-tf.random.set_seed(100)
-## Validation split,callbacks
-hist_6=model_6.fit(X_train,y_train,epochs=10, validation_split=0.2,callbacks=[early_stop])
-pd.DataFrame(hist_6.history).plot();
-
-print(' Evaluation Result:\n')
-model_6.evaluate(X_test,y_test)
-
-Epoch 1/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.2505 - accuracy: 0.9266 - val_loss: 0.1500 - val_accuracy: 0.9624
-Epoch 2/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.1163 - accuracy: 0.9654 - val_loss: 0.1802 - val_accuracy: 0.9683
-Epoch 3/10
-1500/1500 [==============================] - 9s 6ms/step - loss: 0.0871 - accuracy: 0.9736 - val_loss: 0.1132 - val_accuracy: 0.9724
-Epoch 4/10
-1500/1500 [==============================] - 8s 6ms/step - loss: 0.0662 - accuracy: 0.9789 - val_loss: 0.1028 - val_accuracy: 0.9751
-Epoch 5/10
-1500/1500 [==============================] - 8s 5ms/step - loss: 0.0526 - accuracy: 0.9829 - val_loss: 0.1570 - val_accuracy: 0.9712
-Epoch 6/10
-1500/1500 [==============================] - 10s 7ms/step - loss: 0.0458 - accuracy: 0.9852 - val_loss: 0.1737 - val_accuracy: 0.9728
- Evaluation Result:
-
-313/313 [==============================] - 1s 2ms/step - loss: 0.1565 - accuracy: 0.9727
-
-[0.15648391842842102, 0.9726999998092651]
-
-Remark 6:
-
-    Basic Model: Training loss=0.1852 ; Test loss=0.3103 (Overfitting)
-
-    Model with Normalised data: Training loss=0.0170 ; Test loss=0.1470 (Model improved, Overfitting)
-
-    Model with Validation data: Training loss=0.0187 ; Test loss=0.1403 (Model improved, Overfitting)
-
-    Model with Dropout: Training loss=0.0246 ; Test loss= 0.1474(Model NOT improved. Retain the model_3)
-
-    Model with EarlyStop: Training loss=0.0237 ; Test loss= 0.1281(Model improved. Retain the model_5)
-
-    Model with Batch Normalization: Training loss= 0.0458; Test loss= 0.1564(Model NOT improved. Retain the model_5)
-
-7. Model with 2 hidden layers
-
-model_7=tf.keras.Sequential()
-model_7.add(tf.keras.layers.Flatten())
-model_7.add(tf.keras.layers.Dense(300,activation='relu'))
-
-## Adding one more layer
-model_7.add(tf.keras.layers.Dense(100,activation='relu'))
-
-model_7.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-# Compiling the model
-model_7.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-# Introducing early stop
-
-early_stop=tf.keras.callbacks.EarlyStopping(monitor='val_loss',patience=2)
-
-# Training
-tf.random.set_seed(100)
-## Validation split,callbacks
-hist_7=model_7.fit(X_train,y_train,epochs=10, validation_split=0.2,callbacks=[early_stop])
-pd.DataFrame(hist_7.history).plot();
-
-print(' Evaluation Result:\n')
-model_7.evaluate(X_test,y_test)
-
-Epoch 1/10
-1500/1500 [==============================] - 9s 6ms/step - loss: 0.2250 - accuracy: 0.9337 - val_loss: 0.1441 - val_accuracy: 0.9581
-Epoch 2/10
-1500/1500 [==============================] - 7s 5ms/step - loss: 0.0938 - accuracy: 0.9718 - val_loss: 0.1103 - val_accuracy: 0.9692
-Epoch 3/10
-1500/1500 [==============================] - 10s 7ms/step - loss: 0.0661 - accuracy: 0.9809 - val_loss: 0.1001 - val_accuracy: 0.9718
-Epoch 4/10
-1500/1500 [==============================] - 8s 6ms/step - loss: 0.0479 - accuracy: 0.9847 - val_loss: 0.0990 - val_accuracy: 0.9754
-Epoch 5/10
-1500/1500 [==============================] - 8s 6ms/step - loss: 0.0372 - accuracy: 0.9882 - val_loss: 0.1237 - val_accuracy: 0.9688
-Epoch 6/10
-1500/1500 [==============================] - 12s 8ms/step - loss: 0.0356 - accuracy: 0.9891 - val_loss: 0.1329 - val_accuracy: 0.9712
- Evaluation Result:
-
-313/313 [==============================] - 1s 2ms/step - loss: 0.1289 - accuracy: 0.9710
-
-[0.12887224555015564, 0.9710000157356262]
-
-Remark 7:
-
-    Basic Model: Training loss=0.1852 ; Test loss=0.3103 (Overfitting)
-
-    Model with Normalised data: Training loss=0.0170 ; Test loss=0.1470 (Model improved, Overfitting)
-
-    Model with Validation data: Training loss=0.0187 ; Test loss=0.1403 (Model improved, Overfitting)
-
-    Model with Dropout: Training loss=0.0246 ; Test loss= 0.1474(Model NOT improved. Retain the model_3)
-
-    Model with EarlyStop: Training loss=0.0237 ; Test loss= 0.1281(Model improved. Retain the model_5)
-
-    Model with Batch Normalization: Training loss= 0.0458; Test loss= 0.1564(Model NOT improved. Retain the model_5)
-
-    Model with 2 hidden layers: Training loss=0.0356 ; Test loss= 0.1288(Model NOT improved. Retain the model_5)
-
-8. Model with changed no of units
-
-model_8=tf.keras.Sequential()
-model_8.add(tf.keras.layers.Flatten())
-
-# Change the no of units to 50
-model_8.add(tf.keras.layers.Dense(50,activation='relu'))
-
-model_8.add(tf.keras.layers.Dense(10,activation='softmax'))
-
-# Compiling the model
-model_8.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                optimizer=tf.keras.optimizers.Adam(),
-                metrics=['accuracy'])
-# Introducing early stop
-
-early_stop=tf.keras.callbacks.EarlyStopping(monitor='val_loss',patience=2)
-
-# Training
-tf.random.set_seed(100)
-## Validation split,callbacks
-hist_8=model_8.fit(X_train,y_train,epochs=10, validation_split=0.2,callbacks=[early_stop])
-pd.DataFrame(hist_8.history).plot();
-
-print(' Evaluation Result:\n')
-model_8.evaluate(X_test,y_test)
-
-Epoch 1/10
-1500/1500 [==============================] - 5s 3ms/step - loss: 0.3032 - accuracy: 0.9107 - val_loss: 0.1931 - val_accuracy: 0.9446
-Epoch 2/10
-1500/1500 [==============================] - 4s 3ms/step - loss: 0.1429 - accuracy: 0.9583 - val_loss: 0.1376 - val_accuracy: 0.9595
-Epoch 3/10
-1500/1500 [==============================] - 4s 3ms/step - loss: 0.1015 - accuracy: 0.9700 - val_loss: 0.1305 - val_accuracy: 0.9607
-Epoch 4/10
-1500/1500 [==============================] - 4s 3ms/step - loss: 0.0816 - accuracy: 0.9754 - val_loss: 0.1230 - val_accuracy: 0.9641
-Epoch 5/10
-1500/1500 [==============================] - 4s 3ms/step - loss: 0.0637 - accuracy: 0.9805 - val_loss: 0.1248 - val_accuracy: 0.9664
-Epoch 6/10
-1500/1500 [==============================] - 4s 3ms/step - loss: 0.0548 - accuracy: 0.9828 - val_loss: 0.1286 - val_accuracy: 0.9643
- Evaluation Result:
-
-313/313 [==============================] - 1s 2ms/step - loss: 0.1277 - accuracy: 0.9656
-
-[0.12774796783924103, 0.9656000137329102]
-
-Remark 8:
-
-    Basic Model: Training loss=0.1852 ; Test loss=0.3103 (Overfitting)
-
-    Model with Normalised data: Training loss=0.0170 ; Test loss=0.1470 (Model improved, Overfitting)
-
-    Model with Validation data: Training loss=0.0187 ; Test loss=0.1403 (Model improved, Overfitting)
-
-    Model with Dropout: Training loss=0.0246 ; Test loss= 0.1474(Model NOT improved. Retain the model_3)
-
-    Model with EarlyStop: Training loss=0.0237 ; Test loss= 0.1281(Model improved. Retain the model_5)
-
-    Model with Batch Normalization: Training loss= 0.0458; Test loss= 0.1564(Model NOT improved. Retain the model_5)
-
-    Model with 2 hidden layers: Training loss=0.0356 ; Test loss= 0.1288(Model NOT improved. Retain the model_5)
-
-    Model with 50 units: Training loss= 0.0548; Test loss= 0.1277(Model improved. Retain the model_8 as The best model)
-
-Best model: model_8
-Saving the model
-
-model_8.save('best_mnist_model.h5')
-     
-Loading the model
-
-my_mnist=tf.keras.models.load_model('best_mnist_model.h5')
-
-my_mnist.evaluate(X_test,y_test)
-
-313/313 [==============================] - 1s 3ms/step - loss: 0.1277 - accuracy: 0.9656
-
-[0.12774796783924103, 0.9656000137329102]
-DL_10_RNN
-
-
-Stock Market Prediction using LSTM
-
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-import tensorflow as tf
-     
-Accessing data
-
-adani=pd.read_csv('https://query1.finance.yahoo.com/v7/finance/download/ADANIPOWER.NS?period1=1646742145&period2=1678278145&interval=1d&events=history&includeAdjustedClose=true')
-
-adani
-     
- Date  Open  High  Low  Close  Adj Close  Volume
-0  2022-03-08  118.400002  121.449997  117.349998  118.699997  118.699997  27745685
-1  2022-03-09  121.300003  122.699997  119.599998  121.300003  121.300003  21234389
-2  2022-03-10  125.000000  125.699997  121.349998  122.500000  122.500000  20823339
-3  2022-03-11  122.000000  123.500000  121.099998  121.800003  121.800003  14362421
-4  2022-03-14  122.550003  123.099998  120.500000  122.150002  122.150002  14143340
-...  ...  ...  ...  ...  ...  ...  ...
-245  2023-03-01  153.000000  153.600006  152.149994  153.600006  153.600006  1372548
-246  2023-03-02  161.250000  161.250000  161.250000  161.250000  161.250000  1030431
-247  2023-03-03  169.300003  169.300003  169.300003  169.300003  169.300003  648028
-248  2023-03-06  177.750000  177.750000  177.750000  177.750000  177.750000  2877047
-249  2023-03-08  183.100006  186.600006  175.100006  186.600006  186.600006  19594174
-
-250 rows × 7 columns
-
-# Use 'Close'
-
-data=adani['Close']
-
-data
-
-0      118.699997
-1      121.300003
-2      122.500000
-3      121.800003
-4      122.150002
-          ...    
-245    153.600006
-246    161.250000
-247    169.300003
-248    177.750000
-249    186.600006
-Name: Close, Length: 250, dtype: float64
-
-Split into train and test
-
-train=data[:200]
-test=data[200:]
+doc_1
+
+doc_2='''What is Chat GPT and why is everyone talking about it? On Twitter, blogs, and at the office, Chat GPT has taken over the conversation in marketing. However, not everyone is a fan.
+So what is Chat GPT? Who better to ask than Chat GPT itself? 
+ChatGPT is a variant of the GPT (Generative Pre-training Transformer) language model specifically designed for generating text in a chatbot-like manner. It is trained on a large dataset of human-human conversations and can generate natural language responses to input prompts.
+In other words, it is a smart AI technology that will spit out factual, informative and well-written responses to given prompts. The technology presents endless potential with many applications to marketing including customer service, eCommerce, entertainment, resourcing and more! Along with these benefits, many professionals are questioning what such a helpful tool means for working freelancers and industry professionals.'''
+
+doc_2
+
+doc_3='''ChatGPT is a large language learning model that was designed to imitate human conversation. It can remember things you have said to it in the past and is capable of correcting itself when wrong.
+It writes in a human-like way and has a wealth of knowledge because it was trained on all sorts of text from the internet, such as Wikipedia, blog posts, books, and academic articles.
+It's easy to learn how to use ChatGPT, but what is more challenging is finding out what its biggest problems are. Here are some that are worth knowing about.
+1. ChatGPT Isn't Always Right
+It fails at basic math, can't seem to answer simple logic questions, and will even go as far as to argue completely incorrect facts. As social media users can attest, ChatGPT can get it wrong on more than one occasion.'''
+
+doc_3
+
+doc_4='''Texting, chatting and online messaging can be used for much more than simply communicating with your friends. Online communication can help young people build and develop social skills and gives them a platform to share their skills and help each other out.
+Messaging and texting are among the most popular methods of communication among children and teenagers. A study by Common Sense Media in 2018 found that 70% of teenagers report using social media multiple times a day.
+Messaging and texting can be much more than ways to communicate. They can also be tools that help young people learn and master important skills.'''
+
+doc_4
+
+# Creating the list
+
+docs=[doc_1,doc_2,doc_3,doc_4]
+
+print(docs)
+
+## Choosing the tokens
+
+texts=[]# List of all tokens
+for document in docs:
+    doc=nlp(document)
+    text=[] # List of tokens in the document
+    for token in doc:
+        if not token.is_stop and not token.is_punct and not token.like_num:
+            text.append(token.lemma_)
+    texts.append(text)
+
+print(texts)
+
+print(len(texts))
+
+print(len(texts[0]))
+
+print(len(texts[1]))
+
+print(len(texts[2]))
+
+print(len(texts[3]))
+
+## Creation of a corpus
+
+Corpus is a collection of tokens in a dictionary format.
+
+from gensim.corpora import Dictionary
+
+dict_1=Dictionary(texts)
+print(dict_1)
+
+## Giving an ID to each token
+
+print(dict_1.token2id)
+
+print(len(dict_1))
+
+## Bag of words
+
+bow_vec=[]
+for token in texts:
+    bow_vec.append(dict_1.doc2bow(token))
+
+print(bow_vec)
+
+## Creating BOW Matrix
+
+from gensim.matutils import corpus2dense
+
+bow_matrix=corpus2dense(bow_vec,num_terms=len(dict_1))
+
+print(bow_matrix)
+
+bow_matrix.shape
+
+## TFIDF Vectorisation
+
+Term Frequency Inverse Document Frequency
+
+from gensim.models import TfidfModel
+tfidf=TfidfModel(bow_vec)
+
+print(tfidf)
+
+tfidf_vec=[]
+for vec in bow_vec:
+    tfidf_vec.append(tfidf[vec])
+
+print(tfidf_vec)
+
+print(len(tfidf_vec))
+
+print(gensim.__version__)
+
+## Similarity of documents
+
+from gensim.similarities import MatrixSimilarity
+
+sim=MatrixSimilarity(tfidf_vec,num_features=len(dict_1))
+
+print(sim)
+
+print(sim[tfidf_vec[0]])
+
+print(sim[tfidf_vec[3]])
+
+# session 7
+# Topic Modelling
+
+#!pip install pyLDAvis
+import pyLDAvis
+
+import pyLDAvis.gensim_models
+
+import spacy
+import gensim
+
+nlp=spacy.load('en_core_web_sm')
+
+## Accessing texts
+
+text_1='''chess, one of the oldest and most popular board games, played by two opponents on a checkered board with specially designed pieces of contrasting colours, commonly white and black. White moves first, after which the players alternate turns in accordance with fixed rules, each player attempting to force the opponent’s principal piece, the King, into checkmate—a position where it is unable to avoid capture.
+Chess first appeared in India about the 6th century AD and by the 10th century had spread from Asia to the Middle East and Europe. Since at least the 15th century, chess has been known as the “royal game” because of its popularity among the nobility. Rules and set design slowly evolved until both reached today’s standard in the early 19th century. Once an intellectual diversion favoured by the upper classes, chess went through an explosive growth in interest during the 20th century as professional and state-sponsored players competed for an officially recognized world championship title and increasingly lucrative tournament prizes. Organized chess tournaments, postal correspondence games, and Internet chess now attract men, women, and children around the world.
+This article provides an in-depth review of the history and the theory of the game by noted author and international grandmaster Andrew Soltis.
+Characteristics of the game
+Chess is played on a board of 64 squares arranged in eight vertical rows called files and eight horizontal rows called ranks. These squares alternate between two colours: one light, such as white, beige, or yellow; and the other dark, such as black or green. The board is set between the two opponents so that each player has a light-coloured square at the right-hand corner.
+Algebraic notation
+Individual moves and entire games can be recorded using one of several forms of notation. By far the most widely used form, algebraic (or coordinate) notation, identifies each square from the point of view of the player with the light-coloured pieces, called White. The eight ranks are numbered 1 through 8 beginning with the rank closest to White. The files are labeled a through h beginning with the file at White’s left hand. Each square has a name consisting of its letter and number, such as b3 or g8. Additionally, files a through d are referred to as the queenside, and files e through h as the kingside. See Figure 1.
+Get a Britannica Premium subscription and gain access to exclusive content.
+Subscribe Now
+Moves
+The board represents a battlefield in which two armies fight to capture each other’s king. A player’s army consists of 16 pieces that begin play on the two ranks closest to that player. There are six different types of pieces: king, rook, bishop, queen, knight, and pawn; the pieces are distinguished by appearance and by how they move. The players alternate moves, White going first.
+King
+White’s king begins the game on e1. Black’s king is opposite at e8. Each king can move one square in any direction; e.g., White’s king can move from e1 to d1, d2, e2, f2, or f1.
+Rook
+Each player has two rooks (formerly also known as castles), which begin the game on the corner squares a1 and h1 for White, a8 and h8 for Black. A rook can move vertically or horizontally to any unobstructed square along the file or rank on which it is placed.
+Bishop
+Each player has two bishops, and they begin the game at c1 and f1 for White, c8 and f8 for Black. A bishop can move to any unobstructed square on the diagonal on which it is placed. Therefore, each player has one bishop that travels only on light-coloured squares and one bishop that travels only on dark-coloured squares.
+Queen
+Each player has one queen, which combines the powers of the rook and bishop and is thus the most mobile and powerful piece. The White queen begins at d1, the Black queen at d8.
+Knight
+Each player has two knights, and they begin the game on the squares between their rooks and bishops—i.e., at b1 and g1 for White and b8 and g8 for Black. The knight has the trickiest move, an L-shape of two steps: first one square like a rook, then one square like a bishop, but always in a direction away from the starting square. A knight at e4 could move to f2, g3, g5, f6, d6, c5, c3, or d2. The knight has the unique ability to jump over any other piece to reach its destination. It always moves to a square of a different colour.
+Capturing
+The king, rook, bishop, queen, and knight capture enemy pieces in the same manner that they move. For example, a White queen on d3 can capture a Black rook at h7 by moving to h7 and removing the enemy piece from the board. Pieces can capture only enemy pieces.
+Pawns
+Each player has eight pawns, which begin the game on the second rank closest to each player; i.e., White’s pawns start at a2, b2, c2, and so on, while Black’s pawns start at a7, b7, c7, and so on. The pawns are unique in several ways. A pawn can move only forward; it can never retreat. It moves differently than it captures. A pawn moves to the square directly ahead of it but captures on the squares diagonally in front of it; e.g., a White pawn at f5 can move to f6 but can capture only on g6 or e6. An unmoved pawn has the option of moving one or two squares forward. This is the reason for another peculiar option, called en passant—that is, in passing—available to a pawn when an enemy pawn on an adjoining file advances two squares on its initial move and could have been captured had it moved only one square. The first pawn can take the advancing pawn en passant, as if it had advanced only one square. An en passant capture must be made then or not at all. Only pawns can be captured en passant. The last unique feature of the pawn occurs if it reaches the end of a file; it must then be promoted to—that is, exchanged for—a queen, rook, bishop, or knight.
+Castling
+The one exception to the rule that a player may move only one piece at a time is a compound move of king and rook called castling. A player castles by shifting the king two squares in the direction of a rook, which is then placed on the square the king has crossed. For example, White can castle kingside by moving the king from e1 to g1 and the rook from h1 to f1. Castling is permitted only once in a game and is prohibited if the king or rook has previously moved or if any of the squares between them is occupied. Also, castling is not legal if the square the king starts on, crosses, or finishes on is attacked by an enemy piece.
+Relative piece values
+Assigning the pawn a value of 1, the values of the other pieces are approximately as follows: knight 3, bishop 3, rook 5, and queen 9. The relative values of knights and bishops vary with different pawn structures. Additionally, tactical considerations may temporarily override the pieces’ usual relative values. Material concerns are secondary to winning.
+Object of the game
+When a player moves a piece to a square on which it attacks the enemy king—that is, a square from which it could capture the king if the king is not shielded or moved—the king is said to be in check. The game is won when one king is in check and cannot avoid capture on the next move; this is called checkmate. A game also can end when a player, believing the situation to be hopeless, acknowledges defeat by resigning.
+There are three possible results in chess: win, lose, or draw. There are six ways a draw can come about: (1) by mutual consent, (2) when neither player has enough pieces to deliver checkmate, (3) when one player can check the enemy king endlessly (perpetual check), (4) when a player who is not in check has no legal move (stalemate), (5) when an identical position occurs three times with the same player having the right to move, and (6) when no piece has been captured and no pawn has been moved within a period of 50 moves.
+In competitive events, a victory is scored as one point, a draw as half a point, and a loss as no points.'''
+
+text_1
+
+text_2='''Chess computers were first able to beat strong chess players in the late 1980s. Their most famous success was the victory of Deep Blue over then World Chess Champion Garry Kasparov in 1997, but there was some controversy over whether the match conditions favored the computer.
+In 2002–2003, three human–computer matches were drawn, but, whereas Deep Blue was a specialized machine, these were chess programs running on commercially available computers.
+Chess programs running on commercially available desktop computers won decisive victories against human players in matches in 2005 and 2006. The second of these, against then world champion Vladimir Kramnik is (as of 2019) the last major human-computer match.
+Since that time, chess programs running on commercial hardware—more recently including mobile phones—have been able to defeat even the strongest human players.
+MANIAC (1956)
+In 1956 MANIAC, developed at Los Alamos Scientific Laboratory, became the first computer to defeat a human in a chess-like game. Playing with the simplified Los Alamos rules, it defeated a novice in 23 moves.[1]
+Mac Hack VI (1966–1968)
+In 1966 MIT student Richard Greenblatt wrote the chess program Mac Hack VI using MIDAS macro assembly language on a Digital Equipment Corporation PDP-6 computer with 16K of memory. Mac Hack VI evaluated 10 positions per second.
+In 1967, several MIT students and professors (organized by Seymour Papert) challenged Dr. Hubert Dreyfus to play a game of chess against Mac Hack VI. Dreyfus, a professor of philosophy at MIT, wrote the book What Computers Can’t Do, questioning the computer's ability to serve as a model for the human brain. He also asserted that no computer program could defeat even a 10-year-old child at chess. Dreyfus accepted the challenge. Herbert A. Simon, an artificial intelligence pioneer, watched the game. He said, "it was a wonderful game—a real cliffhanger between two woodpushers with bursts of insights and fiendish plans ... great moments of drama and disaster that go in such games." The computer was beating Dreyfus when he found a move which could have captured the enemy queen. The only way the computer could get out of this was to keep Dreyfus in checks with its own queen until it could fork the queen and king, and then exchange them. That is what the computer did. Soon, Dreyfus was losing. Finally, the computer checkmated Dreyfus in the middle of the board.
+In the spring of 1967, Mac Hack VI played in the Boston Amateur championship, winning two games and drawing two games. Mac Hack VI beat a 1510 United States Chess Federation player. This was the first time a computer won a game in a human tournament. At the end of 1968, Mac Hack VI achieved a rating of 1529. The average rating in the USCF was near 1500.[2]
+Chess x.x (1968–1978)
+In 1968, Northwestern University students Larry Atkin, David Slate and Keith Gorlen began work on Chess (Northwestern University). On 14 April 1970 an exhibition game was played against Australian Champion Fred Flatow, the program running on a Control Data Corporation 6600 model. Flatow won easily. On 25 July 1976, Chess 4.5 scored 5–0 in the Class B (1600–1799) section of the 4th Paul Masson chess tournament in Saratoga, California. This was the first time a computer won a human tournament. Chess 4.5 was rated 1722. Chess 4.5 running on a Control Data Corporation CDC Cyber 175 supercomputer (2.1 megaflops) looked at less than 1500 positions per second. On 20 February 1977, Chess 4.5 won the 84th Minnesota Open Championship with 5 wins and 1 loss. It defeated expert Charles Fenner rated 2016. On 30 April 1978, Chess 4.6 scored 5–0 at the Twin Cities Open in Minneapolis. Chess 4.6 was rated 2040.[3] International Master Edward Lasker stated that year, "My contention that computers cannot play like a master, I retract. They play absolutely alarmingly. I know, because I have lost games to 4.7."[4]
+David Levy's bet (1978)
+Main article: David Levy (chess player) § Computer chess bet
+For a long time in the 1970s and 1980s, it remained an open question whether any chess program would ever be able to defeat the expertise of top humans. In 1968, International Master David Levy made a famous bet that no chess computer would be able to beat him within ten years. He won his bet in 1978 by beating Chess 4.7 (the strongest computer at the time).
+Cray Blitz (1981)
+In 1981, Cray Blitz scored 5–0 in the Mississippi State Championship. In round 4, it defeated Joe Sentef (2262) to become the first computer to beat a master in tournament play and the first computer to gain a master rating (2258).[5]
+HiTech (1988)
+In 1988, HiTech won the Pennsylvania State Chess Championship with a score of 4½–½. HiTech defeated International Master Ed Formanek (2485).[6]
+The Harvard Cup Man versus Computer Chess Challenge was organized by Harvard University. There were six challenges from 1989 until 1995. They played in Boston and New York City. In each challenge the humans scored higher and the highest scorer was a human'''
+
+text_2
+
+text_3='''"It's like a game of chess," we used to say in days gone by.
+Every move our politicians made could be analysed and interpreted, not only for its significance in the wider electoral tournament but also for the possible moves, or false moves, it might induce from opponents.
+That all seems rather quaint now, viewed from our present standpoint where the table on which the chess board so precariously sits is being shaken by a constant bombardment of violent impacts: the very survival of the UK, the war on Islamic State and our future in or out of the EU.
+No wonder the chess pieces are wobbling already and could soon be simply tossed up in the air to land who knows where.
+And now, of course, there is a new player in the game. UKIP thinks the contest has for too long been the preserve of the same exclusive club of elite players.
+"This is an unpredictable election," Ed Miliband told me in what could well go down as the understatement of last week in Manchester.
+There really are so many imponderables piled one on top of another that assessing the likely outcomes next May looks less and less like a chess game and more and more like a mug's game.
+For a start, this era of coalition government means that with the two biggest parties short of a Commons majority, they both have rival sets of target seats on the go at the same time. So they are both in the position of having to fight defensive and offensive campaigns simultaneously.
+Our list of marginal seats here in the West Midlands shows that behind their ultra-close knife-edge marginals, Labour have some other narrow majorities to worry about before they start taking the Conservatives' chessmen off the board.
+These numbers underline the extend to which the Midlands has traditionally been a predominantly two-party contest.
+Liberal Democrat Lorely Burt stunned the Conservatives when she "crept in under the radar" in 2005 but now she has her work cut out to defend a majority of just 175 over the Conservatives.
+How will the emergence of the Green Party, now the official opposition on Solihull Council, affect the chances of the larger parties?
+Lorely Burt's party colleague John Hemming has turned Birmingham Yardley into something of a personal fiefdom, but Labour will be fighting hard to overturn his 3,002 majority and regain the seat he captured from former Education Secretary Estelle Morris in 2005.
+The Liberal Democrats' only other Midlands seat is in Cheltenham where Martin Horwood will defend a more comfortable majority of 4,920 over the Conservatives in what is still the home of the Midlands' only Liberal Democrat-controlled council.
+With confident predictions that the Liberal Democrats will lose many seats, perhaps it is to their traditional "core" constituencies that they may have to turn as they fight to limit the damage.
+And into this otherwise two-way political street comes the new kid on the blog, UKIP, arguably the biggest imponderable of all.
+If, as Nigel Farage says, they are not a repository simply for disillusioned Tory votes but a genuine mass party with broad appeal with their "tanks on Labour's lawn", how might they upset the two-party chess board?
+Take Dudley North, for example, where Labour's wafer-thin majority over the Conservatives faces the additional challenge of the UKIP candidate Bill Etheridge MEP, who has turned his borough into a local power base.
+'Politically toxic'
+On the other hand, how will the Conservatives' tiny majority over Labour in Warwickshire North fare against not just an experienced Labour candidate, former minister Mike O'Brien, but also UKIP who have made great play of opposition to high-speed rail in an area where HS2 has become, to mix my analogies, politically toxic?
+Or could the Midlands UKIP vote shrink, as it did in 2010 to just 4% after a performance in the previous summer's European elections which was impressive but not as emphatic as their clear victory in this year's EU poll?
+The evidence of the local elections on the same day was that if you simply weigh the votes, it is the Conservatives who lose the most. But if you apply those numbers to real council areas (and Parliamentary constituencies?} you see it was Labour who suffered last May, failing to win majorities in target councils like Tamworth, Walsall and Worcester.
+But in the remaining eight months before polling, perhaps the greatest imponderable of all is what politicians call "events" in a region which has always been particularly prone to the ups and downs of the economy.
+The Birmingham and Solihull Chamber of Commerce has just reported a continuing surge in business confidence.
+"Try telling that to young people in my constituency" says Ian Austin, the Labour MP for that key seat of Dudley North, where unemployment remains well above the national average and where wages continue to lag behind prices.
+Put all these chess pieces together and you can see why even those politics watchers with the longest memories say they have never known an election as difficult to predict as this.
+It helps to explain why the mood clearly detectable in Labour's ranks last week in Manchester was more uncertain than hopeful; why the Conservatives, behind Labour in the polls for so long, nevertheless closed their conference in Birmingham with more than a sneaking feeling that they could confound the sooth-sayers; and why I have it on good authority that senior Liberal Democrats are preparing to embark on their conference in Glasgow in a mood of innermost trepidation.
+As the end game draws near, a game of chess has never looked more like a game of chance.....'''
+
+text_3
+
+# Create a list of texts
+
+texts=[text_1,text_2,text_3]
+
+print(texts)
+
+## Creating a word list
+
+words_list=[]
+for text in texts:
+    doc=nlp(text)
+    text_words=[]
+    for token in doc:
+        if token.is_stop==False and token.is_punct==False and token.like_num==False and token.text!='\n':
+            text_words.append(token.lemma_)
+    words_list.append(text_words)
+
+print(words_list)
+
+print(len(words_list))
+
+print(len(words_list[0]))
+
+print(len(words_list[1]))
+
+print(len(words_list[2]))
+
+## Creating a corpus
+
+corpus=[]
+from gensim.corpora import Dictionary
+
+dict=Dictionary(words_list)
+type(dict)
+
+for word in words_list:
+    corpus.append(dict.doc2bow(word))
+
+print(corpus)
+
+len(corpus)
+
+len(corpus[0])
+
+len(corpus[1])
+
+len(corpus[2])
+
+## Creating an LDA model
+
+lda=gensim.models.ldamodel.LdaModel(corpus=corpus,
+                                   num_topics=5,
+                                   id2word=dict)
+
+type(lda)
+
+## Displaying topics
+
+lda.print_topics()
+
+lda.print_topics()[:2]
+
+## Getting topics for a word
+
+lda.get_term_topics('game')
+
+lda.get_term_topics('politics')
+
+lda.get_term_topics('famous')
+
+lda.get_term_topics('player')
+
+## Visualisation of topics
+
+pyLDAvis.enable_notebook()
+
+plot=pyLDAvis.gensim_models.prepare(lda,
+                                    corpus=corpus,
+                                   dictionary=lda.id2word)
+
+plot
+
+# session 8
+# Sentiment Analysis and Text Classification 
+
+#!
+
+from textblob import TextBlob
+
+text1='Anuj looks bit sad today'
+
+blob1=TextBlob(text1)
+
+type(blob1)
+
+# We want to have the sentiment
+
+blob1.sentiment
+
+# Another example
+
+text2='The movie was the worst movie I have watched recently. I felt like cheated'
+
+blob2=TextBlob(text2)
+
+blob2.sentiment
+
+text3='The movie was the worst and horrible movie I have watched recently. I felt like cheated. I recommend not to wacth'
+
+blob3=TextBlob(text3)
+
+blob3.sentiment
+
+text4=' I was elated to receive the wonderful news that I have got a call from the bext company I wanted to join. I am so happy and want to share with all you my happiness by throwing a party'
+
+blob4=TextBlob(text4)
+
+blob4.sentiment
+
+text5=' The sun is going to set at 6 PM'
+
+blob5=TextBlob(text5)
+
+blob5.sentiment
+
+
+
+text6='''The Union Budget 2023, presented by the Finance Minister Nirmala Sitharaman proposed to extend the period of limitation on the assessment orders in her budget speech. It was proposed that an order of assessment may be passed within a period of 12 months from the end of the relevant assessment year or the financial year in which updated return is filed, as the case may be. It was also proposed that in cases where search under section 132 of the Income Tax Act, 1961 or requisition under section 132A of the Income Tax Act has been made, the period of limitation of pending assessments shall be extended by twelve months. In the Finance Bill of 2023, it was proposed to amend the section of 153 of the Income Tax Act.  In  sub-section (1A), for the words “nine months”, the words “twelve months” shall be substituted. It was proposed to extend the time limit to 12 months. Additionally, the time limit for completing an assessment or reassessment, as applicable, is extended by 12 months if it is ongoing on the date that a search under Section 132 is commenced or a requisition under Section 132A is made. In this proposal, mainly the time limit has been extended and which would be helpful for the officers to figure out the things and proceed with proper procedure. Additionally, it was proposed to substitute “Principal Chief Commissioner or Chief Commissioner or Principal Commissioner or Commissioner, as the case may be,” for the phrases “Principal Commissioner or Commissioner” at both of their places. As reported before in the case Smt. Rashidaben Taher Morawala Badri Mohalla vsThe DCIT, CITATION: 2022 TAXSCAN (ITAT) 1772, the Division Bench of the Income Tax Appellate Tribunal (ITAT), Ahmedabad quashed the assessment order passed in violation of time limit under Section 153(1) of the Income Tax Act, 1961.
+
+Read More: https://www.taxscan.in/union-budget-2023-period-of-limitation-on-pending-assessment-extended-by-12-months/250888/'''
+
+blob6=TextBlob(text6)
+
+blob6.sentiment
+
+# Text Classification
+
+from sklearn.datasets import fetch_20newsgroups
+
+train=fetch_20newsgroups(subset='train')
+
+test=fetch_20newsgroups(subset='test')
+
+type(train)
+
+train.keys()
 
 train
 
-0      118.699997
-1      121.300003
-2      122.500000
-3      121.800003
-4      122.150002
-          ...    
-195    305.750000
-196    290.500000
-197    276.000000
-198    262.200012
-199    275.299988
-Name: Close, Length: 200, dtype: float64
 
 
-test
+train['target_names']
 
-200    289.049988
-201    303.500000
-202    304.500000
-203    299.549988
-204    298.149994
-205    294.750000
-206    286.600006
-207    288.750000
-208    283.399994
-209    287.700012
-210    279.200012
-211    276.200012
-212    273.649994
-213    278.700012
-214    272.950012
-215    281.950012
-216    278.700012
-217    277.549988
-218    275.049988
-219    273.200012
-220    274.649994
-221    261.000000
-222    247.949997
-223    235.550003
-224    223.800003
-225    212.649994
-226    202.050003
-227    191.949997
-228    182.350006
-229    173.250000
-230    181.899994
-231    172.800003
-232    164.199997
-233    156.000000
-234    148.199997
-235    140.800003
-236    147.800003
-237    155.149994
-238    162.899994
-239    171.000000
-240    162.449997
-241    154.350006
-242    146.649994
-243    139.350006
-244    146.300003
-245    153.600006
-246    161.250000
-247    169.300003
-248    177.750000
-249    186.600006
-Name: Close, dtype: float64
+train['target']
 
-Visualisation
+import numpy as np
 
-plt.figure(figsize=(15,6))
-plt.plot(train)
-plt.plot(test)
-plt.xlabel('Market day')
-plt.ylabel('Stock Price')
-plt.legend(['Train','Test']);
-     
-Standardisation
+np.unique(train['target'])
 
-from sklearn.preprocessing import MinMaxScaler
-scaler=MinMaxScaler()
+train['data']
 
-train_scaled=scaler.fit_transform(np.array(train).reshape(-1,1))
+print(train['data'][1])
 
-test_scaled=scaler.fit_transform(np.array(test).reshape(-1,1))
+print(train['target_names'][1])
 
-     
+print(train['data'][10])
 
-train_scaled
+print()
 
-array([[0.        ],
-       [0.00828555],
-       [0.01210963],
-       [0.00987892],
-       [0.01099428],
-       [0.01147229],
-       [0.01338434],
-       [0.02039516],
-       [0.01864247],
-       [0.01609306],
-       [0.03664755],
-       [0.04286169],
-       [0.07807521],
-       [0.10691524],
-       [0.17479288],
-       [0.16826005],
-       [0.21159977],
-       [0.27007648],
-       [0.2971638 ],
-       [0.36456344],
-       [0.40168898],
-       [0.36281072],
-       [0.32584448],
-       [0.35978333],
-       [0.35723392],
-       [0.333174  ],
-       [0.36870617],
-       [0.36249203],
-       [0.37077758],
-       [0.40822181],
-       [0.44741876],
-       [0.48868703],
-       [0.53202675],
-       [0.57520718],
-       [0.52756533],
-       [0.51513705],
-       [0.51513705],
-       [0.47052265],
-       [0.50812618],
-       [0.55242189],
-       [0.51912048],
-       [0.47434668],
-       [0.43530913],
-       [0.39467815],
-       [0.43323772],
-       [0.47370939],
-       [0.51625243],
-       [0.56086684],
-       [0.56947099],
-       [0.61679414],
-       [0.66650735],
-       [0.61440408],
-       [0.57568517],
-       [0.62332693],
-       [0.66730404],
-       [0.70602295],
-       [0.65184831],
-       [0.60038243],
-       [0.5629382 ],
-       [0.52708734],
-       [0.57233904],
-       [0.55035053],
-       [0.52836202],
-       [0.53871893],
-       [0.51434037],
-       [0.47004466],
-       [0.47147863],
-       [0.48868703],
-       [0.44805605],
-       [0.45442954],
-       [0.41284258],
-       [0.4313257 ],
-       [0.40981518],
-       [0.42670493],
-       [0.46446786],
-       [0.49139578],
-       [0.48295093],
-       [0.48231354],
-       [0.45936905],
-       [0.46064373],
-       [0.45570431],
-       [0.45905036],
-       [0.45889106],
-       [0.50000002],
-       [0.48709366],
-       [0.53027408],
-       [0.55465265],
-       [0.5352135 ],
-       [0.52581266],
-       [0.53553219],
-       [0.54541111],
-       [0.55656471],
-       [0.54557041],
-       [0.55863608],
-       [0.55003183],
-       [0.55130661],
-       [0.57042707],
-       [0.61743153],
-       [0.64770559],
-       [0.62221164],
-       [0.64738689],
-       [0.66873801],
-       [0.70395158],
-       [0.72833015],
-       [0.67989162],
-       [0.66889741],
-       [0.70442958],
-       [0.71287443],
-       [0.72163797],
-       [0.77644999],
-       [0.83413006],
-       [0.89467818],
-       [0.93451247],
-       [1.        ],
-       [0.93116633],
-       [0.8658381 ],
-       [0.87571702],
-       [0.81835564],
-       [0.87810708],
-       [0.94088595],
-       [0.92351817],
-       [0.90041428],
-       [0.86408543],
-       [0.92112811],
-       [0.91650729],
-       [0.90248564],
-       [0.88687062],
-       [0.88878268],
-       [0.87603571],
-       [0.84719563],
-       [0.89388149],
-       [0.85739325],
-       [0.87045891],
-       [0.89085405],
-       [0.86615679],
-       [0.88448056],
-       [0.85054177],
-       [0.78967495],
-       [0.80895471],
-       [0.79365838],
-       [0.79907588],
-       [0.81198216],
-       [0.75254942],
-       [0.74506055],
-       [0.80114725],
-       [0.80991079],
-       [0.78601022],
-       [0.7589229 ],
-       [0.75876351],
-       [0.72705547],
-       [0.67734226],
-       [0.70729763],
-       [0.72307204],
-       [0.68483112],
-       [0.70028685],
-       [0.6803697 ],
-       [0.69104522],
-       [0.6808477 ],
-       [0.69694071],
-       [0.68387504],
-       [0.68897385],
-       [0.73358826],
-       [0.71526448],
-       [0.69486935],
-       [0.72705547],
-       [0.73263227],
-       [0.7874442 ],
-       [0.80528998],
-       [0.76959851],
-       [0.76832374],
-       [0.75956019],
-       [0.72163797],
-       [0.69247929],
-       [0.69407266],
-       [0.67718296],
-       [0.66857872],
-       [0.66045256],
-       [0.65726582],
-       [0.65407907],
-       [0.66778203],
-       [0.65646913],
-       [0.68212237],
-       [0.67463351],
-       [0.6583811 ],
-       [0.65121093],
-       [0.65678773],
-       [0.65567244],
-       [0.65344169],
-       [0.62890373],
-       [0.61026135],
-       [0.65105163],
-       [0.63942004],
-       [0.62699176],
-       [0.60293179],
-       [0.59623961],
-       [0.59608031],
-       [0.54748248],
-       [0.5012747 ],
-       [0.45729769],
-       [0.49904394]])
+print(train['target_names'][10])
 
-Converting TS data to regression data
+print(train['data'][100])
 
-X_train=[]
-y_train=[]
-# window_size=10
-
-for i in range(10,200):
-  X_train.append(train_scaled[i-10:i,0])
-  y_train.append(train_scaled[i])
-
-X_train
-
-[array([0.        , 0.00828555, 0.01210963, 0.00987892, 0.01099428,
-        0.01147229, 0.01338434, 0.02039516, 0.01864247, 0.01609306]),
- array([0.00828555, 0.01210963, 0.00987892, 0.01099428, 0.01147229,
-        0.01338434, 0.02039516, 0.01864247, 0.01609306, 0.03664755]),
- array([0.01210963, 0.00987892, 0.01099428, 0.01147229, 0.01338434,
-        0.02039516, 0.01864247, 0.01609306, 0.03664755, 0.04286169]),
- array([0.00987892, 0.01099428, 0.01147229, 0.01338434, 0.02039516,
-        0.01864247, 0.01609306, 0.03664755, 0.04286169, 0.07807521]),
- array([0.01099428, 0.01147229, 0.01338434, 0.02039516, 0.01864247,
-        0.01609306, 0.03664755, 0.04286169, 0.07807521, 0.10691524]),
- array([0.01147229, 0.01338434, 0.02039516, 0.01864247, 0.01609306,
-        0.03664755, 0.04286169, 0.07807521, 0.10691524, 0.17479288]),
- array([0.01338434, 0.02039516, 0.01864247, 0.01609306, 0.03664755,
-        0.04286169, 0.07807521, 0.10691524, 0.17479288, 0.16826005]),
- array([0.02039516, 0.01864247, 0.01609306, 0.03664755, 0.04286169,
-        0.07807521, 0.10691524, 0.17479288, 0.16826005, 0.21159977]),
- array([0.01864247, 0.01609306, 0.03664755, 0.04286169, 0.07807521,
-        0.10691524, 0.17479288, 0.16826005, 0.21159977, 0.27007648]),
- array([0.01609306, 0.03664755, 0.04286169, 0.07807521, 0.10691524,
-        0.17479288, 0.16826005, 0.21159977, 0.27007648, 0.2971638 ]),
- array([0.03664755, 0.04286169, 0.07807521, 0.10691524, 0.17479288,
-        0.16826005, 0.21159977, 0.27007648, 0.2971638 , 0.36456344]),
- array([0.04286169, 0.07807521, 0.10691524, 0.17479288, 0.16826005,
-        0.21159977, 0.27007648, 0.2971638 , 0.36456344, 0.40168898]),
- array([0.07807521, 0.10691524, 0.17479288, 0.16826005, 0.21159977,
-        0.27007648, 0.2971638 , 0.36456344, 0.40168898, 0.36281072]),
- array([0.10691524, 0.17479288, 0.16826005, 0.21159977, 0.27007648,
-        0.2971638 , 0.36456344, 0.40168898, 0.36281072, 0.32584448]),
- array([0.17479288, 0.16826005, 0.21159977, 0.27007648, 0.2971638 ,
-        0.36456344, 0.40168898, 0.36281072, 0.32584448, 0.35978333]),
- array([0.16826005, 0.21159977, 0.27007648, 0.2971638 , 0.36456344,
-        0.40168898, 0.36281072, 0.32584448, 0.35978333, 0.35723392]),
- array([0.21159977, 0.27007648, 0.2971638 , 0.36456344, 0.40168898,
-        0.36281072, 0.32584448, 0.35978333, 0.35723392, 0.333174  ]),
- array([0.27007648, 0.2971638 , 0.36456344, 0.40168898, 0.36281072,
-        0.32584448, 0.35978333, 0.35723392, 0.333174  , 0.36870617]),
- array([0.2971638 , 0.36456344, 0.40168898, 0.36281072, 0.32584448,
-        0.35978333, 0.35723392, 0.333174  , 0.36870617, 0.36249203]),
- array([0.36456344, 0.40168898, 0.36281072, 0.32584448, 0.35978333,
-        0.35723392, 0.333174  , 0.36870617, 0.36249203, 0.37077758]),
- array([0.40168898, 0.36281072, 0.32584448, 0.35978333, 0.35723392,
-        0.333174  , 0.36870617, 0.36249203, 0.37077758, 0.40822181]),
- array([0.36281072, 0.32584448, 0.35978333, 0.35723392, 0.333174  ,
-        0.36870617, 0.36249203, 0.37077758, 0.40822181, 0.44741876]),
- array([0.32584448, 0.35978333, 0.35723392, 0.333174  , 0.36870617,
-        0.36249203, 0.37077758, 0.40822181, 0.44741876, 0.48868703]),
- array([0.35978333, 0.35723392, 0.333174  , 0.36870617, 0.36249203,
-        0.37077758, 0.40822181, 0.44741876, 0.48868703, 0.53202675]),
- array([0.35723392, 0.333174  , 0.36870617, 0.36249203, 0.37077758,
-        0.40822181, 0.44741876, 0.48868703, 0.53202675, 0.57520718]),
- array([0.333174  , 0.36870617, 0.36249203, 0.37077758, 0.40822181,
-        0.44741876, 0.48868703, 0.53202675, 0.57520718, 0.52756533]),
- array([0.36870617, 0.36249203, 0.37077758, 0.40822181, 0.44741876,
-        0.48868703, 0.53202675, 0.57520718, 0.52756533, 0.51513705]),
- array([0.36249203, 0.37077758, 0.40822181, 0.44741876, 0.48868703,
-        0.53202675, 0.57520718, 0.52756533, 0.51513705, 0.51513705]),
- array([0.37077758, 0.40822181, 0.44741876, 0.48868703, 0.53202675,
-        0.57520718, 0.52756533, 0.51513705, 0.51513705, 0.47052265]),
- array([0.40822181, 0.44741876, 0.48868703, 0.53202675, 0.57520718,
-        0.52756533, 0.51513705, 0.51513705, 0.47052265, 0.50812618]),
- array([0.44741876, 0.48868703, 0.53202675, 0.57520718, 0.52756533,
-        0.51513705, 0.51513705, 0.47052265, 0.50812618, 0.55242189]),
- array([0.48868703, 0.53202675, 0.57520718, 0.52756533, 0.51513705,
-        0.51513705, 0.47052265, 0.50812618, 0.55242189, 0.51912048]),
- array([0.53202675, 0.57520718, 0.52756533, 0.51513705, 0.51513705,
-        0.47052265, 0.50812618, 0.55242189, 0.51912048, 0.47434668]),
- array([0.57520718, 0.52756533, 0.51513705, 0.51513705, 0.47052265,
-        0.50812618, 0.55242189, 0.51912048, 0.47434668, 0.43530913]),
- array([0.52756533, 0.51513705, 0.51513705, 0.47052265, 0.50812618,
-        0.55242189, 0.51912048, 0.47434668, 0.43530913, 0.39467815]),
- array([0.51513705, 0.51513705, 0.47052265, 0.50812618, 0.55242189,
-        0.51912048, 0.47434668, 0.43530913, 0.39467815, 0.43323772]),
- array([0.51513705, 0.47052265, 0.50812618, 0.55242189, 0.51912048,
-        0.47434668, 0.43530913, 0.39467815, 0.43323772, 0.47370939]),
- array([0.47052265, 0.50812618, 0.55242189, 0.51912048, 0.47434668,
-        0.43530913, 0.39467815, 0.43323772, 0.47370939, 0.51625243]),
- array([0.50812618, 0.55242189, 0.51912048, 0.47434668, 0.43530913,
-        0.39467815, 0.43323772, 0.47370939, 0.51625243, 0.56086684]),
- array([0.55242189, 0.51912048, 0.47434668, 0.43530913, 0.39467815,
-        0.43323772, 0.47370939, 0.51625243, 0.56086684, 0.56947099]),
- array([0.51912048, 0.47434668, 0.43530913, 0.39467815, 0.43323772,
-        0.47370939, 0.51625243, 0.56086684, 0.56947099, 0.61679414]),
- array([0.47434668, 0.43530913, 0.39467815, 0.43323772, 0.47370939,
-        0.51625243, 0.56086684, 0.56947099, 0.61679414, 0.66650735]),
- array([0.43530913, 0.39467815, 0.43323772, 0.47370939, 0.51625243,
-        0.56086684, 0.56947099, 0.61679414, 0.66650735, 0.61440408]),
- array([0.39467815, 0.43323772, 0.47370939, 0.51625243, 0.56086684,
-        0.56947099, 0.61679414, 0.66650735, 0.61440408, 0.57568517]),
- array([0.43323772, 0.47370939, 0.51625243, 0.56086684, 0.56947099,
-        0.61679414, 0.66650735, 0.61440408, 0.57568517, 0.62332693]),
- array([0.47370939, 0.51625243, 0.56086684, 0.56947099, 0.61679414,
-        0.66650735, 0.61440408, 0.57568517, 0.62332693, 0.66730404]),
- array([0.51625243, 0.56086684, 0.56947099, 0.61679414, 0.66650735,
-        0.61440408, 0.57568517, 0.62332693, 0.66730404, 0.70602295]),
- array([0.56086684, 0.56947099, 0.61679414, 0.66650735, 0.61440408,
-        0.57568517, 0.62332693, 0.66730404, 0.70602295, 0.65184831]),
- array([0.56947099, 0.61679414, 0.66650735, 0.61440408, 0.57568517,
-        0.62332693, 0.66730404, 0.70602295, 0.65184831, 0.60038243]),
- array([0.61679414, 0.66650735, 0.61440408, 0.57568517, 0.62332693,
-        0.66730404, 0.70602295, 0.65184831, 0.60038243, 0.5629382 ]),
- array([0.66650735, 0.61440408, 0.57568517, 0.62332693, 0.66730404,
-        0.70602295, 0.65184831, 0.60038243, 0.5629382 , 0.52708734]),
- array([0.61440408, 0.57568517, 0.62332693, 0.66730404, 0.70602295,
-        0.65184831, 0.60038243, 0.5629382 , 0.52708734, 0.57233904]),
- array([0.57568517, 0.62332693, 0.66730404, 0.70602295, 0.65184831,
-        0.60038243, 0.5629382 , 0.52708734, 0.57233904, 0.55035053]),
- array([0.62332693, 0.66730404, 0.70602295, 0.65184831, 0.60038243,
-        0.5629382 , 0.52708734, 0.57233904, 0.55035053, 0.52836202]),
- array([0.66730404, 0.70602295, 0.65184831, 0.60038243, 0.5629382 ,
-        0.52708734, 0.57233904, 0.55035053, 0.52836202, 0.53871893]),
- array([0.70602295, 0.65184831, 0.60038243, 0.5629382 , 0.52708734,
-        0.57233904, 0.55035053, 0.52836202, 0.53871893, 0.51434037]),
- array([0.65184831, 0.60038243, 0.5629382 , 0.52708734, 0.57233904,
-        0.55035053, 0.52836202, 0.53871893, 0.51434037, 0.47004466]),
- array([0.60038243, 0.5629382 , 0.52708734, 0.57233904, 0.55035053,
-        0.52836202, 0.53871893, 0.51434037, 0.47004466, 0.47147863]),
- array([0.5629382 , 0.52708734, 0.57233904, 0.55035053, 0.52836202,
-        0.53871893, 0.51434037, 0.47004466, 0.47147863, 0.48868703]),
- array([0.52708734, 0.57233904, 0.55035053, 0.52836202, 0.53871893,
-        0.51434037, 0.47004466, 0.47147863, 0.48868703, 0.44805605]),
- array([0.57233904, 0.55035053, 0.52836202, 0.53871893, 0.51434037,
-        0.47004466, 0.47147863, 0.48868703, 0.44805605, 0.45442954]),
- array([0.55035053, 0.52836202, 0.53871893, 0.51434037, 0.47004466,
-        0.47147863, 0.48868703, 0.44805605, 0.45442954, 0.41284258]),
- array([0.52836202, 0.53871893, 0.51434037, 0.47004466, 0.47147863,
-        0.48868703, 0.44805605, 0.45442954, 0.41284258, 0.4313257 ]),
- array([0.53871893, 0.51434037, 0.47004466, 0.47147863, 0.48868703,
-        0.44805605, 0.45442954, 0.41284258, 0.4313257 , 0.40981518]),
- array([0.51434037, 0.47004466, 0.47147863, 0.48868703, 0.44805605,
-        0.45442954, 0.41284258, 0.4313257 , 0.40981518, 0.42670493]),
- array([0.47004466, 0.47147863, 0.48868703, 0.44805605, 0.45442954,
-        0.41284258, 0.4313257 , 0.40981518, 0.42670493, 0.46446786]),
- array([0.47147863, 0.48868703, 0.44805605, 0.45442954, 0.41284258,
-        0.4313257 , 0.40981518, 0.42670493, 0.46446786, 0.49139578]),
- array([0.48868703, 0.44805605, 0.45442954, 0.41284258, 0.4313257 ,
-        0.40981518, 0.42670493, 0.46446786, 0.49139578, 0.48295093]),
- array([0.44805605, 0.45442954, 0.41284258, 0.4313257 , 0.40981518,
-        0.42670493, 0.46446786, 0.49139578, 0.48295093, 0.48231354]),
- array([0.45442954, 0.41284258, 0.4313257 , 0.40981518, 0.42670493,
-        0.46446786, 0.49139578, 0.48295093, 0.48231354, 0.45936905]),
- array([0.41284258, 0.4313257 , 0.40981518, 0.42670493, 0.46446786,
-        0.49139578, 0.48295093, 0.48231354, 0.45936905, 0.46064373]),
- array([0.4313257 , 0.40981518, 0.42670493, 0.46446786, 0.49139578,
-        0.48295093, 0.48231354, 0.45936905, 0.46064373, 0.45570431]),
- array([0.40981518, 0.42670493, 0.46446786, 0.49139578, 0.48295093,
-        0.48231354, 0.45936905, 0.46064373, 0.45570431, 0.45905036]),
- array([0.42670493, 0.46446786, 0.49139578, 0.48295093, 0.48231354,
-        0.45936905, 0.46064373, 0.45570431, 0.45905036, 0.45889106]),
- array([0.46446786, 0.49139578, 0.48295093, 0.48231354, 0.45936905,
-        0.46064373, 0.45570431, 0.45905036, 0.45889106, 0.50000002]),
- array([0.49139578, 0.48295093, 0.48231354, 0.45936905, 0.46064373,
-        0.45570431, 0.45905036, 0.45889106, 0.50000002, 0.48709366]),
- array([0.48295093, 0.48231354, 0.45936905, 0.46064373, 0.45570431,
-        0.45905036, 0.45889106, 0.50000002, 0.48709366, 0.53027408]),
- array([0.48231354, 0.45936905, 0.46064373, 0.45570431, 0.45905036,
-        0.45889106, 0.50000002, 0.48709366, 0.53027408, 0.55465265]),
- array([0.45936905, 0.46064373, 0.45570431, 0.45905036, 0.45889106,
-        0.50000002, 0.48709366, 0.53027408, 0.55465265, 0.5352135 ]),
- array([0.46064373, 0.45570431, 0.45905036, 0.45889106, 0.50000002,
-        0.48709366, 0.53027408, 0.55465265, 0.5352135 , 0.52581266]),
- array([0.45570431, 0.45905036, 0.45889106, 0.50000002, 0.48709366,
-        0.53027408, 0.55465265, 0.5352135 , 0.52581266, 0.53553219]),
- array([0.45905036, 0.45889106, 0.50000002, 0.48709366, 0.53027408,
-        0.55465265, 0.5352135 , 0.52581266, 0.53553219, 0.54541111]),
- array([0.45889106, 0.50000002, 0.48709366, 0.53027408, 0.55465265,
-        0.5352135 , 0.52581266, 0.53553219, 0.54541111, 0.55656471]),
- array([0.50000002, 0.48709366, 0.53027408, 0.55465265, 0.5352135 ,
-        0.52581266, 0.53553219, 0.54541111, 0.55656471, 0.54557041]),
- array([0.48709366, 0.53027408, 0.55465265, 0.5352135 , 0.52581266,
-        0.53553219, 0.54541111, 0.55656471, 0.54557041, 0.55863608]),
- array([0.53027408, 0.55465265, 0.5352135 , 0.52581266, 0.53553219,
-        0.54541111, 0.55656471, 0.54557041, 0.55863608, 0.55003183]),
- array([0.55465265, 0.5352135 , 0.52581266, 0.53553219, 0.54541111,
-        0.55656471, 0.54557041, 0.55863608, 0.55003183, 0.55130661]),
- array([0.5352135 , 0.52581266, 0.53553219, 0.54541111, 0.55656471,
-        0.54557041, 0.55863608, 0.55003183, 0.55130661, 0.57042707]),
- array([0.52581266, 0.53553219, 0.54541111, 0.55656471, 0.54557041,
-        0.55863608, 0.55003183, 0.55130661, 0.57042707, 0.61743153]),
- array([0.53553219, 0.54541111, 0.55656471, 0.54557041, 0.55863608,
-        0.55003183, 0.55130661, 0.57042707, 0.61743153, 0.64770559]),
- array([0.54541111, 0.55656471, 0.54557041, 0.55863608, 0.55003183,
-        0.55130661, 0.57042707, 0.61743153, 0.64770559, 0.62221164]),
- array([0.55656471, 0.54557041, 0.55863608, 0.55003183, 0.55130661,
-        0.57042707, 0.61743153, 0.64770559, 0.62221164, 0.64738689]),
- array([0.54557041, 0.55863608, 0.55003183, 0.55130661, 0.57042707,
-        0.61743153, 0.64770559, 0.62221164, 0.64738689, 0.66873801]),
- array([0.55863608, 0.55003183, 0.55130661, 0.57042707, 0.61743153,
-        0.64770559, 0.62221164, 0.64738689, 0.66873801, 0.70395158]),
- array([0.55003183, 0.55130661, 0.57042707, 0.61743153, 0.64770559,
-        0.62221164, 0.64738689, 0.66873801, 0.70395158, 0.72833015]),
- array([0.55130661, 0.57042707, 0.61743153, 0.64770559, 0.62221164,
-        0.64738689, 0.66873801, 0.70395158, 0.72833015, 0.67989162]),
- array([0.57042707, 0.61743153, 0.64770559, 0.62221164, 0.64738689,
-        0.66873801, 0.70395158, 0.72833015, 0.67989162, 0.66889741]),
- array([0.61743153, 0.64770559, 0.62221164, 0.64738689, 0.66873801,
-        0.70395158, 0.72833015, 0.67989162, 0.66889741, 0.70442958]),
- array([0.64770559, 0.62221164, 0.64738689, 0.66873801, 0.70395158,
-        0.72833015, 0.67989162, 0.66889741, 0.70442958, 0.71287443]),
- array([0.62221164, 0.64738689, 0.66873801, 0.70395158, 0.72833015,
-        0.67989162, 0.66889741, 0.70442958, 0.71287443, 0.72163797]),
- array([0.64738689, 0.66873801, 0.70395158, 0.72833015, 0.67989162,
-        0.66889741, 0.70442958, 0.71287443, 0.72163797, 0.77644999]),
- array([0.66873801, 0.70395158, 0.72833015, 0.67989162, 0.66889741,
-        0.70442958, 0.71287443, 0.72163797, 0.77644999, 0.83413006]),
- array([0.70395158, 0.72833015, 0.67989162, 0.66889741, 0.70442958,
-        0.71287443, 0.72163797, 0.77644999, 0.83413006, 0.89467818]),
- array([0.72833015, 0.67989162, 0.66889741, 0.70442958, 0.71287443,
-        0.72163797, 0.77644999, 0.83413006, 0.89467818, 0.93451247]),
- array([0.67989162, 0.66889741, 0.70442958, 0.71287443, 0.72163797,
-        0.77644999, 0.83413006, 0.89467818, 0.93451247, 1.        ]),
- array([0.66889741, 0.70442958, 0.71287443, 0.72163797, 0.77644999,
-        0.83413006, 0.89467818, 0.93451247, 1.        , 0.93116633]),
- array([0.70442958, 0.71287443, 0.72163797, 0.77644999, 0.83413006,
-        0.89467818, 0.93451247, 1.        , 0.93116633, 0.8658381 ]),
- array([0.71287443, 0.72163797, 0.77644999, 0.83413006, 0.89467818,
-        0.93451247, 1.        , 0.93116633, 0.8658381 , 0.87571702]),
- array([0.72163797, 0.77644999, 0.83413006, 0.89467818, 0.93451247,
-        1.        , 0.93116633, 0.8658381 , 0.87571702, 0.81835564]),
- array([0.77644999, 0.83413006, 0.89467818, 0.93451247, 1.        ,
-        0.93116633, 0.8658381 , 0.87571702, 0.81835564, 0.87810708]),
- array([0.83413006, 0.89467818, 0.93451247, 1.        , 0.93116633,
-        0.8658381 , 0.87571702, 0.81835564, 0.87810708, 0.94088595]),
- array([0.89467818, 0.93451247, 1.        , 0.93116633, 0.8658381 ,
-        0.87571702, 0.81835564, 0.87810708, 0.94088595, 0.92351817]),
- array([0.93451247, 1.        , 0.93116633, 0.8658381 , 0.87571702,
-        0.81835564, 0.87810708, 0.94088595, 0.92351817, 0.90041428]),
- array([1.        , 0.93116633, 0.8658381 , 0.87571702, 0.81835564,
-        0.87810708, 0.94088595, 0.92351817, 0.90041428, 0.86408543]),
- array([0.93116633, 0.8658381 , 0.87571702, 0.81835564, 0.87810708,
-        0.94088595, 0.92351817, 0.90041428, 0.86408543, 0.92112811]),
- array([0.8658381 , 0.87571702, 0.81835564, 0.87810708, 0.94088595,
-        0.92351817, 0.90041428, 0.86408543, 0.92112811, 0.91650729]),
- array([0.87571702, 0.81835564, 0.87810708, 0.94088595, 0.92351817,
-        0.90041428, 0.86408543, 0.92112811, 0.91650729, 0.90248564]),
- array([0.81835564, 0.87810708, 0.94088595, 0.92351817, 0.90041428,
-        0.86408543, 0.92112811, 0.91650729, 0.90248564, 0.88687062]),
- array([0.87810708, 0.94088595, 0.92351817, 0.90041428, 0.86408543,
-        0.92112811, 0.91650729, 0.90248564, 0.88687062, 0.88878268]),
- array([0.94088595, 0.92351817, 0.90041428, 0.86408543, 0.92112811,
-        0.91650729, 0.90248564, 0.88687062, 0.88878268, 0.87603571]),
- array([0.92351817, 0.90041428, 0.86408543, 0.92112811, 0.91650729,
-        0.90248564, 0.88687062, 0.88878268, 0.87603571, 0.84719563]),
- array([0.90041428, 0.86408543, 0.92112811, 0.91650729, 0.90248564,
-        0.88687062, 0.88878268, 0.87603571, 0.84719563, 0.89388149]),
- array([0.86408543, 0.92112811, 0.91650729, 0.90248564, 0.88687062,
-        0.88878268, 0.87603571, 0.84719563, 0.89388149, 0.85739325]),
- array([0.92112811, 0.91650729, 0.90248564, 0.88687062, 0.88878268,
-        0.87603571, 0.84719563, 0.89388149, 0.85739325, 0.87045891]),
- array([0.91650729, 0.90248564, 0.88687062, 0.88878268, 0.87603571,
-        0.84719563, 0.89388149, 0.85739325, 0.87045891, 0.89085405]),
- array([0.90248564, 0.88687062, 0.88878268, 0.87603571, 0.84719563,
-        0.89388149, 0.85739325, 0.87045891, 0.89085405, 0.86615679]),
- array([0.88687062, 0.88878268, 0.87603571, 0.84719563, 0.89388149,
-        0.85739325, 0.87045891, 0.89085405, 0.86615679, 0.88448056]),
- array([0.88878268, 0.87603571, 0.84719563, 0.89388149, 0.85739325,
-        0.87045891, 0.89085405, 0.86615679, 0.88448056, 0.85054177]),
- array([0.87603571, 0.84719563, 0.89388149, 0.85739325, 0.87045891,
-        0.89085405, 0.86615679, 0.88448056, 0.85054177, 0.78967495]),
- array([0.84719563, 0.89388149, 0.85739325, 0.87045891, 0.89085405,
-        0.86615679, 0.88448056, 0.85054177, 0.78967495, 0.80895471]),
- array([0.89388149, 0.85739325, 0.87045891, 0.89085405, 0.86615679,
-        0.88448056, 0.85054177, 0.78967495, 0.80895471, 0.79365838]),
- array([0.85739325, 0.87045891, 0.89085405, 0.86615679, 0.88448056,
-        0.85054177, 0.78967495, 0.80895471, 0.79365838, 0.79907588]),
- array([0.87045891, 0.89085405, 0.86615679, 0.88448056, 0.85054177,
-        0.78967495, 0.80895471, 0.79365838, 0.79907588, 0.81198216]),
- array([0.89085405, 0.86615679, 0.88448056, 0.85054177, 0.78967495,
-        0.80895471, 0.79365838, 0.79907588, 0.81198216, 0.75254942]),
- array([0.86615679, 0.88448056, 0.85054177, 0.78967495, 0.80895471,
-        0.79365838, 0.79907588, 0.81198216, 0.75254942, 0.74506055]),
- array([0.88448056, 0.85054177, 0.78967495, 0.80895471, 0.79365838,
-        0.79907588, 0.81198216, 0.75254942, 0.74506055, 0.80114725]),
- array([0.85054177, 0.78967495, 0.80895471, 0.79365838, 0.79907588,
-        0.81198216, 0.75254942, 0.74506055, 0.80114725, 0.80991079]),
- array([0.78967495, 0.80895471, 0.79365838, 0.79907588, 0.81198216,
-        0.75254942, 0.74506055, 0.80114725, 0.80991079, 0.78601022]),
- array([0.80895471, 0.79365838, 0.79907588, 0.81198216, 0.75254942,
-        0.74506055, 0.80114725, 0.80991079, 0.78601022, 0.7589229 ]),
- array([0.79365838, 0.79907588, 0.81198216, 0.75254942, 0.74506055,
-        0.80114725, 0.80991079, 0.78601022, 0.7589229 , 0.75876351]),
- array([0.79907588, 0.81198216, 0.75254942, 0.74506055, 0.80114725,
-        0.80991079, 0.78601022, 0.7589229 , 0.75876351, 0.72705547]),
- array([0.81198216, 0.75254942, 0.74506055, 0.80114725, 0.80991079,
-        0.78601022, 0.7589229 , 0.75876351, 0.72705547, 0.67734226]),
- array([0.75254942, 0.74506055, 0.80114725, 0.80991079, 0.78601022,
-        0.7589229 , 0.75876351, 0.72705547, 0.67734226, 0.70729763]),
- array([0.74506055, 0.80114725, 0.80991079, 0.78601022, 0.7589229 ,
-        0.75876351, 0.72705547, 0.67734226, 0.70729763, 0.72307204]),
- array([0.80114725, 0.80991079, 0.78601022, 0.7589229 , 0.75876351,
-        0.72705547, 0.67734226, 0.70729763, 0.72307204, 0.68483112]),
- array([0.80991079, 0.78601022, 0.7589229 , 0.75876351, 0.72705547,
-        0.67734226, 0.70729763, 0.72307204, 0.68483112, 0.70028685]),
- array([0.78601022, 0.7589229 , 0.75876351, 0.72705547, 0.67734226,
-        0.70729763, 0.72307204, 0.68483112, 0.70028685, 0.6803697 ]),
- array([0.7589229 , 0.75876351, 0.72705547, 0.67734226, 0.70729763,
-        0.72307204, 0.68483112, 0.70028685, 0.6803697 , 0.69104522]),
- array([0.75876351, 0.72705547, 0.67734226, 0.70729763, 0.72307204,
-        0.68483112, 0.70028685, 0.6803697 , 0.69104522, 0.6808477 ]),
- array([0.72705547, 0.67734226, 0.70729763, 0.72307204, 0.68483112,
-        0.70028685, 0.6803697 , 0.69104522, 0.6808477 , 0.69694071]),
- array([0.67734226, 0.70729763, 0.72307204, 0.68483112, 0.70028685,
-        0.6803697 , 0.69104522, 0.6808477 , 0.69694071, 0.68387504]),
- array([0.70729763, 0.72307204, 0.68483112, 0.70028685, 0.6803697 ,
-        0.69104522, 0.6808477 , 0.69694071, 0.68387504, 0.68897385]),
- array([0.72307204, 0.68483112, 0.70028685, 0.6803697 , 0.69104522,
-        0.6808477 , 0.69694071, 0.68387504, 0.68897385, 0.73358826]),
- array([0.68483112, 0.70028685, 0.6803697 , 0.69104522, 0.6808477 ,
-        0.69694071, 0.68387504, 0.68897385, 0.73358826, 0.71526448]),
- array([0.70028685, 0.6803697 , 0.69104522, 0.6808477 , 0.69694071,
-        0.68387504, 0.68897385, 0.73358826, 0.71526448, 0.69486935]),
- array([0.6803697 , 0.69104522, 0.6808477 , 0.69694071, 0.68387504,
-        0.68897385, 0.73358826, 0.71526448, 0.69486935, 0.72705547]),
- array([0.69104522, 0.6808477 , 0.69694071, 0.68387504, 0.68897385,
-        0.73358826, 0.71526448, 0.69486935, 0.72705547, 0.73263227]),
- array([0.6808477 , 0.69694071, 0.68387504, 0.68897385, 0.73358826,
-        0.71526448, 0.69486935, 0.72705547, 0.73263227, 0.7874442 ]),
- array([0.69694071, 0.68387504, 0.68897385, 0.73358826, 0.71526448,
-        0.69486935, 0.72705547, 0.73263227, 0.7874442 , 0.80528998]),
- array([0.68387504, 0.68897385, 0.73358826, 0.71526448, 0.69486935,
-        0.72705547, 0.73263227, 0.7874442 , 0.80528998, 0.76959851]),
- array([0.68897385, 0.73358826, 0.71526448, 0.69486935, 0.72705547,
-        0.73263227, 0.7874442 , 0.80528998, 0.76959851, 0.76832374]),
- array([0.73358826, 0.71526448, 0.69486935, 0.72705547, 0.73263227,
-        0.7874442 , 0.80528998, 0.76959851, 0.76832374, 0.75956019]),
- array([0.71526448, 0.69486935, 0.72705547, 0.73263227, 0.7874442 ,
-        0.80528998, 0.76959851, 0.76832374, 0.75956019, 0.72163797]),
- array([0.69486935, 0.72705547, 0.73263227, 0.7874442 , 0.80528998,
-        0.76959851, 0.76832374, 0.75956019, 0.72163797, 0.69247929]),
- array([0.72705547, 0.73263227, 0.7874442 , 0.80528998, 0.76959851,
-        0.76832374, 0.75956019, 0.72163797, 0.69247929, 0.69407266]),
- array([0.73263227, 0.7874442 , 0.80528998, 0.76959851, 0.76832374,
-        0.75956019, 0.72163797, 0.69247929, 0.69407266, 0.67718296]),
- array([0.7874442 , 0.80528998, 0.76959851, 0.76832374, 0.75956019,
-        0.72163797, 0.69247929, 0.69407266, 0.67718296, 0.66857872]),
- array([0.80528998, 0.76959851, 0.76832374, 0.75956019, 0.72163797,
-        0.69247929, 0.69407266, 0.67718296, 0.66857872, 0.66045256]),
- array([0.76959851, 0.76832374, 0.75956019, 0.72163797, 0.69247929,
-        0.69407266, 0.67718296, 0.66857872, 0.66045256, 0.65726582]),
- array([0.76832374, 0.75956019, 0.72163797, 0.69247929, 0.69407266,
-        0.67718296, 0.66857872, 0.66045256, 0.65726582, 0.65407907]),
- array([0.75956019, 0.72163797, 0.69247929, 0.69407266, 0.67718296,
-        0.66857872, 0.66045256, 0.65726582, 0.65407907, 0.66778203]),
- array([0.72163797, 0.69247929, 0.69407266, 0.67718296, 0.66857872,
-        0.66045256, 0.65726582, 0.65407907, 0.66778203, 0.65646913]),
- array([0.69247929, 0.69407266, 0.67718296, 0.66857872, 0.66045256,
-        0.65726582, 0.65407907, 0.66778203, 0.65646913, 0.68212237]),
- array([0.69407266, 0.67718296, 0.66857872, 0.66045256, 0.65726582,
-        0.65407907, 0.66778203, 0.65646913, 0.68212237, 0.67463351]),
- array([0.67718296, 0.66857872, 0.66045256, 0.65726582, 0.65407907,
-        0.66778203, 0.65646913, 0.68212237, 0.67463351, 0.6583811 ]),
- array([0.66857872, 0.66045256, 0.65726582, 0.65407907, 0.66778203,
-        0.65646913, 0.68212237, 0.67463351, 0.6583811 , 0.65121093]),
- array([0.66045256, 0.65726582, 0.65407907, 0.66778203, 0.65646913,
-        0.68212237, 0.67463351, 0.6583811 , 0.65121093, 0.65678773]),
- array([0.65726582, 0.65407907, 0.66778203, 0.65646913, 0.68212237,
-        0.67463351, 0.6583811 , 0.65121093, 0.65678773, 0.65567244]),
- array([0.65407907, 0.66778203, 0.65646913, 0.68212237, 0.67463351,
-        0.6583811 , 0.65121093, 0.65678773, 0.65567244, 0.65344169]),
- array([0.66778203, 0.65646913, 0.68212237, 0.67463351, 0.6583811 ,
-        0.65121093, 0.65678773, 0.65567244, 0.65344169, 0.62890373]),
- array([0.65646913, 0.68212237, 0.67463351, 0.6583811 , 0.65121093,
-        0.65678773, 0.65567244, 0.65344169, 0.62890373, 0.61026135]),
- array([0.68212237, 0.67463351, 0.6583811 , 0.65121093, 0.65678773,
-        0.65567244, 0.65344169, 0.62890373, 0.61026135, 0.65105163]),
- array([0.67463351, 0.6583811 , 0.65121093, 0.65678773, 0.65567244,
-        0.65344169, 0.62890373, 0.61026135, 0.65105163, 0.63942004]),
- array([0.6583811 , 0.65121093, 0.65678773, 0.65567244, 0.65344169,
-        0.62890373, 0.61026135, 0.65105163, 0.63942004, 0.62699176]),
- array([0.65121093, 0.65678773, 0.65567244, 0.65344169, 0.62890373,
-        0.61026135, 0.65105163, 0.63942004, 0.62699176, 0.60293179]),
- array([0.65678773, 0.65567244, 0.65344169, 0.62890373, 0.61026135,
-        0.65105163, 0.63942004, 0.62699176, 0.60293179, 0.59623961]),
- array([0.65567244, 0.65344169, 0.62890373, 0.61026135, 0.65105163,
-        0.63942004, 0.62699176, 0.60293179, 0.59623961, 0.59608031]),
- array([0.65344169, 0.62890373, 0.61026135, 0.65105163, 0.63942004,
-        0.62699176, 0.60293179, 0.59623961, 0.59608031, 0.54748248]),
- array([0.62890373, 0.61026135, 0.65105163, 0.63942004, 0.62699176,
-        0.60293179, 0.59623961, 0.59608031, 0.54748248, 0.5012747 ]),
- array([0.61026135, 0.65105163, 0.63942004, 0.62699176, 0.60293179,
-        0.59623961, 0.59608031, 0.54748248, 0.5012747 , 0.45729769])]
+print()
 
 
-y_train
 
-[array([0.03664755]),
- array([0.04286169]),
- array([0.07807521]),
- array([0.10691524]),
- array([0.17479288]),
- array([0.16826005]),
- array([0.21159977]),
- array([0.27007648]),
- array([0.2971638]),
- array([0.36456344]),
- array([0.40168898]),
- array([0.36281072]),
- array([0.32584448]),
- array([0.35978333]),
- array([0.35723392]),
- array([0.333174]),
- array([0.36870617]),
- array([0.36249203]),
- array([0.37077758]),
- array([0.40822181]),
- array([0.44741876]),
- array([0.48868703]),
- array([0.53202675]),
- array([0.57520718]),
- array([0.52756533]),
- array([0.51513705]),
- array([0.51513705]),
- array([0.47052265]),
- array([0.50812618]),
- array([0.55242189]),
- array([0.51912048]),
- array([0.47434668]),
- array([0.43530913]),
- array([0.39467815]),
- array([0.43323772]),
- array([0.47370939]),
- array([0.51625243]),
- array([0.56086684]),
- array([0.56947099]),
- array([0.61679414]),
- array([0.66650735]),
- array([0.61440408]),
- array([0.57568517]),
- array([0.62332693]),
- array([0.66730404]),
- array([0.70602295]),
- array([0.65184831]),
- array([0.60038243]),
- array([0.5629382]),
- array([0.52708734]),
- array([0.57233904]),
- array([0.55035053]),
- array([0.52836202]),
- array([0.53871893]),
- array([0.51434037]),
- array([0.47004466]),
- array([0.47147863]),
- array([0.48868703]),
- array([0.44805605]),
- array([0.45442954]),
- array([0.41284258]),
- array([0.4313257]),
- array([0.40981518]),
- array([0.42670493]),
- array([0.46446786]),
- array([0.49139578]),
- array([0.48295093]),
- array([0.48231354]),
- array([0.45936905]),
- array([0.46064373]),
- array([0.45570431]),
- array([0.45905036]),
- array([0.45889106]),
- array([0.50000002]),
- array([0.48709366]),
- array([0.53027408]),
- array([0.55465265]),
- array([0.5352135]),
- array([0.52581266]),
- array([0.53553219]),
- array([0.54541111]),
- array([0.55656471]),
- array([0.54557041]),
- array([0.55863608]),
- array([0.55003183]),
- array([0.55130661]),
- array([0.57042707]),
- array([0.61743153]),
- array([0.64770559]),
- array([0.62221164]),
- array([0.64738689]),
- array([0.66873801]),
- array([0.70395158]),
- array([0.72833015]),
- array([0.67989162]),
- array([0.66889741]),
- array([0.70442958]),
- array([0.71287443]),
- array([0.72163797]),
- array([0.77644999]),
- array([0.83413006]),
- array([0.89467818]),
- array([0.93451247]),
- array([1.]),
- array([0.93116633]),
- array([0.8658381]),
- array([0.87571702]),
- array([0.81835564]),
- array([0.87810708]),
- array([0.94088595]),
- array([0.92351817]),
- array([0.90041428]),
- array([0.86408543]),
- array([0.92112811]),
- array([0.91650729]),
- array([0.90248564]),
- array([0.88687062]),
- array([0.88878268]),
- array([0.87603571]),
- array([0.84719563]),
- array([0.89388149]),
- array([0.85739325]),
- array([0.87045891]),
- array([0.89085405]),
- array([0.86615679]),
- array([0.88448056]),
- array([0.85054177]),
- array([0.78967495]),
- array([0.80895471]),
- array([0.79365838]),
- array([0.79907588]),
- array([0.81198216]),
- array([0.75254942]),
- array([0.74506055]),
- array([0.80114725]),
- array([0.80991079]),
- array([0.78601022]),
- array([0.7589229]),
- array([0.75876351]),
- array([0.72705547]),
- array([0.67734226]),
- array([0.70729763]),
- array([0.72307204]),
- array([0.68483112]),
- array([0.70028685]),
- array([0.6803697]),
- array([0.69104522]),
- array([0.6808477]),
- array([0.69694071]),
- array([0.68387504]),
- array([0.68897385]),
- array([0.73358826]),
- array([0.71526448]),
- array([0.69486935]),
- array([0.72705547]),
- array([0.73263227]),
- array([0.7874442]),
- array([0.80528998]),
- array([0.76959851]),
- array([0.76832374]),
- array([0.75956019]),
- array([0.72163797]),
- array([0.69247929]),
- array([0.69407266]),
- array([0.67718296]),
- array([0.66857872]),
- array([0.66045256]),
- array([0.65726582]),
- array([0.65407907]),
- array([0.66778203]),
- array([0.65646913]),
- array([0.68212237]),
- array([0.67463351]),
- array([0.6583811]),
- array([0.65121093]),
- array([0.65678773]),
- array([0.65567244]),
- array([0.65344169]),
- array([0.62890373]),
- array([0.61026135]),
- array([0.65105163]),
- array([0.63942004]),
- array([0.62699176]),
- array([0.60293179]),
- array([0.59623961]),
- array([0.59608031]),
- array([0.54748248]),
- array([0.5012747]),
- array([0.45729769]),
- array([0.49904394])]
+## Building the model
 
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-X_train.shape
+from sklearn.naive_bayes import MultinomialNB
 
----------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-<ipython-input-15-d2ba684acd0f> in <module>
-----> 1 X_train.shape
+from sklearn.pipeline import make_pipeline
 
-AttributeError: 'list' object has no attribute 'shape'
+mnb=make_pipeline(TfidfVectorizer(),MultinomialNB())
 
-
-# Converting to np.array
-
-X_train=np.array(X_train)
-y_train=np.array(y_train)
-
-X_train.shape
-
-(190, 10)
-
-
-y_train.shape
-
-(190, 1)
-
-
-# Converting text data
-
-X_test=[]
-y_test=[]
-# window_size=10
-
-for i in range(10,50):
-  X_test.append(test_scaled[i-10:i,0])
-  y_test.append(test_scaled[i])
-
-X_test=np.array(X_test)
-y_test=np.array(y_test)
-
-X_test.shape
-
-(40, 10)
-
-
-y_test.shape
-
-(40, 1)
-
-Model building
-
-lstm=tf.keras.Sequential()
-lstm.add(tf.keras.layers.LSTM(50,return_sequences=True,
-                              input_shape=(X_train.shape[1],1))) # (10,1)
-lstm.add(tf.keras.layers.Dense(1))
-
-# Compiling
-
-lstm.compile(loss=tf.keras.losses.MeanSquaredError(),
-             optimizer=tf.keras.optimizers.Adam(),
-             metrics=['mae'])
+type(mnb)
 
 # Training
 
-tf.random.set_seed(10)
-hist=lstm.fit(X_train,y_train,epochs=100)
-pd.DataFrame(hist.history).plot();
+mnb.fit(train['data'],train['target'])
 
-Epoch 1/100
-6/6 [==============================] - 3s 8ms/step - loss: 0.3202 - mae: 0.5375
-Epoch 2/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.1867 - mae: 0.3969
-Epoch 3/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.1040 - mae: 0.2578
-Epoch 4/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0884 - mae: 0.2418
-Epoch 5/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0810 - mae: 0.2321
-Epoch 6/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0675 - mae: 0.1990
-Epoch 7/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0623 - mae: 0.1827
-Epoch 8/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0580 - mae: 0.1739
-Epoch 9/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0531 - mae: 0.1663
-Epoch 10/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0492 - mae: 0.1614
-Epoch 11/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0459 - mae: 0.1561
-Epoch 12/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0426 - mae: 0.1479
-Epoch 13/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0396 - mae: 0.1398
-Epoch 14/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0369 - mae: 0.1330
-Epoch 15/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0345 - mae: 0.1278
-Epoch 16/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0324 - mae: 0.1239
-Epoch 17/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0304 - mae: 0.1204
-Epoch 18/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0288 - mae: 0.1172
-Epoch 19/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0275 - mae: 0.1148
-Epoch 20/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0263 - mae: 0.1130
-Epoch 21/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0253 - mae: 0.1112
-Epoch 22/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0244 - mae: 0.1093
-Epoch 23/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0235 - mae: 0.1075
-Epoch 24/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0226 - mae: 0.1053
-Epoch 25/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0218 - mae: 0.1033
-Epoch 26/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0210 - mae: 0.1013
-Epoch 27/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0202 - mae: 0.0993
-Epoch 28/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0195 - mae: 0.0975
-Epoch 29/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0188 - mae: 0.0957
-Epoch 30/100
-6/6 [==============================] - 0s 10ms/step - loss: 0.0182 - mae: 0.0940
-Epoch 31/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0175 - mae: 0.0922
-Epoch 32/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0169 - mae: 0.0905
-Epoch 33/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0163 - mae: 0.0888
-Epoch 34/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0157 - mae: 0.0871
-Epoch 35/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0151 - mae: 0.0855
-Epoch 36/100
-6/6 [==============================] - 0s 11ms/step - loss: 0.0146 - mae: 0.0840
-Epoch 37/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0141 - mae: 0.0827
-Epoch 38/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0136 - mae: 0.0812
-Epoch 39/100
-6/6 [==============================] - 0s 11ms/step - loss: 0.0132 - mae: 0.0802
-Epoch 40/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0127 - mae: 0.0787
-Epoch 41/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0123 - mae: 0.0776
-Epoch 42/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0120 - mae: 0.0765
-Epoch 43/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0116 - mae: 0.0756
-Epoch 44/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0113 - mae: 0.0750
-Epoch 45/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0110 - mae: 0.0740
-Epoch 46/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0107 - mae: 0.0730
-Epoch 47/100
-6/6 [==============================] - 0s 14ms/step - loss: 0.0105 - mae: 0.0727
-Epoch 48/100
-6/6 [==============================] - 0s 13ms/step - loss: 0.0102 - mae: 0.0719
-Epoch 49/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0100 - mae: 0.0709
-Epoch 50/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0097 - mae: 0.0704
-Epoch 51/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0095 - mae: 0.0698
-Epoch 52/100
-6/6 [==============================] - 0s 13ms/step - loss: 0.0094 - mae: 0.0692
-Epoch 53/100
-6/6 [==============================] - 0s 13ms/step - loss: 0.0091 - mae: 0.0690
-Epoch 54/100
-6/6 [==============================] - 0s 11ms/step - loss: 0.0089 - mae: 0.0685
-Epoch 55/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0087 - mae: 0.0674
-Epoch 56/100
-6/6 [==============================] - 0s 13ms/step - loss: 0.0086 - mae: 0.0669
-Epoch 57/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0084 - mae: 0.0665
-Epoch 58/100
-6/6 [==============================] - 0s 13ms/step - loss: 0.0082 - mae: 0.0660
-Epoch 59/100
-6/6 [==============================] - 0s 14ms/step - loss: 0.0081 - mae: 0.0659
-Epoch 60/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0080 - mae: 0.0650
-Epoch 61/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0078 - mae: 0.0649
-Epoch 62/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0077 - mae: 0.0646
-Epoch 63/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0076 - mae: 0.0639
-Epoch 64/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0075 - mae: 0.0636
-Epoch 65/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0073 - mae: 0.0630
-Epoch 66/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0072 - mae: 0.0630
-Epoch 67/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0071 - mae: 0.0621
-Epoch 68/100
-6/6 [==============================] - 0s 13ms/step - loss: 0.0070 - mae: 0.0619
-Epoch 69/100
-6/6 [==============================] - 0s 13ms/step - loss: 0.0069 - mae: 0.0617
-Epoch 70/100
-6/6 [==============================] - 0s 11ms/step - loss: 0.0069 - mae: 0.0612
-Epoch 71/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0068 - mae: 0.0609
-Epoch 72/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0067 - mae: 0.0607
-Epoch 73/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0066 - mae: 0.0605
-Epoch 74/100
-6/6 [==============================] - 0s 12ms/step - loss: 0.0066 - mae: 0.0602
-Epoch 75/100
-6/6 [==============================] - 0s 13ms/step - loss: 0.0065 - mae: 0.0599
-Epoch 76/100
-6/6 [==============================] - 0s 13ms/step - loss: 0.0065 - mae: 0.0598
-Epoch 77/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0064 - mae: 0.0596
-Epoch 78/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0063 - mae: 0.0593
-Epoch 79/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0063 - mae: 0.0588
-Epoch 80/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0062 - mae: 0.0588
-Epoch 81/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0062 - mae: 0.0589
-Epoch 82/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0062 - mae: 0.0583
-Epoch 83/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0061 - mae: 0.0581
-Epoch 84/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0061 - mae: 0.0583
-Epoch 85/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0061 - mae: 0.0579
-Epoch 86/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0060 - mae: 0.0576
-Epoch 87/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0060 - mae: 0.0576
-Epoch 88/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0060 - mae: 0.0583
-Epoch 89/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0060 - mae: 0.0577
-Epoch 90/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0059 - mae: 0.0574
-Epoch 91/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0059 - mae: 0.0575
-Epoch 92/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0059 - mae: 0.0570
-Epoch 93/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0059 - mae: 0.0570
-Epoch 94/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0059 - mae: 0.0570
-Epoch 95/100
-6/6 [==============================] - 0s 9ms/step - loss: 0.0059 - mae: 0.0570
-Epoch 96/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0059 - mae: 0.0569
-Epoch 97/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0058 - mae: 0.0567
-Epoch 98/100
-6/6 [==============================] - 0s 8ms/step - loss: 0.0058 - mae: 0.0570
-Epoch 99/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0058 - mae: 0.0567
-Epoch 100/100
-6/6 [==============================] - 0s 7ms/step - loss: 0.0058 - mae: 0.0564
+# Prediction
 
-Evaluation of the model
+y_pred=mnb.predict(test['data'])
 
-lstm.evaluate(X_test,y_test)
+y_pred
 
-2/2 [==============================] - 1s 10ms/step - loss: 0.0496 - mae: 0.1691
+## Performance of the model
 
-[0.04961086064577103, 0.16910341382026672]
+from sklearn.metrics import classification_report,confusion_matrix
+
+report=classification_report(test['target'],y_pred)
+
+print('The report:\n',report)
+
+# Confusion Matrix
+
+cm=confusion_matrix(test['target'],y_pred)
+
+print('The confusion Matrix:\n',cm)
+
+## Testing with our own data
+
+def news_group_prediction(doc):
+    group_pred=mnb.predict([doc])
+    return test['target_names'][group_pred[0]]
+
+news_group_prediction('Computer technology is becoming more user friendly. Windows operating systems are easy to operate')
+
+news_group_prediction('The soocer is the one sport most of Eurpeaons follow. It is quite a big business, which involved lot of anlaytucs as well  ')
 
 
-lstm.summary()
+# session 9
+# Text Clustering
 
-Model: "sequential"
-_________________________________________________________________
- Layer (type)                Output Shape              Param #   
-=================================================================
- lstm (LSTM)                 (None, 10, 50)            10400     
-                                                                 
- dense (Dense)               (None, 10, 1)             51        
-                                                                 
-=================================================================
-Total params: 10,451
-Trainable params: 10,451
-Non-trainable params: 0
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+## Accessing the dataset
+
+bbc=pd.read_csv('bbc-text.csv')
+
+bbc
+
+bbc['category'].value_counts()
+
+## Selecting the data
+
+data=bbc['text']
+
+data
+
+data[0]
+
+data[1]
+
+data[10]
+
+data[100]
+
+data[1000]
+
+## Converting text into vectors
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+tf=TfidfVectorizer()
+
+features=tf.fit_transform(data)
+
+features
+
+print(features)
+
+## Clustering using K Means
+
+from sklearn.cluster import KMeans
+
+
+SSD=[]
+for k in range(1,10):
+    kmeans=KMeans(n_clusters=k, random_state=10)
+    kmeans.fit(features)
+    SSD.append(kmeans.inertia_)
+plt.plot(range(1,10),SSD);
+
+## Applying silhouette_score
+from sklearn.metrics import silhouette_score
+SS=[]
+for k in range(2,11):
+    kmeans=KMeans(n_clusters=k, random_state=10)
+    kmeans.fit(features)
+    SS.append(silhouette_score(features,kmeans.predict(features)))
+    
+plt.plot(range(2,11),SS);
+
+## Building the model with 5 clusters
+
+kmeans=KMeans(n_clusters=5,random_state=10)
+kmeans.fit(features)
+
+
+kmeans.labels_
+
+## Updating the DF with cluster labels
+
+bbc['Cluster']=kmeans.labels_
+
+bbc
+
+## Dimensionality reduction using TSNE
+
+from sklearn.manifold import TSNE
+
+tsne=TSNE(n_components=2,perplexity=30,random_state=10)
+
+features_tsne=tsne.fit_transform(features)
+
+features_tsne
+
+features_tsne.shape
+
+## Visualisation 
+
+plt.figure(figsize=(10,8))
+plt.scatter(features_tsne[:,0],features_tsne[:,1]);
+
+plt.figure(figsize=(10,8))
+plt.scatter(features_tsne[:,0],features_tsne[:,1],c=bbc['Cluster']);
+
